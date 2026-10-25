@@ -27,3 +27,10 @@ test('读取平台真实 state 包装，并拒绝截断数据以免统计错误'
   assert.deepEqual(L.normalizeStates({ok:true,states:{abc:{value:{total:12}}}}),[{key:'abc',total:12}]);
   assert.throws(()=>L.normalizeStates({ok:true,truncated:true,states:{}}));
 });
+test('直接识别字母数字，不依赖输入框；支持大小写和输入法物理键',()=>{
+  assert.deepEqual(L.typingKey({key:'D',code:'KeyD'}),{text:'d',main:true});
+  assert.deepEqual(L.typingKey({key:'2',code:'Digit2'}),{text:'2',main:true});
+  assert.deepEqual(L.typingKey({key:'Process',code:'KeyD',isComposing:true}),{text:'d',main:true});
+  assert.deepEqual(L.typingKey({key:'End',code:'Numpad1'}),{text:'1',main:false});
+  for(const event of [{key:'d',ctrlKey:true},{key:'d',metaKey:true},{key:'d',altKey:true},{key:'d',repeat:true},{key:'Shift'},{key:'Enter'},{key:'!'}])assert.equal(L.typingKey(event),null);
+});

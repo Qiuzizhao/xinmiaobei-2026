@@ -32,6 +32,18 @@
     const chars=level<=2 ? alphabet : level===3 ? digits : alphabet+digits;
     return chars[(within*7 + level*3 + Math.floor(total/9))%chars.length];
   }
+  function typingKey(event) {
+    if(event.ctrlKey || event.metaKey || event.altKey || event.repeat)return null;
+    const code=event.code||'',key=event.key||'';
+    if(/^Numpad[0-9]$/.test(code))return {text:code.slice(-1),main:false};
+    if(/^[a-z0-9]$/i.test(key))return {text:key.toLowerCase(),main:true};
+    // 中文输入法接管按键时，仍可根据物理字母键和数字键练习。
+    if(key==='Process'||key==='Unidentified'||event.isComposing){
+      if(/^Key[A-Z]$/.test(code))return {text:code.slice(3).toLowerCase(),main:true};
+      if(/^Digit[0-9]$/.test(code))return {text:code.slice(5),main:true};
+    }
+    return null;
+  }
   function stats(people) {
     const levels=people.map(p=>levelInfo(p.total).level).sort((a,b)=>b-a), n=levels.length;
     return {count:n, max:n?levels[0]:0, mean:n?levels.reduce((a,b)=>a+b,0)/n:0,
@@ -47,7 +59,7 @@
     if(response.truncated) throw Error('状态数量超过平台单次读取范围，请更换课堂编号或任务');
     return Object.entries(response.states).map(([key,item])=>({key,...item.value}));
   }
-  const api={regions,themes,quota,levelInfo,theme,swatch,targetAt,stats,distribution,normalizeStates};
+  const api={regions,themes,quota,levelInfo,theme,swatch,targetAt,typingKey,stats,distribution,normalizeStates};
   if(typeof module!=='undefined' && module.exports) module.exports=api;
   else root.Lesson=api;
 })(typeof window!=='undefined'?window:globalThis);

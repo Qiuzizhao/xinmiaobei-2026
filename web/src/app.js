@@ -75,28 +75,25 @@
   let renderedLevel=0,typingLocked=false;
   function studentTyping(){
     main.innerHTML=intro('打字，点亮色卡','输入目标字符，每次点亮一格。','任务 02 / 打字拾色记')+
-      `<div class="typing-layout"><section class="panel typing-task"><div class="section-head"><span class="lesson-label" id="exercise-label"></span><span class="badge" id="total-count"></span></div><div class="target-strip" id="targets" aria-label="接下来要输入的字符"></div><input id="typing-input" class="typing-input" autocomplete="off" autocapitalize="off" spellcheck="false" inputmode="text" aria-label="在这里输入目标字母或数字" placeholder="点击这里，开始打字"/><div class="input-hint" id="input-hint" role="status">请使用英文输入。</div><div class="progress-track"><span id="typing-progress"></span></div><div class="typing-bottom"><span>主键盘区 · 字母与数字</span><span id="level-progress"></span></div></section>
+      `<div class="typing-layout"><section class="panel typing-task"><div class="section-head"><span class="lesson-label" id="exercise-label"></span><span class="badge" id="total-count"></span></div><div class="target-strip" id="targets" aria-label="接下来要输入的字符"></div><div class="input-hint" id="input-hint" role="status">看准绿色字符，直接按键。</div><div class="progress-track"><span id="typing-progress"></span></div><div class="typing-bottom"><span>主键盘区 · 字母与数字</span><span id="level-progress"></span></div></section>
       <section class="panel"><div class="section-head"><h2 id="theme-name"></h2><span class="level-tag" id="level-name"></span></div><p class="swatch-count" id="swatch-count"></p><div class="swatch-grid" id="swatches"></div><div class="celebration" id="celebration">下一格，会是什么颜色呢？</div></section></div>
       <section class="collection"><div class="section-head"><h2>色卡收藏</h2><span class="badge" id="collection-count"></span></div><div id="collection-list" class="collection-list"></div></section>`;
-    const input=$('#typing-input');let lastCode='',lastCodeAt=0;
-    input.addEventListener('keydown',e=>{lastCode=e.code;lastCodeAt=Date.now();if(e.key==='Enter')e.preventDefault();});
-    input.addEventListener('paste',e=>{e.preventDefault();$('#input-hint').textContent='请一个一个输入，自己点亮色卡。';});
-    input.addEventListener('drop',e=>e.preventDefault());
-    input.addEventListener('input',e=>{
-      if(e.isComposing)return;
-      const text=input.value;input.value='';if(!text || typingLocked)return;
-      if(e.inputType==='insertFromPaste'||Array.from(text).length!==1){$('#input-hint').textContent='请切换到英文输入状态，一个一个输入。';return;}
-      if(text.toLowerCase()===targetAt(state.total) && !(lastCode.startsWith('Numpad')&&Date.now()-lastCodeAt<1500)){
-        const before=levelInfo(state.total);state.total++;persist();input.classList.remove('error');$('#input-hint').textContent='找对了！又点亮了一格。';
+    const targets=$('#targets');
+    document.addEventListener('keydown',e=>{
+      if(e.target instanceof Element && e.target.closest('input,textarea,select,[contenteditable="true"]'))return;
+      const key=Lesson.typingKey(e);if(!key)return;
+      e.preventDefault();if(typingLocked)return;
+      if(key.text===targetAt(state.total) && key.main){
+        const before=levelInfo(state.total);state.total++;persist();targets.classList.remove('error');$('#input-hint').textContent='找对了！又点亮了一格。';
         const after=levelInfo(state.total);
         if(before.level!==after.level){
           // 先让学生看到完整色卡，再进入下一关；过渡期间不接收新字符。
           typingLocked=true;updateTyping(before.level,before.target);$('#celebration').textContent=`${theme(before.level).name}色卡已收集！`;
-          syncStudent(true);setTimeout(()=>{typingLocked=false;updateTyping();input.focus();},850);
+          syncStudent(true);setTimeout(()=>{typingLocked=false;updateTyping();},850);
         }else updateTyping();
-      }else{input.classList.remove('error');void input.offsetWidth;input.classList.add('error');$('#input-hint').textContent=lastCode.startsWith('Numpad')&&Date.now()-lastCodeAt<1500?'请用主键盘区上方的数字键。':'再找找目标字符，已经点亮的颜色会保留。';}
+      }else{targets.classList.remove('error');void targets.offsetWidth;targets.classList.add('error');$('#input-hint').textContent=!key.main?'请用主键盘区上方的数字键。':'再找找目标字符，已经点亮的颜色会保留。';}
     });
-    input.addEventListener('compositionend',()=>{input.value='';$('#input-hint').textContent='请先切换到英文输入状态。';});
+    document.addEventListener('paste',e=>{e.preventDefault();});
     updateTyping();
   }
   function updateTyping(displayLevel,displayWithin){
