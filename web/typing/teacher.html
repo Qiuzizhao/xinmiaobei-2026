@@ -278,7 +278,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
   const main=$('#main');
   if(demo)main.insertAdjacentHTML('beforebegin','<div class="offline-banner" style="margin:12px 4vw 0">示例体验 · 不计入课堂</div>');
   function intro(title,desc,tag){return `<div class="intro"><div><h1>${title}</h1>${desc?`<p>${desc}</p>`:''}</div></div>`;}
-  function legend(){return regions.map(r=>`<span><i class="dot" style="--c:${r.color}"></i>${r.name}</span>`).join('')+'<span><i class="dot"></i>未填色</span>';}
+  function legend(){return regions.map(r=>`<span><i class="dot" style="--c:${r.color}"></i>${r.name}</span>`).join('');}
   // 调色偏好单独保存在本机，不进入 state 或上传内容。
   const shadeStorageKey=`${localKey}:shades`,localShades=load(shadeStorageKey,{});
   const shadeHues={main:355,function:43,editing:223,numeric:160,indicator:264};
@@ -462,7 +462,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
   }
   function showTip(k,b,e){
     const tip=$('#tooltip'),data=shownPeople(),n=data.length,counts=distribution(data,k.id);
-    tip.innerHTML=`<strong>${esc(k.label||'空格键')}${k.region==='indicator'?' 指示灯':''}</strong>`+[...regions,{id:'blank',name:'未填色',color:'#e4e9e0'}].map(r=>`<div class="tiprow"><span><i class="dot" style="--c:${r.color}"></i>${r.name}</span><span>${counts[r.id]} 人 · ${n?Math.round(counts[r.id]/n*100):0}%</span></div>`).join('')+`<p class="tiptotal">按本课堂 ${n} 位参与学生计算</p>`;
+    tip.innerHTML=`<strong>${esc(k.label||'空格键')}${k.region==='indicator'?' 指示灯':''}</strong>`+regions.map(r=>`<div class="tiprow"><span><i class="dot" style="--c:${r.color}"></i>${r.name}</span><span>${counts[r.id]} 人 · ${n?Math.round(counts[r.id]/n*100):0}%</span></div>`).join('')+`<p class="tiptotal">按本课堂 ${n} 位参与学生计算</p>`;
     tip.classList.remove('hidden');const rect=b.getBoundingClientRect();positionTip(e?.clientX||rect.x,e?.clientY||rect.y);
   }
   function positionTip(x,y){const tip=$('#tooltip');tip.style.left=Math.max(8,Math.min(x+15,innerWidth-280))+'px';tip.style.top=Math.max(8,Math.min(y+15,innerHeight-tip.offsetHeight-12))+'px';}
