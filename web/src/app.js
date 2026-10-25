@@ -179,7 +179,7 @@
       const position=typingBatchStart+i,done=position<state.total,current=position===state.total,char=targetAt(position);
       const label=({'1':'数字 1','l':'字母 L','0':'数字 0','o':'字母 O'})[char];
       const glyph=char==='l'?'L':char==='o'?'O':char;
-      return `<span class="target-char${done?' done':current?' current':''}${label?' clarified':''}" ${current?'aria-current="true"':''} aria-label="${label||char}"><span class="char-glyph">${glyph}</span>${label?`<small class="char-kind">${label}</small>`:''}</span>`;
+      return `<span class="target-char${done?' done':current?' current':''}${label?' clarified':''}${char==='o'?' letter-o':''}" ${current?'aria-current="true"':''} aria-label="${label||char}"><span class="char-glyph">${glyph}</span>${label?`<small class="char-kind">${label}</small>`:''}</span>`;
     }).join('');
     $('#total-count').textContent=`已正确输入 ${state.total} 个`;
     $('#theme-name').textContent=theme(level).name+'色卡';$('#level-name').textContent=`第 ${level} 关`;
