@@ -320,7 +320,7 @@
     finally{creatingRoom=false;button.disabled=false;$('#room').disabled=false;button.textContent='新建课堂';}
   }
   function teacherColor(){
-    teacherShell();$('#teacher-content').innerHTML=`<div class="metrics"><div class="metric"><span class="label">参与学生</span><strong id="m-count">0<small>人</small></strong></div><div class="metric"><span class="label">最近在线</span><strong id="m-online">0<small>人</small></strong></div><div class="metric"><span class="label">平均填色进度</span><strong id="m-progress">0<small>%</small></strong></div><div class="metric"><span class="label">已点击完成</span><strong id="m-complete">0<small>人</small></strong></div></div>
+    teacherShell();$('#teacher-content').innerHTML=`<div class="metrics"><div class="metric"><span class="label">参与学生</span><strong id="m-count">0<small>人</small></strong></div><div class="metric"><span class="label">最近在线</span><strong id="m-online">0<small>人</small></strong></div><div class="metric"><span class="label">平均填色进度</span><strong id="m-progress">0<small>%</small></strong></div><div class="metric"><span class="label">已填完</span><strong id="m-complete">0<small>人</small></strong></div></div>
       <section class="panel"><div class="section-head"><h2 id="board-title">全班混色键盘</h2><button id="answer-toggle">查看标准分区</button></div><div class="legend">${legend()}</div><div id="empty-hint" class="notice">等待学生进入。同一课堂中的学生填色后，这里会自动更新。</div><div class="keyboard-scroll"><div id="keyboard"></div></div><div class="keyboard-note"><span>悬停或点击任意格子，查看人数与百分比。</span><span id="updated"></span></div></section>
       <div class="below"><section class="panel"><h2>保存快照</h2><div class="toolbar"><button id="save-before">保存讲解前</button><button id="save-after">保存修正后</button></div><p class="tips" id="snapshot-message"></p></section>
       <section class="panel"><div class="section-head"><h2>讲解前后对比</h2><button id="live-view">回到实时</button></div><div id="snapshots"><p class="tips">还没有保存快照。</p></div></section></div><div id="tooltip" role="tooltip" class="tooltip hidden"></div>`;
@@ -335,11 +335,11 @@
   let showAnswer=false,viewSnapshot=null;
   function shownPeople(){return viewSnapshot?viewSnapshot.people:people;}
   function renderColorTeacher(){
-    const data=shownPeople(),n=data.length,valid=new Set(keys.map(k=>k.id));
+    const data=shownPeople(),n=data.length,progress=data.map(p=>Lesson.coloringProgress(p.colors||{},keys));
     $('#m-count').innerHTML=n+'<small>人</small>';$('#m-online').innerHTML=people.filter(p=>Date.now()-p.updatedAt<90000).length+'<small>人</small>';
-    const painted=data.reduce((sum,p)=>sum+Object.keys(p.colors||{}).filter(k=>valid.has(k)).length,0);
+    const painted=progress.reduce((sum,p)=>sum+p.filled,0);
     $('#m-progress').innerHTML=(n?Math.round(painted/(n*keys.length)*100):0)+'<small>%</small>';
-    $('#m-complete').innerHTML=data.filter(p=>p.completed).length+'<small>人</small>';
+    $('#m-complete').innerHTML=progress.filter(p=>p.filled===keys.length).length+'<small>人</small>';
     $('#empty-hint').classList.toggle('hidden',n>0);
     $('#board-title').textContent=showAnswer?'标准分区 · 用于讲解':viewSnapshot?`${viewSnapshot.label} · ${n} 人快照`:'全班混色键盘';
     $('#answer-toggle').textContent=showAnswer?'回到混色键盘':'查看标准分区';
