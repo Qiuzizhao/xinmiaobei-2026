@@ -57,3 +57,19 @@ test('填色过半才显示正确率，全部正确才解锁，未填和非法�
   colors[106]='main';p=L.coloringProgress(colors,keys);assert.equal(p.perfect,false);assert.ok(p.accuracy<100);
   colors[106]='invalid';assert.equal(L.coloringProgress(colors,keys).filled,106);
 });
+
+test('40张色卡各有独立色系，色块兼具浓淡明暗变化',()=>{
+  assert.equal(L.themes.length,40);
+  assert.equal(new Set(L.themes.map(t=>t[0])).size,40);
+  const palettes=[];
+  for(let level=1;level<=40;level++){
+    const colors=Array.from({length:30},(_,i)=>L.swatch(level,i,30));
+    assert.equal(new Set(colors).size,30);
+    const values=colors.map(c=>c.match(/^hsl\(([\d.]+) ([\d.]+)% ([\d.]+)%\)$/).slice(1).map(Number));
+    assert.ok(values.every(([h,s,l])=>h>=0&&h<360&&s>=18&&s<=95&&l>0&&l<100));
+    assert.ok(values[29][2]-values[0][2]>=45);
+    assert.ok(Math.abs(values[29][1]-values[0][1])>=8);
+    palettes.push(colors.join('|'));
+  }
+  assert.equal(new Set(palettes).size,40);
+});
