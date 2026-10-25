@@ -99,10 +99,9 @@
   function save(key,value){try{localStorage.setItem(storagePrefix+key,JSON.stringify(value));}catch{storageOK=false;}}
   let studentId=load('device',null);
   if(!studentId){studentId=crypto.randomUUID?.()||Math.random().toString(36).slice(2)+Date.now();save('device',studentId);}
-  const localKey=`${demo?'demo:':''}${room}:student`, controlKey=`control:${room}`;
-  let state={...defaultState,...load(localKey,{})}, people=[], snapshots=[], stage='explore', selected='main';
-  let dirty=true, busy=false, lastSent=0, isOnline=false, controlBusy=false, lastControlRevision='', pollBusy=false;
-  const stageNames={explore:'自主尝试',explain:'一起认识五个区域',revise:'再试一次'};
+  const localKey=`${demo?'demo:':''}${room}:student`;
+  let state={...defaultState,...load(localKey,{})}, people=[], snapshots=[], selected='main';
+  let dirty=true, busy=false, lastSent=0, isOnline=false, pollBusy=false;
   const base=`https://qiuform.qiuzizhao.com/api/${cfg.taskId}`;
   const demoKey=`${storagePrefix}demo-state:${room}`;
   let toastTimer;
@@ -123,16 +122,12 @@
     if(demo)return Object.entries(getDemo()).filter(([,v])=>v.expires>Date.now()).map(([key,v])=>({key,...v.value}));
     return normalizeStates(await request('/state'));
   }
-  async function getControl(){
-    if(demo)return getDemo()[controlKey]?.value||null;
-    const data=await request('/state/'+encodeURIComponent(controlKey));return data.exists?data.state.value:null;
-  }
   async function post(value){
     if(demo){const all=load('demo-snapshots:'+room,[]);all.push(value);save('demo-snapshots:'+room,all);return;}
     return request('','POST',value);
   }
   function persist(){save(localKey,state);dirty=true;}
-  function payload(){return {sessionId:room,studentId,kind,updatedAt:Date.now(),...(kind==='coloring'?{colors:state.colors,phase:stage,completed:!!state.completed}:{total:state.total,level:levelInfo(state.total).level})};}
+  function payload(){return {sessionId:room,studentId,kind,updatedAt:Date.now(),...(kind==='coloring'?{colors:state.colors,completed:!!state.completed}:{total:state.total,level:levelInfo(state.total).level})};}
   async function syncStudent(force=false){
     if(busy || (!force&&!dirty&&Date.now()-lastSent<20000))return;
     busy=true;dirty=false;
@@ -148,7 +143,7 @@
   function studentColor(){
     main.innerHTML=intro('给键盘涂色','选颜色，点格子；按住鼠标可连续涂色。','任务 01 / 键盘调色室')+
       `<div class="palette">${regions.map(r=>`<button class="color-choice${r.id===selected?' active':''}" data-color="${r.id}" aria-pressed="${r.id===selected}"><i class="dot" style="--c:${r.color}"></i>${r.name}</button>`).join('')}<button class="color-choice" data-color="blank" aria-pressed="false">◇ 擦除</button></div>
-      <section class="panel"><div class="section-head"><h2 id="stage-title">自主尝试</h2><span class="badge" id="paint-count"></span></div><div class="keyboard-scroll"><div id="keyboard"></div></div><div class="toolbar"><button id="clear" class="quiet">重新填色</button><span class="spacer"></span><button id="complete" class="primary">我填好了 ✓</button></div><div id="saved-note" class="notice hidden">已完成，还可以修改。</div></section>`;
+      <section class="panel"><div class="section-head"><h2>键盘</h2><span class="badge" id="paint-count"></span></div><div class="keyboard-scroll"><div id="keyboard"></div></div><div class="toolbar"><button id="clear" class="quiet">重新填色</button><span class="spacer"></span><button id="complete" class="primary">我填好了 ✓</button></div><div id="saved-note" class="notice hidden">已完成，还可以修改。</div></section>`;
     Lesson.drawKeyboard($('#keyboard'),(b,k)=>{
       const paint=()=>{if(selected==='blank')delete state.colors[k.id];else state.colors[k.id]=selected;state.completed=false;persist();updateColor();};
       b.addEventListener('click',paint);b.addEventListener('pointerenter',e=>{if(e.buttons===1&&e.pointerType==='mouse')paint();});
@@ -163,7 +158,6 @@
     $$('.key').forEach(b=>{const id=state.colors[b.dataset.key],r=regions.find(x=>x.id===id);b.style.background=r?.color||'';b.setAttribute('aria-label',`${keys.find(k=>k.id===b.dataset.key)?.label||'空格键'}，${r?.name||'未填色'}`);});
     $('#paint-count').textContent=`已填 ${Object.keys(state.colors).filter(k=>keys.some(x=>x.id===k)).length} / ${keys.length} 格`;
     $('#saved-note').classList.toggle('hidden',!state.completed);$('#complete').textContent=state.completed?'已完成 ✓':'我填好了 ✓';
-    $('#stage-title').textContent=stageNames[stage]||stageNames.explore;
   }
   let renderedLevel=0,typingLocked=false;
   function studentTyping(){
@@ -221,13 +215,12 @@
   function teacherColor(){
     teacherShell();$('#teacher-content').innerHTML=`<div class="metrics"><div class="metric"><span class="label">参与学生</span><strong id="m-count">0<small>人</small></strong></div><div class="metric"><span class="label">最近在线</span><strong id="m-online">0<small>人</small></strong></div><div class="metric"><span class="label">平均填色进度</span><strong id="m-progress">0<small>%</small></strong></div><div class="metric"><span class="label">已点击完成</span><strong id="m-complete">0<small>人</small></strong></div></div>
       <section class="panel"><div class="section-head"><h2 id="board-title">全班混色键盘</h2><button id="answer-toggle">查看标准分区</button></div><div class="legend">${legend()}</div><div id="empty-hint" class="notice">等待学生进入。同一课堂中的学生填色后，这里会自动更新。</div><div class="keyboard-scroll"><div id="keyboard"></div></div><div class="keyboard-note"><span>悬停或点击任意格子，查看人数与百分比。</span><span id="updated"></span></div></section>
-      <div class="below"><section class="panel"><h2>课堂阶段</h2><div class="stage-buttons">${Object.entries(stageNames).map(([id,name])=>`<button data-stage="${id}">${name}</button>`).join('')}</div><div class="toolbar"><button id="save-before">保存讲解前</button><button id="save-after">保存修正后</button></div><p class="tips" id="snapshot-message"></p></section>
+      <div class="below"><section class="panel"><h2>保存快照</h2><div class="toolbar"><button id="save-before">保存讲解前</button><button id="save-after">保存修正后</button></div><p class="tips" id="snapshot-message"></p></section>
       <section class="panel"><div class="section-head"><h2>讲解前后对比</h2><button id="live-view">回到实时</button></div><div id="snapshots"><p class="tips">还没有保存快照。</p></div></section></div><div id="tooltip" role="tooltip" class="tooltip hidden"></div>`;
     Lesson.drawKeyboard($('#keyboard'),(b,k)=>{
       b.onpointerenter=e=>showTip(k,b,e);b.onpointermove=e=>positionTip(e.clientX,e.clientY);b.onpointerleave=()=>$('#tooltip').classList.add('hidden');b.onfocus=()=>showTip(k,b);b.onblur=()=>$('#tooltip').classList.add('hidden');b.onclick=e=>showTip(k,b,e);
     });
     $('#answer-toggle').onclick=()=>{showAnswer=!showAnswer;renderColorTeacher();};
-    $$('[data-stage]').forEach(b=>b.onclick=async()=>{if(controlBusy)return;controlBusy=true;try{await put(controlKey,{sessionId:room,phase:b.dataset.stage,revision:Date.now()},86400);stage=b.dataset.stage;renderColorTeacher();toast('学生端活动提示已更新');}catch{toast('没有同步成功，请再试一次');}finally{controlBusy=false;}});
     $('#save-before').onclick=()=>takeSnapshot('before');$('#save-after').onclick=()=>takeSnapshot('after');
     $('#live-view').onclick=()=>{viewSnapshot=null;renderColorTeacher();};
     loadSnapshots();
@@ -247,7 +240,6 @@
       if(showAnswer)b.style.background=regions.find(r=>r.id===k.region).color;
       else {const counts=distribution(data,k.id);let angle=0;const parts=[...regions,{id:'blank',color:'#edf1eb'}].filter(r=>counts[r.id]>0).map(r=>{const start=angle;angle+=counts[r.id]/n*360;return `${r.color} ${start}deg ${angle}deg`;});b.style.background=n?`conic-gradient(${parts.join(',')})`:'#edf1eb';}
     });
-    $$('[data-stage]').forEach(b=>b.classList.toggle('active',b.dataset.stage===stage));
     $('#updated').textContent='每 2 秒自动更新';
   }
   function showTip(k,b,e){
@@ -287,14 +279,8 @@
   async function pollTeacher(){
     if(pollBusy)return;pollBusy=true;
     try{const values=await readStates();people=values.filter(v=>v.key.startsWith(kind+':'+room+':')&&v.sessionId===room&&v.kind===kind&&v.studentId);
-      const control=values.find(v=>v.key===controlKey);if(control?.phase)stage=control.phase;
       if(kind==='coloring')renderColorTeacher();else renderTypingTeacher();status(true,'看板已同步');
     }catch{status(false,'连接暂断 · 显示最近结果');}finally{pollBusy=false;}
-  }
-  async function pollControl(){
-    if(controlBusy)return;controlBusy=true;
-    try{const c=await getControl();if(c&&c.revision!==lastControlRevision){lastControlRevision=c.revision;stage=c.phase||'explore';if(kind==='coloring')updateColor();}}
-    catch{/* 上传状态单独显示连接情况，读取失败不会阻止本地练习。 */}finally{controlBusy=false;}
   }
   async function seedDemo(){
     const all=getDemo();for(let i=0;i<16;i++){
@@ -303,7 +289,7 @@
     }localStorage.setItem(demoKey,JSON.stringify(all));await pollTeacher();toast('已生成 16 位示例学生');
   }
   if(teacher){kind==='coloring'?teacherColor():teacherTyping();await pollTeacher();setInterval(pollTeacher,2000);}
-  else{kind==='coloring'?studentColor():studentTyping();await syncStudent(true);setInterval(()=>syncStudent(),2000);if(kind==='coloring'){pollControl();setInterval(pollControl,2500);}}
+  else{kind==='coloring'?studentColor():studentTyping();await syncStudent(true);setInterval(()=>syncStudent(),2000);}
   if(!storageOK)toast('浏览器限制了本机保存，请保持网页打开以免丢失进度。');
   window.addEventListener('online',()=>teacher?pollTeacher():syncStudent(true));
   // 自动化验收及教师调试只读入口，无上传或修改能力。
