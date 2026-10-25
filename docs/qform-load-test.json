@@ -1,0 +1,9690 @@
+{
+  "session": "loadtest-20261025200025",
+  "startedAt": "2026-10-25T20:00:25.351Z",
+  "finishedAt": "2026-10-25T20:02:16.348Z",
+  "stopped": null,
+  "policy": {
+    "stages": [
+      {
+        "students": 10,
+        "seconds": 20
+      },
+      {
+        "students": 25,
+        "seconds": 30
+      },
+      {
+        "students": 40,
+        "seconds": 60
+      }
+    ],
+    "writeIntervalsMs": {
+      "coloring": 5000,
+      "typing": 10000
+    },
+    "teacherIntervalMs": 5000,
+    "ttlSeconds": 120,
+    "requestTimeoutMs": 8000
+  },
+  "total": {
+    "requests": 1053,
+    "success": 1053,
+    "statuses": {
+      "200": 1053
+    },
+    "p50ms": 64.7,
+    "p95ms": 72.7,
+    "p99ms": 190.6,
+    "maxMs": 783.9,
+    "responseBytes": 1821569
+  },
+  "byStage": {
+    "baseline": {
+      "requests": 4,
+      "success": 4,
+      "statuses": {
+        "200": 4
+      },
+      "p50ms": 61.3,
+      "p95ms": 783.9,
+      "p99ms": 783.9,
+      "maxMs": 783.9,
+      "responseBytes": 10062
+    },
+    "10+10": {
+      "requests": 68,
+      "success": 68,
+      "statuses": {
+        "200": 68
+      },
+      "p50ms": 65.8,
+      "p95ms": 173.6,
+      "p99ms": 238.5,
+      "maxMs": 238.5,
+      "responseBytes": 104768
+    },
+    "25+25": {
+      "requests": 237,
+      "success": 237,
+      "statuses": {
+        "200": 237
+      },
+      "p50ms": 65.1,
+      "p95ms": 73.3,
+      "p99ms": 190.6,
+      "maxMs": 193.7,
+      "responseBytes": 400134
+    },
+    "40+40": {
+      "requests": 744,
+      "success": 744,
+      "statuses": {
+        "200": 744
+      },
+      "p50ms": 64.5,
+      "p95ms": 71.2,
+      "p99ms": 178.2,
+      "maxMs": 208.2,
+      "responseBytes": 1306605
+    }
+  },
+  "byEndpoint": {
+    "coloring GET /state": {
+      "requests": 23,
+      "success": 23,
+      "statuses": {
+        "200": 23
+      },
+      "p50ms": 68.8,
+      "p95ms": 147.8,
+      "p99ms": 783.9,
+      "maxMs": 783.9,
+      "responseBytes": 1463687
+    },
+    "coloring GET /all": {
+      "requests": 1,
+      "success": 1,
+      "statuses": {
+        "200": 1
+      },
+      "p50ms": 63.2,
+      "p95ms": 63.2,
+      "p99ms": 63.2,
+      "maxMs": 63.2,
+      "responseBytes": 2212
+    },
+    "typing GET /state": {
+      "requests": 23,
+      "success": 23,
+      "statuses": {
+        "200": 23
+      },
+      "p50ms": 60.3,
+      "p95ms": 149.3,
+      "p99ms": 173.6,
+      "maxMs": 173.6,
+      "responseBytes": 216977
+    },
+    "typing GET /all": {
+      "requests": 1,
+      "success": 1,
+      "statuses": {
+        "200": 1
+      },
+      "p50ms": 61.3,
+      "p95ms": 61.3,
+      "p99ms": 61.3,
+      "maxMs": 61.3,
+      "responseBytes": 333
+    },
+    "typing PUT state-write": {
+      "requests": 335,
+      "success": 335,
+      "statuses": {
+        "200": 335
+      },
+      "p50ms": 64.1,
+      "p95ms": 70.7,
+      "p99ms": 179.2,
+      "maxMs": 190.6,
+      "responseBytes": 45450
+    },
+    "coloring PUT state-write": {
+      "requests": 670,
+      "success": 670,
+      "statuses": {
+        "200": 670
+      },
+      "p50ms": 64.9,
+      "p95ms": 72.7,
+      "p99ms": 195.6,
+      "maxMs": 238.5,
+      "responseBytes": 92910
+    }
+  },
+  "records": [
+    {
+      "stage": "baseline",
+      "kind": "coloring",
+      "method": "GET",
+      "endpoint": "/state",
+      "ms": 783.9,
+      "status": 200,
+      "bytes": 4924,
+      "ownStates": 0
+    },
+    {
+      "stage": "baseline",
+      "kind": "coloring",
+      "method": "GET",
+      "endpoint": "/all",
+      "ms": 63.2,
+      "status": 200,
+      "bytes": 2212
+    },
+    {
+      "stage": "baseline",
+      "kind": "typing",
+      "method": "GET",
+      "endpoint": "/state",
+      "ms": 61.2,
+      "status": 200,
+      "bytes": 2593,
+      "ownStates": 0
+    },
+    {
+      "stage": "baseline",
+      "kind": "typing",
+      "method": "GET",
+      "endpoint": "/all",
+      "ms": 61.3,
+      "status": 200,
+      "bytes": 333
+    },
+    {
+      "stage": "10+10",
+      "kind": "coloring",
+      "method": "GET",
+      "endpoint": "/state",
+      "ms": 61.7,
+      "status": 200,
+      "bytes": 4924,
+      "ownStates": 0
+    },
+    {
+      "stage": "10+10",
+      "kind": "typing",
+      "method": "GET",
+      "endpoint": "/state",
+      "ms": 173.6,
+      "status": 200,
+      "bytes": 2593,
+      "ownStates": 0
+    },
+    {
+      "stage": "10+10",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 67,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "10+10",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 67.1,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "10+10",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 69.9,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "10+10",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 68.9,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "10+10",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 67.4,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "10+10",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 61,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "10+10",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 68.7,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "10+10",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.8,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "10+10",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 66.5,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "10+10",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 66,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "10+10",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 61.4,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "10+10",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.2,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "10+10",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 174.4,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "10+10",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 70.6,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "10+10",
+      "kind": "typing",
+      "method": "GET",
+      "endpoint": "/state",
+      "ms": 57.5,
+      "status": 200,
+      "bytes": 3618,
+      "ownStates": 4
+    },
+    {
+      "stage": "10+10",
+      "kind": "coloring",
+      "method": "GET",
+      "endpoint": "/state",
+      "ms": 64.5,
+      "status": 200,
+      "bytes": 24622,
+      "ownStates": 10
+    },
+    {
+      "stage": "10+10",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 66.7,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "10+10",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 238.5,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "10+10",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "10+10",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.8,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "10+10",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 66.4,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "10+10",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.3,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "10+10",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 59.3,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "10+10",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 62.7,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "10+10",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 61.7,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "10+10",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 66.7,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "10+10",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 67.2,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "10+10",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.4,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "10+10",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 61.6,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "10+10",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 74.5,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "10+10",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 69.4,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "10+10",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 70.7,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "10+10",
+      "kind": "typing",
+      "method": "GET",
+      "endpoint": "/state",
+      "ms": 58.3,
+      "status": 200,
+      "bytes": 5153,
+      "ownStates": 10
+    },
+    {
+      "stage": "10+10",
+      "kind": "coloring",
+      "method": "GET",
+      "endpoint": "/state",
+      "ms": 63.7,
+      "status": 200,
+      "bytes": 25006,
+      "ownStates": 10
+    },
+    {
+      "stage": "10+10",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.8,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "10+10",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.8,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "10+10",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 66,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "10+10",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.1,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "10+10",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.8,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "10+10",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 59.7,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "10+10",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 67.2,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "10+10",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 66.8,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "10+10",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 66,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "10+10",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 62.4,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "10+10",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 68.1,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "10+10",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "10+10",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.6,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "10+10",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 66.6,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "10+10",
+      "kind": "typing",
+      "method": "GET",
+      "endpoint": "/state",
+      "ms": 57.8,
+      "status": 200,
+      "bytes": 5153,
+      "ownStates": 10
+    },
+    {
+      "stage": "10+10",
+      "kind": "coloring",
+      "method": "GET",
+      "endpoint": "/state",
+      "ms": 64.3,
+      "status": 200,
+      "bytes": 25479,
+      "ownStates": 10
+    },
+    {
+      "stage": "10+10",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.8,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "10+10",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 66.1,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "10+10",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.8,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "10+10",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 60.8,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "10+10",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 66.5,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "10+10",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.4,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "10+10",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 80.3,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "10+10",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.3,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "10+10",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 211.7,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "10+10",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.7,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "10+10",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.4,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "10+10",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.7,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "10+10",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63.1,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "10+10",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.3,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "10+10",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 68.3,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "10+10",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.8,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "25+25",
+      "kind": "typing",
+      "method": "GET",
+      "endpoint": "/state",
+      "ms": 57.7,
+      "status": 200,
+      "bytes": 5155,
+      "ownStates": 10
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "GET",
+      "endpoint": "/state",
+      "ms": 64.2,
+      "status": 200,
+      "bytes": 26302,
+      "ownStates": 10
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 70.7,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 68.7,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "25+25",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.6,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.7,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "25+25",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.7,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 71.2,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63.5,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "25+25",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.4,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 67.1,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.9,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "25+25",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 68.2,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 66.5,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 66.1,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "25+25",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 62.5,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "25+25",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.8,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "25+25",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63.1,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "25+25",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 183.3,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "25+25",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 67.6,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "25+25",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.5,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 68,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 61.8,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "25+25",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 67.5,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.5,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 60.7,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.5,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 61.1,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 190.8,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.9,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.4,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 66,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 62.5,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 67.1,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "25+25",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 68.4,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "25+25",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.7,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "25+25",
+      "kind": "typing",
+      "method": "GET",
+      "endpoint": "/state",
+      "ms": 57.6,
+      "status": 200,
+      "bytes": 7227,
+      "ownStates": 18
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "GET",
+      "endpoint": "/state",
+      "ms": 67.7,
+      "status": 200,
+      "bytes": 58717,
+      "ownStates": 25
+    },
+    {
+      "stage": "25+25",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63.2,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 62.5,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "25+25",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.8,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "25+25",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.4,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 67.3,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "25+25",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.4,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 68.8,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 61.9,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 66.3,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 62.4,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "25+25",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 66.3,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "25+25",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.1,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 61.6,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 71.1,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "25+25",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 67.2,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "25+25",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.7,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 67.6,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.2,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 67.4,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "25+25",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 190.6,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 72.9,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "25+25",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 71.3,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 68.8,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 66.3,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "25+25",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 67.6,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 69,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 66.4,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 184.7,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 69.4,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 68.3,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "25+25",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 62.8,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 68.5,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.2,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63.7,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 72.2,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "25+25",
+      "kind": "typing",
+      "method": "GET",
+      "endpoint": "/state",
+      "ms": 63.9,
+      "status": 200,
+      "bytes": 9039,
+      "ownStates": 25
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "GET",
+      "endpoint": "/state",
+      "ms": 70.6,
+      "status": 200,
+      "bytes": 58931,
+      "ownStates": 25
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 69.6,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 66.5,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "25+25",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 61.7,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "25+25",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.5,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 67.6,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 61,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "25+25",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.3,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.5,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 60.6,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "25+25",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.6,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 66.2,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 73.3,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "25+25",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 61.8,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "25+25",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.2,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "25+25",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 60.5,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "25+25",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 62.3,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "25+25",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.2,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 59.4,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "25+25",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 66.9,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 62.4,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.7,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 61.5,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "25+25",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 70,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.4,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 60.4,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.2,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63.7,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 62.3,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 183.6,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.3,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.4,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.5,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.6,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 62.4,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.4,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "25+25",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.7,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "25+25",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.1,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "25+25",
+      "kind": "typing",
+      "method": "GET",
+      "endpoint": "/state",
+      "ms": 58.6,
+      "status": 200,
+      "bytes": 9040,
+      "ownStates": 25
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "GET",
+      "endpoint": "/state",
+      "ms": 71.1,
+      "status": 200,
+      "bytes": 58927,
+      "ownStates": 25
+    },
+    {
+      "stage": "25+25",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 68.7,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 62.1,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "25+25",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.3,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.9,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "25+25",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 60.4,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.9,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "25+25",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.8,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.7,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 61.2,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 68.2,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 66.8,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "25+25",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "25+25",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.2,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 60.9,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 66,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "25+25",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 66,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "25+25",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 66.1,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 66.4,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63.1,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.3,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "25+25",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 183.9,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 70.7,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "25+25",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63.7,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.8,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 60.1,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "25+25",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 61.4,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 59.8,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 66.2,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 61.7,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 193.7,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.7,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.7,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "25+25",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 61.6,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 66,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.1,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 62.3,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.2,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "25+25",
+      "kind": "typing",
+      "method": "GET",
+      "endpoint": "/state",
+      "ms": 57.7,
+      "status": 200,
+      "bytes": 9041,
+      "ownStates": 25
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "GET",
+      "endpoint": "/state",
+      "ms": 68.8,
+      "status": 200,
+      "bytes": 58927,
+      "ownStates": 25
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.7,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 66,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "25+25",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 61.3,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "25+25",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.7,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.6,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63.9,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "25+25",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.6,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.9,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 62.1,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "25+25",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.9,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 67.6,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 66.3,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "25+25",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 60.7,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "25+25",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.2,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "25+25",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 60,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "25+25",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 60.5,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "25+25",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 72.1,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 60.2,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "25+25",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 67.6,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.1,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.8,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 84.8,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "25+25",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.9,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.3,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 61.8,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.5,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 68.3,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 60.9,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 187.4,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.4,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.5,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.5,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.6,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.6,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 60.8,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "25+25",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "25+25",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 61.9,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "25+25",
+      "kind": "typing",
+      "method": "GET",
+      "endpoint": "/state",
+      "ms": 63.6,
+      "status": 200,
+      "bytes": 9041,
+      "ownStates": 25
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "GET",
+      "endpoint": "/state",
+      "ms": 64.4,
+      "status": 200,
+      "bytes": 58827,
+      "ownStates": 25
+    },
+    {
+      "stage": "25+25",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.1,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 60.5,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "25+25",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 66.9,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 68.5,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "25+25",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 66.2,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.6,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "25+25",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 67.4,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 66.2,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.6,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 61.1,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "25+25",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.5,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "25+25",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.5,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 60.8,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 66.6,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "25+25",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.5,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "25+25",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.1,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 68.6,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "25+25",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 62.9,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 66.7,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 186.5,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 60.7,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "25+25",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.1,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.5,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 61.8,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "25+25",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63.3,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63.5,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 69.9,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 178.6,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 66,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.5,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "25+25",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 59.4,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.7,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.8,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.7,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "25+25",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 60.9,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "GET",
+      "endpoint": "/state",
+      "ms": 57.9,
+      "status": 200,
+      "bytes": 9042,
+      "ownStates": 25
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "GET",
+      "endpoint": "/state",
+      "ms": 72,
+      "status": 200,
+      "bytes": 58473,
+      "ownStates": 25
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63.6,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.8,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 60.5,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63.3,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.8,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 61.6,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 68.9,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 66.2,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 60.8,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 67.7,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 59.7,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 66,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 67,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63.3,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 67,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 66.5,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 66.7,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 66.6,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 66.3,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 70.7,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 75.7,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 67.8,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.9,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.1,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 62.2,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63.8,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 68.2,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.7,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 60.9,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.2,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.1,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63.9,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 61.1,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 68.7,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 69.3,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 81.3,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 69.6,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 66.5,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 67,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 199.7,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 190.6,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.4,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 60.7,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 66.8,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 60.8,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 59.1,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 62.3,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 67.2,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 61,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.9,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 61.8,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63.7,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 61.1,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.1,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.3,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 60.1,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63.4,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.8,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "GET",
+      "endpoint": "/state",
+      "ms": 58.4,
+      "status": 200,
+      "bytes": 10860,
+      "ownStates": 32
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "GET",
+      "endpoint": "/state",
+      "ms": 70.5,
+      "status": 200,
+      "bytes": 90988,
+      "ownStates": 40
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63.7,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.9,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 61,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.4,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 73.9,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.9,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.6,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 61.7,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.5,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 67.6,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63.2,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 70.9,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 66.5,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.8,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.8,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.3,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.4,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.1,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.7,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 61.3,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.6,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.9,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 61.3,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.5,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 67.3,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 59.8,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 66.6,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.4,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.4,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.1,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 60.2,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.1,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 60.1,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.9,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 60.3,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63.9,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 66.1,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.5,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 66.1,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 60.2,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.1,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 60.5,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63.9,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 59.9,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.6,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.9,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 68.6,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.6,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 68.3,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 61.8,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 62.2,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 62,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.4,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.2,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 62.3,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "GET",
+      "endpoint": "/state",
+      "ms": 60.9,
+      "status": 200,
+      "bytes": 12939,
+      "ownStates": 40
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "GET",
+      "endpoint": "/state",
+      "ms": 68.2,
+      "status": 200,
+      "bytes": 90988,
+      "ownStates": 40
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.1,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 60,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 66.3,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.8,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.5,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 61.9,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.1,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63.9,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 59.5,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 66,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 59.7,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63.3,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63.4,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 62.8,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 62.8,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 66.2,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 62.4,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63.1,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.5,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 58.6,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.8,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.2,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.1,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 66.7,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 62.9,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 66,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.6,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.2,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.3,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 60.9,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.4,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63.7,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.4,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 60.6,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63.9,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 60.4,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.2,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.4,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 79,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 87.6,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 92.1,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 93.2,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 208.2,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.9,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63.4,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63.9,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 60.3,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 66.1,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 60.5,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63.4,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 67.1,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 60.7,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 66.7,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 76.6,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.4,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.6,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.2,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 60.5,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.9,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "GET",
+      "endpoint": "/state",
+      "ms": 62.2,
+      "status": 200,
+      "bytes": 12941,
+      "ownStates": 40
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "GET",
+      "endpoint": "/state",
+      "ms": 65.1,
+      "status": 200,
+      "bytes": 90988,
+      "ownStates": 40
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.9,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.7,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 62,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.1,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63.2,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 66,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.5,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63.2,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.8,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.1,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.8,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.8,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 67.2,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63.2,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.5,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63.9,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.2,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 61.8,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 71.1,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 59.8,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 67,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.9,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 59.5,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.2,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 61.9,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 61.7,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 62.6,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.4,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.5,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 60.5,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63.9,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 62.6,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.7,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.1,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 59.9,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 60.3,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 67.6,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 62.2,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.9,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63.5,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.3,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 60.8,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 68.7,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63.9,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.6,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.1,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.2,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 66.6,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 70,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 61.4,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 62.6,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 68.4,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 66.2,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.4,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 61.2,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "GET",
+      "endpoint": "/state",
+      "ms": 62.4,
+      "status": 200,
+      "bytes": 12941,
+      "ownStates": 40
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "GET",
+      "endpoint": "/state",
+      "ms": 65.3,
+      "status": 200,
+      "bytes": 90988,
+      "ownStates": 40
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 62,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63.8,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63.4,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 62,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63.8,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 60.5,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.3,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 71.2,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 62.4,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 59,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63.3,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.6,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.2,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.3,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.4,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 58.8,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.6,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.1,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 59.6,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 66.2,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 66,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.2,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.8,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 60.5,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.2,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 61.6,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.4,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.4,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.8,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 70.2,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63.5,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 68.4,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 59.9,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.7,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 61.9,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.5,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.3,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63.7,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 59.7,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 66.1,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.1,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 204.6,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.5,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.7,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.1,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 60.5,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63.3,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.4,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 62.6,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.9,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 60.9,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 91.7,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63.5,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63.7,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.2,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 60.6,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.6,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63.9,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 60.4,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 62.8,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.2,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "GET",
+      "endpoint": "/state",
+      "ms": 61.2,
+      "status": 200,
+      "bytes": 12941,
+      "ownStates": 40
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "GET",
+      "endpoint": "/state",
+      "ms": 65,
+      "status": 200,
+      "bytes": 90828,
+      "ownStates": 40
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 66.8,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 60.5,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63.6,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 62.4,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.3,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 61.1,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.7,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.7,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63.4,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.1,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.8,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.7,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 61.4,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.6,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 66.1,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 66.8,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63.7,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.6,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 66.5,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 62.1,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 61.5,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.9,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 66.8,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.7,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.2,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 61.5,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.2,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 61.1,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.3,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 66.7,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 60.2,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 62.6,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63.3,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 66,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.5,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 60.8,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.2,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 61.4,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 66.1,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 62,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.2,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.6,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 60.4,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 66.2,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63.3,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 58.4,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.7,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.3,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.9,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 60.7,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "GET",
+      "endpoint": "/state",
+      "ms": 58.2,
+      "status": 200,
+      "bytes": 12942,
+      "ownStates": 40
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "GET",
+      "endpoint": "/state",
+      "ms": 72,
+      "status": 200,
+      "bytes": 90828,
+      "ownStates": 40
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63.6,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.4,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.1,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 68.5,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 60.3,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.2,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63.6,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 60.9,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63.6,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 60.6,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63.2,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 59,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 66.1,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.2,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.8,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 62.6,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 62.1,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.5,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 58.4,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63.4,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 66.8,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.4,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.5,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 60.7,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.8,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 62.9,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.4,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63.3,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63.6,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.3,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 59.9,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 69.4,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 62.6,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 67.1,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 61.7,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.6,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.9,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 60.7,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 62.9,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.5,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 60.3,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.4,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 60.3,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.7,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 59.9,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 59.3,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63.2,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 66,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 61,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.1,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 61.2,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.1,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.6,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 62.4,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.8,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 66.9,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 60.6,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.3,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "GET",
+      "endpoint": "/state",
+      "ms": 60.3,
+      "status": 200,
+      "bytes": 12943,
+      "ownStates": 40
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "GET",
+      "endpoint": "/state",
+      "ms": 69.4,
+      "status": 200,
+      "bytes": 90828,
+      "ownStates": 40
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63.8,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.3,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 61,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63.4,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 68.3,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 66,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 62,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.8,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.9,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 62.5,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 62.1,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.6,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.7,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 67.6,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.4,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 67.7,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 61.4,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 66,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 62.4,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 69.8,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 67.9,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 67.3,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 69.4,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 60,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 66.3,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 66.9,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.8,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.7,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 66.7,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 61.8,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.1,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.8,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 77,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 61,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 62.9,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63.5,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63.3,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 62.6,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.6,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.8,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 59.6,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.4,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 60.4,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.4,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.4,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.3,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.5,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.3,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.9,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 72.7,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.3,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 58.7,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 67.4,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.2,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.5,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 61.1,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "GET",
+      "endpoint": "/state",
+      "ms": 64.8,
+      "status": 200,
+      "bytes": 12943,
+      "ownStates": 40
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "GET",
+      "endpoint": "/state",
+      "ms": 72.5,
+      "status": 200,
+      "bytes": 90828,
+      "ownStates": 40
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.3,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.1,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.2,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63.3,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.6,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 61.5,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.8,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.9,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 61.7,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.1,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 60.7,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.6,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.7,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.6,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 67.9,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 60.4,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.8,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 61.9,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 62.5,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.6,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 69.7,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.6,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.2,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 70.8,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 66.4,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 67.3,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.1,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 66.2,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.8,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 62.6,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 67.1,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.3,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 76.3,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 67.7,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.5,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 66.7,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 60.8,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 68.7,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 69.4,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 198.3,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 69,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 62.2,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.3,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.3,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 62.7,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.3,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.9,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 61.8,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 66.9,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63.1,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.8,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.2,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 71.5,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 66.1,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.4,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 60.4,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.6,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 67.3,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "GET",
+      "endpoint": "/state",
+      "ms": 79.6,
+      "status": 200,
+      "bytes": 12944,
+      "ownStates": 40
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "GET",
+      "endpoint": "/state",
+      "ms": 96.6,
+      "status": 200,
+      "bytes": 90788,
+      "ownStates": 40
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 85.2,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.1,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63.7,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63.7,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 59.2,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.2,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.2,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 62.7,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 68.8,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63.6,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.4,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.3,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 59.6,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63.8,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63.8,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.1,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 66.1,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.9,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 62.5,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.3,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 60.4,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.9,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63.4,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63.9,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.7,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 58.8,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.4,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.8,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.7,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.6,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.7,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 60.8,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 68.2,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 61.9,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.8,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63.3,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.5,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 59.2,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 66.4,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63.3,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.8,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63.3,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 60,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.1,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 61.1,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 62.5,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.3,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.2,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 70.9,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 62.2,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.1,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 62.6,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.8,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.3,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63.4,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "GET",
+      "endpoint": "/state",
+      "ms": 60.3,
+      "status": 200,
+      "bytes": 12944,
+      "ownStates": 40
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "GET",
+      "endpoint": "/state",
+      "ms": 73.4,
+      "status": 200,
+      "bytes": 90788,
+      "ownStates": 40
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.1,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 61.8,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 62.8,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 62.4,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.7,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 60,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.6,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 59.8,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.6,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 60.3,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.8,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.3,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 60.2,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.4,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.9,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63.9,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 61.4,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 68.6,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 59.4,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.4,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 67.1,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.7,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.5,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.8,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.4,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 60.6,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 67.5,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 60.3,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63.3,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.2,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 60.3,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.7,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 78.5,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 85.7,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.3,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.2,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.3,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63.8,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 58.9,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 67,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.9,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 195.6,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.2,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 60.1,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 66.1,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 61.3,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 62.5,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 62.1,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 62,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.8,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 60.7,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.2,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 58.8,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.9,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63.7,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 60.4,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.6,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.5,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 59.8,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 62,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.9,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 130.9,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "GET",
+      "endpoint": "/state",
+      "ms": 147.8,
+      "status": 200,
+      "bytes": 90788,
+      "ownStates": 40
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "GET",
+      "endpoint": "/state",
+      "ms": 149.3,
+      "status": 200,
+      "bytes": 12944,
+      "ownStates": 40
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 179.2,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 143.8,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 111.8,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 178.2,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 118.7,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63.4,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.3,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63.5,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.3,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.1,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 59.7,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 67.7,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.5,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.2,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.3,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.6,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 60.7,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.5,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 59.7,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.3,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 61.1,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 66.2,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 61,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 61.8,
+      "status": 200,
+      "bytes": 135
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 68.2,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 69.1,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.1,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.1,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63.7,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 62.1,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 66.5,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63.3,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 74.6,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 60.4,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 68.1,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.4,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.7,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 60.2,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.4,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 60.7,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 62.9,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.1,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.7,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 69.8,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 62.7,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.5,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 63.1,
+      "status": 200,
+      "bytes": 138
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.8,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "typing",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 65.7,
+      "status": 200,
+      "bytes": 136
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 67.7,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 64.6,
+      "status": 200,
+      "bytes": 139
+    },
+    {
+      "stage": "40+40",
+      "kind": "coloring",
+      "method": "PUT",
+      "endpoint": "state-write",
+      "ms": 69.1,
+      "status": 200,
+      "bytes": 139
+    }
+  ]
+}
