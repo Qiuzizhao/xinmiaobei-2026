@@ -69,12 +69,16 @@
     });
     $$('[data-color]').forEach(b=>b.onclick=()=>{selected=b.dataset.color;$$('[data-color]').forEach(x=>{x.classList.toggle('active',x===b);x.setAttribute('aria-pressed',String(x===b));});});
     $('#clear').onclick=()=>{if(confirm('清空这次填色，重新试一试吗？')){state.colors={};state.completed=false;persist();updateColor();}};
-    $('#complete').onclick=async()=>{state.completed=true;persist();updateColor();await syncStudent(true);toast(isOnline?'选择已同步，可以继续观察键盘。':'选择已保存在本机，连接恢复后自动同步。');};
+    $('#complete').onclick=async()=>{if(paintedCount()!==keys.length)return;state.completed=true;persist();updateColor();await syncStudent(true);toast(isOnline?'选择已同步，可以继续观察键盘。':'选择已保存在本机，连接恢复后自动同步。');};
     updateColor();
   }
+  function paintedCount(){return keys.filter(k=>regions.some(r=>r.id===state.colors[k.id])).length;}
   function updateColor(){
+    const filled=paintedCount(),allFilled=filled===keys.length;
+    if(state.completed&&!allFilled){state.completed=false;persist();}
+    $('#complete').disabled=!allFilled;
     $$('.key').forEach(b=>{const id=state.colors[b.dataset.key],r=regions.find(x=>x.id===id);b.style.background=r?.color||'';b.setAttribute('aria-label',`${keys.find(k=>k.id===b.dataset.key)?.label||'空格键'}，${r?.name||'未填色'}`);});
-    $('#paint-count').textContent=`已填 ${Object.keys(state.colors).filter(k=>keys.some(x=>x.id===k)).length} / ${keys.length} 格`;
+    $('#paint-count').textContent=`已填 ${filled} / ${keys.length} 格`;
     $('#saved-note').classList.toggle('hidden',!state.completed);$('#complete').textContent=state.completed?'已完成 ✓':'我填好了 ✓';
   }
   let renderedLevel=0,typingLocked=false;
