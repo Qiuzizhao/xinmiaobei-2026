@@ -166,7 +166,7 @@
   function intro(title,desc,tag){return `<div class="intro"><div><h1>${title}</h1>${desc?`<p>${desc}</p>`:''}</div></div>`;}
   function legend(){return regions.map(r=>`<span><i class="dot" style="--c:${r.color}"></i>${r.name}</span>`).join('')+'<span><i class="dot"></i>未填色</span>';}
   function studentColor(){
-    main.innerHTML=intro('给键盘涂色','选颜色，点格子；按住鼠标可连续涂色。','任务 01 / 填色盘')+
+    main.innerHTML=intro('给键盘涂色','','任务 01 / 填色盘')+
       `<div class="palette">${regions.map(r=>`<button class="color-choice${r.id===selected?' active':''}" data-color="${r.id}" aria-pressed="${r.id===selected}"><i class="dot" style="--c:${r.color}"></i>${r.name}</button>`).join('')}<button class="color-choice" data-color="blank" aria-pressed="false">◇ 擦除</button></div>
       <section class="panel"><div class="section-head"><h2>键盘</h2><span class="badge" id="paint-count"></span></div><div class="keyboard-scroll"><div id="keyboard"></div></div><div class="toolbar"><button id="clear" class="quiet">重新填色</button><span class="spacer"></span><button id="complete" class="primary">我填好了 ✓</button></div><div id="saved-note" class="notice hidden">已完成，还可以修改。</div></section>`;
     Lesson.drawKeyboard($('#keyboard'),(b,k)=>{
