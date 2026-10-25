@@ -9,7 +9,7 @@
   row([['CapsLock','Caps Lock',1.75],...Array.from('ASDFGHJKL',n=>['Key'+n,n]),['Semicolon',';'],['Quote',"'"],['Enter','Enter',2.25]],3.7);
   row([['ShiftLeft','Shift',2.25],...Array.from('ZXCVBNM',n=>['Key'+n,n]),['Comma',','],['Period','.'],['Slash','/'],['ShiftRight','Shift',2.75]],4.75);
   row([['ControlLeft','Ctrl',1.25],['MetaLeft','Win',1.25],['AltLeft','Alt',1.25],['Space','',6.25],['AltRight','Alt',1.25],['MetaRight','Win',1.25],['ContextMenu','▤',1.25],['ControlRight','Ctrl',1.25]],5.8);
-  [['PrintScreen','PrtSc'],['ScrollLock','ScrLk'],['Pause','Pause']].forEach(([id,label],i)=>add(id,label,15.65+i,0,1,1,'editing'));
+  [['PrintScreen','PrtSc'],['ScrollLock','ScrLk'],['Pause','Pause']].forEach(([id,label],i)=>add(id,label,15.65+i,0,1,1,'function'));
   [['Insert','Ins'],['Home','Home'],['PageUp','PgUp'],['Delete','Del'],['End','End'],['PageDown','PgDn']].forEach(([id,label],i)=>add(id,label,15.65+i%3,1.6+Math.floor(i/3)*1.05,1,1,'editing'));
   add('ArrowUp','↑',16.65,4.75,1,1,'editing');
   [['ArrowLeft','←'],['ArrowDown','↓'],['ArrowRight','→']].forEach(([id,label],i)=>add(id,label,15.65+i,5.8,1,1,'editing'));
