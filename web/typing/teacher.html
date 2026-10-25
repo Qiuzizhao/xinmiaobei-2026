@@ -171,7 +171,9 @@
       <section class="panel"><div class="section-head"><h2>键盘</h2><span class="badge" id="paint-count"></span></div><div class="keyboard-scroll"><div id="keyboard"></div></div><div class="toolbar"><button id="clear" class="quiet">重新填色</button><span class="spacer"></span><button id="complete" class="primary">我填好了 ✓</button></div><div id="saved-note" class="notice hidden">已完成，还可以修改。</div></section>`;
     Lesson.drawKeyboard($('#keyboard'),(b,k)=>{
       const paint=()=>{if(selected==='blank')delete state.colors[k.id];else state.colors[k.id]=selected;state.completed=false;persist();updateColor();};
-      b.addEventListener('click',paint);b.addEventListener('pointerenter',e=>{if(e.buttons===1&&e.pointerType==='mouse')paint();});
+      b.addEventListener('pointerdown',e=>{if(e.button===0)paint();});
+      b.addEventListener('pointerenter',e=>{if(e.buttons===1&&e.pointerType==='mouse')paint();});
+      b.addEventListener('click',e=>{if(e.detail===0)paint();}); // 保留键盘和辅助操作触发的点击。
       b.addEventListener('dragstart',e=>e.preventDefault());
     });
     $$('[data-color]').forEach(b=>b.onclick=()=>{selected=b.dataset.color;$$('[data-color]').forEach(x=>{x.classList.toggle('active',x===b);x.setAttribute('aria-pressed',String(x===b));});});
