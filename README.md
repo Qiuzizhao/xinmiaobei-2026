@@ -56,7 +56,7 @@
 
 | 活动 | 学生端 | 教师端 |
 | --- | --- | --- |
-| 键盘调色室 | [填色](https://qiuform.qiuzizhao.com/p/urw467xtz4n7/student.html) | [混色看板](https://qiuform.qiuzizhao.com/p/urw467xtz4n7/teacher.html) |
+| 填色盘 | [填色](https://qiuform.qiuzizhao.com/p/urw467xtz4n7/student.html) | [混色看板](https://qiuform.qiuzizhao.com/p/urw467xtz4n7/teacher.html) |
 | 打字拾色记 | [打字](https://qiuform.qiuzizhao.com/p/cujbj48aycbw/student.html) | [进度看板](https://qiuform.qiuzizhao.com/p/cujbj48aycbw/teacher.html) |
 
 使用步骤：教师打开对应看板，点击“新建课堂”，复制该课堂的学生链接后分发。两套活动分别分发自己的链接，不联动切换。
