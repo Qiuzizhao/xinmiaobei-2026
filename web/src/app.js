@@ -97,7 +97,16 @@
     $('#paint-count').textContent=`已填 ${filled} / ${keys.length} 格`;
     $('#saved-note').classList.toggle('hidden',!state.completed);$('#complete').textContent=state.completed?'已完成 ✓':'我填好了 ✓';
   }
-  let renderedLevel=0,typingLocked=false;
+  let renderedLevel=0,typingLocked=false,typingBatchStart=Math.floor((state.total||0)/7)*7;
+  function nextTypingBatch(delay=160){
+    typingLocked=true;
+    setTimeout(()=>{
+      const targets=$('#targets');targets.classList.add('round-out');
+      setTimeout(()=>{typingBatchStart=state.total;updateTyping();targets.classList.remove('round-out');targets.classList.add('round-in');
+        setTimeout(()=>{targets.classList.remove('round-in');typingLocked=false;},220);
+      },180);
+    },delay);
+  }
   function studentTyping(){
     main.innerHTML=
       `<div class="typing-layout"><section class="panel typing-task"><div class="section-head"><span class="lesson-label" id="exercise-label"></span><span class="badge" id="total-count"></span></div><div class="target-strip" id="targets" aria-label="接下来要输入的字符"></div><div class="input-hint" id="input-hint" role="status">看准绿色字符，直接按键。</div><div class="progress-track"><span id="typing-progress"></span></div><div class="typing-bottom" style="justify-content:flex-end"><span id="level-progress"></span></div></section>
@@ -111,11 +120,14 @@
       if(key.text===targetAt(state.total) && key.main){
         const before=levelInfo(state.total);state.total++;persist();targets.classList.remove('error');$('#input-hint').textContent='找对了！又点亮了一格。';
         const after=levelInfo(state.total);
+        const batchFinished=state.total-typingBatchStart===7;
         if(before.level!==after.level){
           // 先让学生看到完整色卡，再进入下一关；过渡期间不接收新字符。
           typingLocked=true;updateTyping(before.level,before.target);$('#celebration').textContent=`${theme(before.level).name}色卡已收集！`;
-          syncStudent(true);setTimeout(()=>{typingLocked=false;updateTyping();},850);
-        }else updateTyping();
+          syncStudent(true);
+          if(batchFinished)nextTypingBatch(850);
+          else setTimeout(()=>{typingLocked=false;updateTyping();},850);
+        }else{updateTyping();if(batchFinished)nextTypingBatch();}
       }else{targets.classList.remove('error');void targets.offsetWidth;targets.classList.add('error');$('#input-hint').textContent=!key.main?'请用主键盘区上方的数字键。':'再找找目标字符，已经点亮的颜色会保留。';}
     });
     document.addEventListener('paste',e=>{e.preventDefault();});
@@ -124,7 +136,7 @@
   function updateTyping(displayLevel,displayWithin){
     const actual=levelInfo(state.total),level=displayLevel||actual.level,within=displayWithin??actual.within,target=Lesson.quota(level);
     $('#exercise-label').textContent=level<=2?'找一找 · 字母键':level===3?'找一找 · 主键盘数字键':'试一试 · 字母与数字';
-    $('#targets').innerHTML=Array.from({length:7},(_,i)=>`<span class="target-char${i===0?' current':''}" ${i===0?'aria-current="true"':''}>${targetAt(state.total+i)}</span>`).join('');
+    $('#targets').innerHTML=Array.from({length:7},(_,i)=>{const position=typingBatchStart+i,done=position<state.total,current=position===state.total;return `<span class="target-char${done?' done':current?' current':''}" ${current?'aria-current="true"':''}>${targetAt(position)}</span>`;}).join('');
     $('#total-count').textContent=`已正确输入 ${state.total} 个`;
     $('#theme-name').textContent=theme(level).name+'色卡';$('#level-name').textContent=`第 ${level} 关`;
     $('#swatch-count').textContent=`已点亮 ${within} / ${target} 格`;
