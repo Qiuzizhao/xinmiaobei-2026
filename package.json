@@ -1,0 +1,9 @@
+{
+  "name": "xinmiaobei-keyboard-lesson-2026",
+  "private": true,
+  "scripts": {
+    "build": "node web/build.cjs",
+    "test": "node --test tests/core.test.cjs",
+    "start": "python -m http.server 18080 --directory web"
+  }
+}
