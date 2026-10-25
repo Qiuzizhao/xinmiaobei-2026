@@ -149,6 +149,15 @@
   const $=s=>document.querySelector(s), $$=s=>Array.from(document.querySelectorAll(s));
   const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const cfg=window.APP_CONFIG, kind=cfg.kind, teacher=cfg.role==='teacher';
+  if(!teacher){
+    const lessonURL=location.href;
+    const keepLesson=()=>history.pushState({...history.state,keyboardLessonGuard:true},'',lessonURL);
+    if(!history.state?.keyboardLessonGuard)keepLesson();
+    window.addEventListener('popstate',keepLesson);
+    document.addEventListener('keydown',event=>{
+      if(event.key==='BrowserBack'||(event.altKey&&event.key==='ArrowLeft'))event.preventDefault();
+    },{capture:true});
+  }
   const params=new URLSearchParams(location.search), demo=params.get('demo')==='1';
   const storagePrefix=`keyboard-v1:${kind}:`, defaultState=kind==='coloring'?{colors:{}}:{total:0};
   let storageOK=true;
