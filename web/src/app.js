@@ -118,7 +118,7 @@
   }
   function teacherShell(){
     const title=kind==='coloring'?'全班填色':'打字进度';
-    main.innerHTML=intro(title,'',kind==='coloring'?'填色盘 / 教师看板':'打字拾色记 / 教师看板')+
+    main.innerHTML=intro(title,'',kind==='coloring'?'填色盘 / 教师看板':'收集色卡 / 教师看板')+
       `<div class="teacher-bar"><label for="room">课堂</label><select id="room" aria-label="选择课堂"></select><button id="new-room">新建课堂</button><span style="flex:1"></span><button class="primary" id="copy-link">复制学生链接</button><button id="open-student">打开学生端</button></div>${demo?'<div class="new-room"><button id="demo-seed">生成示例学生</button></div>':''}<div id="teacher-content"></div>`;
     renderClassrooms();
     $('#room').onchange=()=>switchClassroom($('#room').value);
