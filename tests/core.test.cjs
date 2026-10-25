@@ -34,3 +34,12 @@ test('直接识别字母数字，不依赖输入框；支持大小写和输入�
   assert.deepEqual(L.typingKey({key:'End',code:'Numpad1'}),{text:'1',main:false});
   for(const event of [{key:'d',ctrlKey:true},{key:'d',metaKey:true},{key:'d',altKey:true},{key:'d',repeat:true},{key:'Shift'},{key:'Enter'},{key:'!'}])assert.equal(L.typingKey(event),null);
 });
+test('课堂列表去重、保留真实创建时间、按创建时间倒序',()=>{
+  const result=L.mergeClassrooms([{id:'OLD',createdAt:null},{id:'ABC234',createdAt:200}], [{sessionId:'ABC234',createdAt:200},{id:'OLD'},{id:'NEW567',createdAt:300},{id:'ABC234'}]);
+  assert.deepEqual(result,[{id:'NEW567',createdAt:300},{id:'ABC234',createdAt:200},{id:'OLD',createdAt:null}]);
+  assert.deepEqual(L.mergeClassrooms([],[{id:'',createdAt:123},{}]),[]);
+});
+test('新课堂为简短六位编号，不包含年级或易混淆字符',()=>{
+  const code=L.roomCode(new Uint8Array([0,7,15,30,120,255]));
+  assert.equal(code.length,6);assert.match(code,/^[2-9A-HJ-NP-Z]{6}$/);
+});

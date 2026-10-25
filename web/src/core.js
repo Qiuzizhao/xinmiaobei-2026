@@ -59,7 +59,17 @@
     if(response.truncated) throw Error('状态数量超过平台单次读取范围，请更换课堂编号或任务');
     return Object.entries(response.states).map(([key,item])=>({key,...item.value}));
   }
-  const api={regions,themes,quota,levelInfo,theme,swatch,targetAt,typingKey,stats,distribution,normalizeStates};
+  function mergeClassrooms(existing,records) {
+    const map=new Map();
+    for(const item of [...existing,...records]){
+      const id=item.id||item.sessionId;if(typeof id!=='string'||!id.trim())continue;
+      const previous=map.get(id),time=Number(item.createdAt)>0?Number(item.createdAt):null;
+      map.set(id,{id,createdAt:previous?.createdAt&&time?Math.min(previous.createdAt,time):previous?.createdAt||time});
+    }
+    return [...map.values()].sort((a,b)=>(b.createdAt||0)-(a.createdAt||0)||a.id.localeCompare(b.id));
+  }
+  function roomCode(bytes){const alphabet='23456789ABCDEFGHJKLMNPQRSTUVWXYZ';return Array.from(bytes,b=>alphabet[b%alphabet.length]).join('');}
+  const api={regions,themes,quota,levelInfo,theme,swatch,targetAt,typingKey,stats,distribution,normalizeStates,mergeClassrooms,roomCode};
   if(typeof module!=='undefined' && module.exports) module.exports=api;
   else root.Lesson=api;
 })(typeof window!=='undefined'?window:globalThis);

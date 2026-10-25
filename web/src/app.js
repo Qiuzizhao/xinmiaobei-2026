@@ -5,11 +5,14 @@
   const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const cfg=window.APP_CONFIG, kind=cfg.kind, teacher=cfg.role==='teacher';
   const params=new URLSearchParams(location.search), demo=params.get('demo')==='1';
-  const room=(params.get('room')||'三年级体验').trim().slice(0,64)||'三年级体验';
   const storagePrefix=`keyboard-v1:${kind}:`, defaultState=kind==='coloring'?{colors:{}}:{total:0};
   let storageOK=true;
   function load(key,fallback){try{return JSON.parse(localStorage.getItem(storagePrefix+key))??fallback;}catch{storageOK=false;return fallback;}}
   function save(key,value){try{localStorage.setItem(storagePrefix+key,JSON.stringify(value));}catch{storageOK=false;}}
+  const room=(params.get('room')||(teacher?load('last-room',null):null)||'体验').trim().slice(0,64)||'体验';
+  if(teacher)save('last-room',room);
+  const roomCacheKey=demo?'demo-rooms':'rooms';
+  let classrooms=Lesson.mergeClassrooms(load(roomCacheKey,[]),[{id:room}]),roomListSignature='',creatingRoom=false,pendingClassroom=null;
   let studentId=load('device',null);
   if(!studentId){studentId=crypto.randomUUID?.()||Math.random().toString(36).slice(2)+Date.now();save('device',studentId);}
   const localKey=`${demo?'demo:':''}${room}:student`;
@@ -114,13 +117,54 @@
   function teacherShell(){
     const title=kind==='coloring'?'全班填色':'打字进度';
     main.innerHTML=intro(title,'',kind==='coloring'?'键盘调色室 / 教师看板':'打字拾色记 / 教师看板')+
-      `<div class="teacher-bar"><label for="room">课堂</label><input id="room" value="${esc(room)}" aria-label="课堂编号"><button id="open-room">切换</button><button id="new-room">新建课堂</button><span style="flex:1"></span><button class="primary" id="copy-link">复制学生链接</button><button id="open-student">打开学生端</button></div>${demo?'<div class="new-room"><button id="demo-seed">生成示例学生</button></div>':''}<div id="teacher-content"></div>`;
-    $('#open-room').onclick=()=>{const next=$('#room').value.trim();if(!next)return toast('请给这节课起一个简短编号');const u=new URL(location.href);u.searchParams.set('room',next);location.href=u;};
-    $('#new-room').onclick=()=>{const now=new Date(),id=`三年级-${now.getMonth()+1}${now.getDate()}-${now.getHours()}${String(now.getMinutes()).padStart(2,'0')}-${Math.random().toString(36).slice(2,5)}`;$('#room').value=id;$('#open-room').click();};
+      `<div class="teacher-bar"><label for="room">课堂</label><select id="room" aria-label="选择课堂"></select><button id="new-room">新建课堂</button><span style="flex:1"></span><button class="primary" id="copy-link">复制学生链接</button><button id="open-student">打开学生端</button></div>${demo?'<div class="new-room"><button id="demo-seed">生成示例学生</button></div>':''}<div id="teacher-content"></div>`;
+    renderClassrooms();
+    $('#room').onchange=()=>switchClassroom($('#room').value);
+    $('#room').onblur=()=>renderClassrooms();
+    $('#new-room').onclick=createClassroom;
+    loadClassrooms();
     const studentURL=()=>{const u=new URL('student.html',location.href);u.searchParams.set('room',room);if(demo)u.searchParams.set('demo','1');return u.href;};
     $('#copy-link').onclick=async()=>{try{await navigator.clipboard.writeText(studentURL());toast('学生链接已复制');}catch{prompt('复制这个链接给学生：',studentURL());}};
     $('#open-student').onclick=()=>window.open(studentURL(),'_blank','noopener');
     if(demo)$('#demo-seed').onclick=seedDemo;
+  }
+  function switchClassroom(id){
+    if(!id||id===room)return;
+    save('last-room',id);const u=new URL(location.href);u.searchParams.set('room',id);location.href=u;
+  }
+  function rememberClassrooms(records){
+    classrooms=Lesson.mergeClassrooms(classrooms,records);save(roomCacheKey,classrooms);renderClassrooms();
+  }
+  function renderClassrooms(){
+    const select=$('#room');if(!select||document.activeElement===select)return;
+    const signature=JSON.stringify(classrooms);if(signature===roomListSignature)return;
+    roomListSignature=signature;
+    select.innerHTML=classrooms.map(c=>{
+      const name=c.id==='三年级体验'?'体验':c.id.replace(/^三年级-/, '');
+      const time=c.createdAt?new Date(c.createdAt).toLocaleString('zh-CN',{timeZone:'Asia/Shanghai',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false}):'创建时间未记录';
+      return `<option value="${esc(c.id)}"${c.id===room?' selected':''}>${esc(name)} · ${esc(time)}</option>`;
+    }).join('');
+  }
+  async function loadClassrooms(){
+    try{
+      const data=demo?load('demo-classroom-records',[]):(await request('/all')).submissions;
+      const records=(data||[]).map(x=>x.data||x.payload||x);
+      rememberClassrooms(records.filter(x=>x.type==='classroom').map(x=>({id:x.sessionId,createdAt:x.createdAt})));
+      rememberClassrooms(records.filter(x=>x.type==='coloring-snapshot').map(x=>({id:x.sessionId})));
+    }catch{toast('课堂列表暂未更新，正在显示已保存的课堂');}
+  }
+  async function createClassroom(){
+    if(creatingRoom)return;creatingRoom=true;const button=$('#new-room');button.disabled=true;$('#room').disabled=true;button.textContent='正在创建…';
+    if(!pendingClassroom){
+      let id;do{id=Lesson.roomCode(crypto.getRandomValues(new Uint8Array(6)));}while(classrooms.some(c=>c.id===id));
+      pendingClassroom={type:'classroom',sessionId:id,createdAt:Date.now()};
+    }
+    try{
+      if(demo){const records=load('demo-classroom-records',[]);records.push(pendingClassroom);save('demo-classroom-records',records);}
+      else await post(pendingClassroom);
+      rememberClassrooms([{id:pendingClassroom.sessionId,createdAt:pendingClassroom.createdAt}]);switchClassroom(pendingClassroom.sessionId);
+    }catch{toast('课堂未确认创建成功，请再试一次');}
+    finally{creatingRoom=false;button.disabled=false;$('#room').disabled=false;button.textContent='新建课堂';}
   }
   function teacherColor(){
     teacherShell();$('#teacher-content').innerHTML=`<div class="metrics"><div class="metric"><span class="label">参与学生</span><strong id="m-count">0<small>人</small></strong></div><div class="metric"><span class="label">最近在线</span><strong id="m-online">0<small>人</small></strong></div><div class="metric"><span class="label">平均填色进度</span><strong id="m-progress">0<small>%</small></strong></div><div class="metric"><span class="label">已点击完成</span><strong id="m-complete">0<small>人</small></strong></div></div>
@@ -189,6 +233,7 @@
   async function pollTeacher(){
     if(pollBusy)return;pollBusy=true;
     try{const values=await readStates();people=values.filter(v=>v.key.startsWith(kind+':'+room+':')&&v.sessionId===room&&v.kind===kind&&v.studentId);
+      rememberClassrooms(values.filter(v=>v.kind===kind&&v.sessionId&&v.studentId).map(v=>({id:v.sessionId})));
       if(kind==='coloring')renderColorTeacher();else renderTypingTeacher();status(true,'看板已同步');
     }catch{status(false,'连接暂断 · 显示最近结果');}finally{pollBusy=false;}
   }
@@ -198,7 +243,7 @@
       all[`${kind}:${room}:${id}`]={expires:Date.now()+7200000,value:{sessionId:room,studentId:id,kind,updatedAt:Date.now(),colors,completed:i%3===0,total:i*9}};
     }localStorage.setItem(demoKey,JSON.stringify(all));await pollTeacher();toast('已生成 16 位示例学生');
   }
-  if(teacher){kind==='coloring'?teacherColor():teacherTyping();await pollTeacher();setInterval(pollTeacher,2000);}
+  if(teacher){kind==='coloring'?teacherColor():teacherTyping();await pollTeacher();setInterval(pollTeacher,2000);setInterval(loadClassrooms,30000);}
   else{kind==='coloring'?studentColor():studentTyping();await syncStudent(true);setInterval(()=>syncStudent(),2000);}
   if(!storageOK)toast('浏览器限制了本机保存，请保持网页打开以免丢失进度。');
   window.addEventListener('online',()=>teacher?pollTeacher():syncStudent(true));
