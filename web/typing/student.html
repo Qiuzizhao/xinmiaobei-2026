@@ -178,17 +178,41 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
   if(!studentId){studentId=crypto.randomUUID?.()||Math.random().toString(36).slice(2)+Date.now();save('device',studentId);}
   const localKey=`${demo?'demo:':''}${room}:student`;
   let state={...defaultState,...load(localKey,{})}, people=[], snapshots=[], selected='main';
-  let dirty=true, busy=false, lastSent=0, isOnline=false, pollBusy=false;
+  let dirty=true, busy=false, lastSent=0, lastUploadAttempt=0, isOnline=false, pollBusy=false;
+  const uploadDelay=kind==='coloring'?5000:10000;
+  let retryAt=0,requestFailures=0,recordsCache=null,recordsCachedAt=0,recordsPending=null,recordsVersion=0;
   const base=`https://qiuform.qiuzizhao.com/api/${cfg.taskId}`;
   const demoKey=`${storagePrefix}demo-state:${room}`;
   let toastTimer;
   function toast(message){let e=$('#toast');if(!e){e=document.createElement('div');e.id='toast';e.className='toast';e.setAttribute('role','status');document.body.append(e);}e.textContent=message;clearTimeout(toastTimer);toastTimer=setTimeout(()=>e.remove(),3200);}
   function status(ok,text){const e=$('#sync');if(!e)return;e.className='status '+(ok?'ok':'error');e.textContent=text;isOnline=ok;}
   async function request(path,method='GET',body){
+    if(navigator.onLine===false||Date.now()<retryAt)throw Error('等待网络恢复或重试窗口');
     const ctrl=new AbortController(), timer=setTimeout(()=>ctrl.abort(),8000);
     try {const r=await fetch(base+path,{method,headers:body?{'Content-Type':'application/json'}:undefined,body:body?JSON.stringify(body):undefined,signal:ctrl.signal,cache:'no-store'});
-      if(!r.ok)throw Error('HTTP '+r.status);const data=await r.json();if(data.ok===false)throw Error(data.error||'请求未完成');return data;
+      if(!r.ok){
+        const error=Error('HTTP '+r.status);error.status=r.status;
+        const value=r.headers.get('Retry-After');
+        error.retryAfter=value?(/^\d+(\.\d+)?$/.test(value)?Number(value)*1000:Math.max(0,Date.parse(value)-Date.now())):0;
+        throw error;
+      }
+      const data=await r.json();if(data.ok===false)throw Error(data.error||'请求未完成');
+      if(Date.now()>=retryAt)requestFailures=0;
+      return data;
+    } catch(error){
+      requestFailures++;
+      const delay=Math.max(error.retryAfter||0,error.status===429?60000:0,Math.min(120000,5000*2**Math.min(requestFailures-1,5)));
+      retryAt=Math.max(retryAt,Date.now()+delay+Math.random()*1000);
+      throw error;
     } finally {clearTimeout(timer);}
+  }
+  async function readRecords(){
+    if(recordsCache&&Date.now()-recordsCachedAt<60000)return recordsCache;
+    if(recordsPending)return recordsPending;
+    const version=recordsVersion;
+    const pending=request('/all').then(data=>{if(version===recordsVersion){recordsCache=data;recordsCachedAt=Date.now();}return data;});
+    recordsPending=pending;
+    try{return await pending;}finally{if(recordsPending===pending)recordsPending=null;}
   }
   function getDemo(){try{return JSON.parse(localStorage.getItem(demoKey))||{};}catch{return {};}}
   async function put(key,value,ttl=7200){
@@ -201,13 +225,17 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
   }
   async function post(value){
     if(demo){const all=load('demo-snapshots:'+room,[]);all.push(value);save('demo-snapshots:'+room,all);return;}
-    return request('','POST',value);
+    const result=await request('','POST',value);
+    recordsVersion++;recordsCache=null;recordsPending=null;
+    return result;
   }
   function persist(){save(localKey,state);dirty=true;}
   function payload(){return {sessionId:room,studentId,kind,updatedAt:Date.now(),...(kind==='coloring'?{colors:state.colors,completed:!!state.completed}:{total:state.total,level:levelInfo(state.total).level})};}
   async function syncStudent(force=false){
-    if(busy || (!force&&!dirty&&Date.now()-lastSent<20000))return;
-    busy=true;dirty=false;
+    const now=Date.now();
+    if(busy||document.hidden||navigator.onLine===false||now<retryAt||now-lastUploadAttempt<uploadDelay)return;
+    if(!force&&!dirty&&now-lastSent<60000)return;
+    busy=true;dirty=false;lastUploadAttempt=now;
     try{await put(`${kind}:${room}:${studentId}`,payload());lastSent=Date.now();status(true,'已同步');}
     catch{dirty=true;status(false,'正在重连');}
     finally{busy=false;}
@@ -285,7 +313,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
         if(before.level!==after.level){
           // 先让学生看到完整色卡，再进入下一关；过渡期间不接收新字符。
           typingLocked=true;updateTyping(before.level,before.target);$('#celebration').textContent=`${theme(before.level).name}色卡已收集！`;
-          syncStudent(true);
+          syncStudent();
           if(batchFinished)nextTypingBatch(850);
           else setTimeout(()=>{typingLocked=false;updateTyping();},850);
         }else{updateTyping();if(batchFinished)nextTypingBatch();}
@@ -347,7 +375,8 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
   }
   async function loadClassrooms(){
     try{
-      const data=demo?load('demo-classroom-records',[]):(await request('/all')).submissions;
+      if(document.hidden||navigator.onLine===false||Date.now()<retryAt)return;
+      const data=demo?load('demo-classroom-records',[]):(await readRecords()).submissions;
       const records=(data||[]).map(x=>x.data||x.payload||x);
       rememberClassrooms(records.filter(x=>x.type==='classroom').map(x=>({id:x.sessionId,createdAt:x.createdAt})));
       rememberClassrooms(records.filter(x=>x.type==='coloring-snapshot').map(x=>({id:x.sessionId})));
@@ -394,7 +423,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
       if(showAnswer)b.style.background=regions.find(r=>r.id===k.region).color;
       else {const counts=distribution(data,k.id);let angle=0;const parts=[...regions,{id:'blank',color:'#edf1eb'}].filter(r=>counts[r.id]>0).map(r=>{const start=angle;angle+=counts[r.id]/n*360;return `${r.color} ${start}deg ${angle}deg`;});b.style.background=n?`conic-gradient(${parts.join(',')})`:'#edf1eb';}
     });
-    $('#updated').textContent='每 2 秒自动更新';
+    $('#updated').textContent='约每 5 秒自动更新';
   }
   function showTip(k,b,e){
     const tip=$('#tooltip'),data=shownPeople(),n=data.length,counts=distribution(data,k.id);
@@ -409,7 +438,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     try{await post(record);snapshots.push(record);renderSnapshots();$('#snapshot-message').textContent=record.label+'快照已保存';toast('已保存'+record.label+'全班快照');}catch{$('#snapshot-message').textContent='保存失败，请确认连接后再试；当前实时数据仍保留。';}finally{button.disabled=false;}
   }
   async function loadSnapshots(){
-    try{const data=demo?load('demo-snapshots:'+room,[]):(await request('/all')).submissions;
+    try{const data=demo?load('demo-snapshots:'+room,[]):(await readRecords()).submissions;
       snapshots=(data||[]).map(x=>x.data||x.payload||x).filter(x=>x.type==='coloring-snapshot'&&x.sessionId===room&&Array.isArray(x.people));renderSnapshots();
     }catch{$('#snapshots').innerHTML='<p class="tips">历史快照暂时无法读取，实时看板仍可使用。</p>';}
   }
@@ -430,11 +459,17 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     const online=people.filter(p=>Date.now()-p.updatedAt<90000).length;
     $('#typing-observation').textContent=`最近在线 ${online} 人 · 当前关卡为正在挑战的关卡`;
   }
+  let peopleSignature='',lastTeacherRender=0;
   async function pollTeacher(){
-    if(pollBusy)return;pollBusy=true;
+    if(pollBusy||document.hidden||navigator.onLine===false||Date.now()<retryAt)return;pollBusy=true;
     try{const values=await readStates();people=values.filter(v=>v.key.startsWith(kind+':'+room+':')&&v.sessionId===room&&v.kind===kind&&v.studentId);
       rememberClassrooms(values.filter(v=>v.kind===kind&&v.sessionId&&v.studentId).map(v=>({id:v.sessionId})));
-      if(kind==='coloring')renderColorTeacher();else renderTypingTeacher();status(true,'看板已同步');
+      const signature=JSON.stringify(people.map(p=>[p.studentId,kind==='coloring'?p.colors:p.total]));
+      if(signature!==peopleSignature||Date.now()-lastTeacherRender>=30000){
+        if(kind==='coloring')renderColorTeacher();else renderTypingTeacher();
+        peopleSignature=signature;lastTeacherRender=Date.now();
+      }
+      status(true,'看板已同步');
     }catch{status(false,'连接暂断 · 显示最近结果');}finally{pollBusy=false;}
   }
   async function seedDemo(){
@@ -443,10 +478,24 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
       all[`${kind}:${room}:${id}`]={expires:Date.now()+7200000,value:{sessionId:room,studentId:id,kind,updatedAt:Date.now(),colors,completed:i%3===0,total:i*9}};
     }localStorage.setItem(demoKey,JSON.stringify(all));await pollTeacher();toast('已生成 16 位示例学生');
   }
-  if(teacher){kind==='coloring'?teacherColor():teacherTyping();await pollTeacher();setInterval(pollTeacher,2000);setInterval(loadClassrooms,30000);}
-  else{kind==='coloring'?studentColor():studentTyping();await syncStudent(true);setInterval(()=>syncStudent(),2000);}
+  let networkTimer,recordsTimer;
+  function scheduleNetwork(delay){
+    clearTimeout(networkTimer);
+    networkTimer=setTimeout(async()=>{
+      try{if(teacher)await pollTeacher();else await syncStudent();}
+      finally{scheduleNetwork(document.hidden?30000:Math.max(teacher?5000:uploadDelay,retryAt-Date.now())+Math.random()*1000);}
+    },delay);
+  }
+  function scheduleRecords(){
+    clearTimeout(recordsTimer);
+    recordsTimer=setTimeout(async()=>{try{await loadClassrooms();}finally{scheduleRecords();}},180000+Math.random()*5000);
+  }
+  if(teacher){kind==='coloring'?teacherColor():teacherTyping();scheduleRecords();}
+  else{kind==='coloring'?studentColor():studentTyping();}
+  scheduleNetwork(Math.random()*3000);
   if(!storageOK)toast('浏览器限制了本机保存，请保持网页打开以免丢失进度。');
-  window.addEventListener('online',()=>teacher?pollTeacher():syncStudent(true));
+  window.addEventListener('online',()=>scheduleNetwork(Math.max(1000,retryAt-Date.now())+Math.random()*2000));
+  document.addEventListener('visibilitychange',()=>scheduleNetwork(document.hidden?30000:1000+Math.random()*2000));
   // 自动化验收及教师调试只读入口，无上传或修改能力。
   window.lessonState=()=>({kind,role:cfg.role,room,demo,state:JSON.parse(JSON.stringify(state)),people:JSON.parse(JSON.stringify(people))});
 })();
