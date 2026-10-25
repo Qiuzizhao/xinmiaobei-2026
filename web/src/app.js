@@ -56,8 +56,18 @@
   if(demo)main.insertAdjacentHTML('beforebegin','<div class="offline-banner" style="margin:12px 4vw 0">示例体验 · 不计入课堂</div>');
   function intro(title,desc,tag){return `<div class="intro"><div><h1>${title}</h1>${desc?`<p>${desc}</p>`:''}</div></div>`;}
   function legend(){return regions.map(r=>`<span><i class="dot" style="--c:${r.color}"></i>${r.name}</span>`).join('')+'<span><i class="dot"></i>未填色</span>';}
+  // 调色偏好单独保存在本机，不进入 state 或上传内容。
+  const shadeStorageKey=`${localKey}:shades`,localShades=load(shadeStorageKey,{});
+  const shadeHues={main:355,function:43,editing:223,numeric:160,indicator:264};
+  function shadeOptions(id){return [regions.find(r=>r.id===id).color,...[52,60,68,76,84].map(light=>`hsl(${shadeHues[id]} 70% ${light}%)`)];}
+  function displayColor(id){const r=regions.find(r=>r.id===id);return r?shadeOptions(id)[localShades[id]]||r.color:'';}
+  function renderShades(){
+    const id=$('#shade-region').value;
+    $('#shade-options').innerHTML=shadeOptions(id).map((color,i)=>`<button class="shade-option" style="--shade:${color}" data-shade="${i}" aria-label="${regions.find(r=>r.id===id).name}色号 ${i+1}" aria-pressed="${(localShades[id]||0)===i}"></button>`).join('');
+    $$('[data-shade]').forEach(b=>b.onclick=()=>{if(!state.completed)return;localShades[id]=Number(b.dataset.shade);save(shadeStorageKey,localShades);renderShades();updateColor();});
+  }
   function studentColor(){
-    main.innerHTML=intro('给键盘涂色','','任务 01 / 填色盘')+
+    main.innerHTML=`<div class="intro coloring-intro"><h1>给键盘涂色</h1><div id="shade-play" class="shade-play hidden"><select id="shade-region" aria-label="选择调色区域">${regions.map(r=>`<option value="${r.id}">${r.name}</option>`).join('')}</select><div id="shade-options" class="shade-options"></div></div></div>`+
       `<div class="palette">${regions.map(r=>`<button class="color-choice${r.id===selected?' active':''}" data-color="${r.id}" aria-pressed="${r.id===selected}"><i class="dot" style="--c:${r.color}"></i>${r.name}</button>`).join('')}<button class="color-choice" data-color="blank" aria-pressed="false">◇ 擦除</button><span class="badge" id="paint-count" style="margin-left:auto;align-self:center"></span></div>
       <section class="panel"><div class="keyboard-scroll"><div id="keyboard"></div></div><div class="toolbar"><button id="clear" class="quiet">重新填色</button><span class="spacer"></span><button id="complete" class="primary">我填好了 ✓</button></div><div id="saved-note" class="notice hidden">已完成，还可以修改。</div></section>`;
     Lesson.drawKeyboard($('#keyboard'),(b,k)=>{
@@ -70,6 +80,8 @@
     $$('[data-color]').forEach(b=>b.onclick=()=>{selected=b.dataset.color;$$('[data-color]').forEach(x=>{x.classList.toggle('active',x===b);x.setAttribute('aria-pressed',String(x===b));});});
     $('#clear').onclick=()=>{if(confirm('清空这次填色，重新试一试吗？')){state.colors={};state.completed=false;persist();updateColor();}};
     $('#complete').onclick=async()=>{if(paintedCount()!==keys.length)return;state.completed=true;persist();updateColor();await syncStudent(true);toast(isOnline?'选择已同步，可以继续观察键盘。':'选择已保存在本机，连接恢复后自动同步。');};
+    $('#shade-region').onchange=renderShades;
+    renderShades();
     updateColor();
   }
   function paintedCount(){return keys.filter(k=>regions.some(r=>r.id===state.colors[k.id])).length;}
@@ -77,7 +89,9 @@
     const filled=paintedCount(),allFilled=filled===keys.length;
     if(state.completed&&!allFilled){state.completed=false;persist();}
     $('#complete').disabled=!allFilled;
-    $$('.key').forEach(b=>{const id=state.colors[b.dataset.key],r=regions.find(x=>x.id===id);b.style.background=r?.color||'';b.setAttribute('aria-label',`${keys.find(k=>k.id===b.dataset.key)?.label||'空格键'}，${r?.name||'未填色'}`);});
+    $('#shade-play').classList.toggle('hidden',!state.completed);
+    $$('[data-color] .dot').forEach(dot=>{dot.style.background=displayColor(dot.parentElement.dataset.color);});
+    $$('.key').forEach(b=>{const id=state.colors[b.dataset.key],r=regions.find(x=>x.id===id);b.style.background=displayColor(id);b.setAttribute('aria-label',`${keys.find(k=>k.id===b.dataset.key)?.label||'空格键'}，${r?.name||'未填色'}`);});
     $('#paint-count').textContent=`已填 ${filled} / ${keys.length} 格`;
     $('#saved-note').classList.toggle('hidden',!state.completed);$('#complete').textContent=state.completed?'已完成 ✓':'我填好了 ✓';
   }
