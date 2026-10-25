@@ -41,3 +41,5 @@ body{overflow-anchor:none}
 #histogram{height:280px;overflow-y:auto;scrollbar-gutter:stable;overscroll-behavior:contain}
 #snapshots{height:196px;overflow-y:auto;scrollbar-gutter:stable;overscroll-behavior:contain}
 #snapshot-message{min-height:3.6em;line-height:1.8}
+
+.shade-play{position:relative}.shade-play.guide-active{outline:3px solid #23765e;outline-offset:5px;box-shadow:0 0 0 10px #23765e15}.shade-guide{position:absolute;z-index:30;top:calc(100% + 18px);right:0;width:264px;max-width:calc(100vw - 48px);padding:16px;background:white;border:1px solid #a8cbb8;border-radius:14px;box-shadow:0 12px 32px #24384026;text-align:left;cursor:default}.shade-guide strong{display:block;font-size:16px;color:var(--green)}.shade-guide p{font-size:13px;line-height:1.7;margin:8px 0 12px}.shade-guide button{font-size:13px;padding:7px 16px}.shade-guide:before{content:'';position:absolute;width:12px;height:12px;right:25px;top:-7px;background:white;border-left:1px solid #a8cbb8;border-top:1px solid #a8cbb8;transform:rotate(45deg)}@media(max-width:640px){.shade-guide{right:auto;left:0}.shade-guide:before{right:auto;left:25px}}

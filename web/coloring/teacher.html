@@ -42,6 +42,8 @@ body{overflow-anchor:none}
 #histogram{height:280px;overflow-y:auto;scrollbar-gutter:stable;overscroll-behavior:contain}
 #snapshots{height:196px;overflow-y:auto;scrollbar-gutter:stable;overscroll-behavior:contain}
 #snapshot-message{min-height:3.6em;line-height:1.8}
+
+.shade-play{position:relative}.shade-play.guide-active{outline:3px solid #23765e;outline-offset:5px;box-shadow:0 0 0 10px #23765e15}.shade-guide{position:absolute;z-index:30;top:calc(100% + 18px);right:0;width:264px;max-width:calc(100vw - 48px);padding:16px;background:white;border:1px solid #a8cbb8;border-radius:14px;box-shadow:0 12px 32px #24384026;text-align:left;cursor:default}.shade-guide strong{display:block;font-size:16px;color:var(--green)}.shade-guide p{font-size:13px;line-height:1.7;margin:8px 0 12px}.shade-guide button{font-size:13px;padding:7px 16px}.shade-guide:before{content:'';position:absolute;width:12px;height:12px;right:25px;top:-7px;background:white;border-left:1px solid #a8cbb8;border-top:1px solid #a8cbb8;transform:rotate(45deg)}@media(max-width:640px){.shade-guide{right:auto;left:0}.shade-guide:before{right:auto;left:25px}}
 </style></head><body><script>window.APP_CONFIG={"taskId":"urw467xtz4n7","title":"填色盘","kind":"coloring","role":"teacher"};</script><script>(function (root) {
   'use strict';
   const regions = [
@@ -270,7 +272,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     if(busy||document.hidden||navigator.onLine===false||now<retryAt||now-lastUploadAttempt<uploadDelay)return;
     if(!force&&!dirty&&now-lastSent<60000)return;
     busy=true;dirty=false;lastUploadAttempt=now;
-    try{await put(`${kind}:${room}:${studentId}`,payload());lastSent=Date.now();status(true,'已同步');}
+    try{const outgoing=payload();await put(`${kind}:${room}:${studentId}`,outgoing);lastSent=Date.now();status(true,'已同步');if(kind==='coloring'&&outgoing.completed&&!dirty)showShadeGuide();}
     catch{dirty=true;status(false,'正在重连');}
     finally{busy=false;}
   }
@@ -282,12 +284,26 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
   // 调色偏好单独保存在本机，不进入 state 或上传内容。
   const shadeStorageKey=`${localKey}:shades`,localShades=load(shadeStorageKey,{});
   const shadeHues={main:355,function:43,editing:223,numeric:160,indicator:264};
+  function dismissShadeGuide(){
+    $('#shade-guide')?.remove();$('#shade-play')?.classList.remove('guide-active');
+  }
+  function showShadeGuide(){
+    if(!state.completed||!Lesson.coloringProgress(state.colors,keys).perfect||load(localKey+':shade-guide-seen',false))return;
+    const target=$('#shade-play');if(!target||target.classList.contains('hidden'))return;
+    save(localKey+':shade-guide-seen',true);target.classList.add('guide-active');
+    target.insertAdjacentHTML('beforeend','<div id="shade-guide" class="shade-guide" role="dialog" aria-label="试试调色"><strong>全部正确，试试调色！</strong><p>先选左侧区域，再点这里的色块，换个色调。</p><button id="shade-guide-close" class="primary">试试看</button></div>');
+    $('#shade-guide-close').onclick=dismissShadeGuide;
+    $('#shade-guide').addEventListener('keydown',event=>{if(event.key==='Escape')dismissShadeGuide();});
+    const rect=target.getBoundingClientRect();
+    if(rect.top<0||rect.bottom>innerHeight)target.scrollIntoView({behavior:'smooth',block:'center'});
+    $('#shade-guide-close').focus({preventScroll:true});
+  }
   function shadeOptions(id){return [regions.find(r=>r.id===id).color,...[52,60,68,76,84].map(light=>`hsl(${shadeHues[id]} 70% ${light}%)`)];}
   function displayColor(id){const r=regions.find(r=>r.id===id);return r?shadeOptions(id)[localShades[id]]||r.color:'';}
   function renderShades(){
     const id=regions.some(r=>r.id===selected)?selected:regions[0].id;
     $('#shade-options').innerHTML=shadeOptions(id).map((color,i)=>`<button class="shade-option" style="--shade:${color}" data-shade="${i}" aria-label="${regions.find(r=>r.id===id).name}色号 ${i+1}" aria-pressed="${(localShades[id]||0)===i}"></button>`).join('');
-    $$('[data-shade]').forEach(b=>b.onclick=()=>{if(!state.completed||!Lesson.coloringProgress(state.colors,keys).perfect)return;localShades[id]=Number(b.dataset.shade);save(shadeStorageKey,localShades);renderShades();updateColor();});
+    $$('[data-shade]').forEach(b=>b.onclick=()=>{if(!state.completed||!Lesson.coloringProgress(state.colors,keys).perfect)return;dismissShadeGuide();localShades[id]=Number(b.dataset.shade);save(shadeStorageKey,localShades);renderShades();updateColor();});
   }
   function studentColor(){
     main.innerHTML=`<div class="intro coloring-intro"><h1>给键盘涂色</h1><div id="shade-play" class="shade-play hidden"><div id="shade-options" class="shade-options"></div></div></div>`+
@@ -310,6 +326,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
   function updateColor(){
     const progress=Lesson.coloringProgress(state.colors,keys),filled=progress.filled,allFilled=filled===keys.length;
     if(state.completed&&!allFilled){state.completed=false;persist();}
+    if(!state.completed||!progress.perfect||selected==='blank')dismissShadeGuide();
     $('#complete').disabled=!allFilled;
     $('#shade-play').classList.toggle('hidden',!state.completed||!progress.perfect||selected==='blank');
     $('#paint-accuracy').classList.toggle('hidden',!progress.showAccuracy);
