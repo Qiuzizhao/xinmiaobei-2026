@@ -133,6 +133,7 @@
 
 (async function () {
   'use strict';
+  document.addEventListener('contextmenu',event=>event.preventDefault(),{capture:true});
   const {regions,keys,levelInfo,theme,swatch,targetAt,stats,distribution,normalizeStates}=Lesson;
   const $=s=>document.querySelector(s), $$=s=>Array.from(document.querySelectorAll(s));
   const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
