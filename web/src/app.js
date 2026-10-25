@@ -146,7 +146,12 @@
   function updateTyping(displayLevel,displayWithin){
     const actual=levelInfo(state.total),level=displayLevel||actual.level,within=displayWithin??actual.within,target=Lesson.quota(level);
     $('#exercise-label').textContent=level<=2?'找一找 · 字母键':level===3?'找一找 · 主键盘数字键':'试一试 · 字母与数字';
-    $('#targets').innerHTML=Array.from({length:7},(_,i)=>{const position=typingBatchStart+i,done=position<state.total,current=position===state.total;return `<span class="target-char${done?' done':current?' current':''}" ${current?'aria-current="true"':''}>${targetAt(position)}</span>`;}).join('');
+    $('#targets').innerHTML=Array.from({length:7},(_,i)=>{
+      const position=typingBatchStart+i,done=position<state.total,current=position===state.total,char=targetAt(position);
+      const label=({'1':'数字 1','l':'字母 L','0':'数字 0','o':'字母 O'})[char];
+      const glyph=char==='l'?'L':char==='o'?'O':char;
+      return `<span class="target-char${done?' done':current?' current':''}${label?' clarified':''}" ${current?'aria-current="true"':''} aria-label="${label||char}"><span class="char-glyph">${glyph}</span>${label?`<small class="char-kind">${label}</small>`:''}</span>`;
+    }).join('');
     $('#total-count').textContent=`已正确输入 ${state.total} 个`;
     $('#theme-name').textContent=theme(level).name+'色卡';$('#level-name').textContent=`第 ${level} 关`;
     $('#swatch-count').textContent=`已点亮 ${within} / ${target} 格`;
