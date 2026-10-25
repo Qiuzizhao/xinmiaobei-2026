@@ -64,11 +64,11 @@
   function renderShades(){
     const id=$('#shade-region').value;
     $('#shade-options').innerHTML=shadeOptions(id).map((color,i)=>`<button class="shade-option" style="--shade:${color}" data-shade="${i}" aria-label="${regions.find(r=>r.id===id).name}色号 ${i+1}" aria-pressed="${(localShades[id]||0)===i}"></button>`).join('');
-    $$('[data-shade]').forEach(b=>b.onclick=()=>{if(!state.completed)return;localShades[id]=Number(b.dataset.shade);save(shadeStorageKey,localShades);renderShades();updateColor();});
+    $$('[data-shade]').forEach(b=>b.onclick=()=>{if(!state.completed||!Lesson.coloringProgress(state.colors,keys).perfect)return;localShades[id]=Number(b.dataset.shade);save(shadeStorageKey,localShades);renderShades();updateColor();});
   }
   function studentColor(){
     main.innerHTML=`<div class="intro coloring-intro"><h1>给键盘涂色</h1><div id="shade-play" class="shade-play hidden"><select id="shade-region" aria-label="选择调色区域">${regions.map(r=>`<option value="${r.id}">${r.name}</option>`).join('')}</select><div id="shade-options" class="shade-options"></div></div></div>`+
-      `<div class="palette">${regions.map(r=>`<button class="color-choice${r.id===selected?' active':''}" data-color="${r.id}" aria-pressed="${r.id===selected}"><i class="dot" style="--c:${r.color}"></i>${r.name}</button>`).join('')}<button class="color-choice" data-color="blank" aria-pressed="false">◇ 擦除</button><span class="badge" id="paint-count" style="margin-left:auto;align-self:center"></span></div>
+      `<div class="palette">${regions.map(r=>`<button class="color-choice${r.id===selected?' active':''}" data-color="${r.id}" aria-pressed="${r.id===selected}"><i class="dot" style="--c:${r.color}"></i>${r.name}</button>`).join('')}<button class="color-choice" data-color="blank" aria-pressed="false">◇ 擦除</button><span class="paint-feedback"><span class="badge" id="paint-count"></span><span class="badge hidden" id="paint-accuracy" title="已填格子中，分区选择正确的比例"></span></span></div>
       <section class="panel"><div class="keyboard-scroll"><div id="keyboard"></div></div><div class="toolbar"><button id="clear" class="quiet">重新填色</button><span class="spacer"></span><button id="complete" class="primary">我填好了 ✓</button></div><div id="saved-note" class="notice hidden">已完成，还可以修改。</div></section>`;
     Lesson.drawKeyboard($('#keyboard'),(b,k)=>{
       const paint=()=>{if(selected==='blank')delete state.colors[k.id];else state.colors[k.id]=selected;state.completed=false;persist();updateColor();};
@@ -86,10 +86,12 @@
   }
   function paintedCount(){return keys.filter(k=>regions.some(r=>r.id===state.colors[k.id])).length;}
   function updateColor(){
-    const filled=paintedCount(),allFilled=filled===keys.length;
+    const progress=Lesson.coloringProgress(state.colors,keys),filled=progress.filled,allFilled=filled===keys.length;
     if(state.completed&&!allFilled){state.completed=false;persist();}
     $('#complete').disabled=!allFilled;
-    $('#shade-play').classList.toggle('hidden',!state.completed);
+    $('#shade-play').classList.toggle('hidden',!state.completed||!progress.perfect);
+    $('#paint-accuracy').classList.toggle('hidden',!progress.showAccuracy);
+    $('#paint-accuracy').textContent=`正确率 ${progress.accuracy}%`;
     $$('[data-color] .dot').forEach(dot=>{dot.style.background=displayColor(dot.parentElement.dataset.color);});
     $$('.key').forEach(b=>{const id=state.colors[b.dataset.key],r=regions.find(x=>x.id===id);b.style.background=displayColor(id);b.setAttribute('aria-label',`${keys.find(k=>k.id===b.dataset.key)?.label||'空格键'}，${r?.name||'未填色'}`);});
     $('#paint-count').textContent=`已填 ${filled} / ${keys.length} 格`;

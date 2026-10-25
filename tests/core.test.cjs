@@ -43,3 +43,17 @@ test('新课堂为简短六位编号，不包含年级或易混淆字符',()=>{
   const code=L.roomCode(new Uint8Array([0,7,15,30,120,255]));
   assert.equal(code.length,6);assert.match(code,/^[2-9A-HJ-NP-Z]{6}$/);
 });
+
+test('填色过半才显示正确率，全部正确才解锁，未填和非法颜色不计入',()=>{
+  const keys=Array.from({length:107},(_,i)=>({id:String(i),region:i%2?'main':'numeric'}));
+  const colors={};
+  assert.equal(L.coloringProgress(colors,keys).showAccuracy,false);
+  for(let i=0;i<53;i++)colors[i]=keys[i].region;
+  assert.equal(L.coloringProgress(colors,keys).showAccuracy,false);
+  colors[53]=keys[53].region;
+  let p=L.coloringProgress(colors,keys);assert.equal(p.showAccuracy,true);assert.equal(p.accuracy,100);assert.equal(p.perfect,false);
+  for(let i=54;i<107;i++)colors[i]=keys[i].region;
+  assert.equal(L.coloringProgress(colors,keys).perfect,true);
+  colors[106]='main';p=L.coloringProgress(colors,keys);assert.equal(p.perfect,false);assert.ok(p.accuracy<100);
+  colors[106]='invalid';assert.equal(L.coloringProgress(colors,keys).filled,106);
+});

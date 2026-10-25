@@ -4,3 +4,5 @@
 #complete:disabled{cursor:not-allowed}
 
 .coloring-intro{align-items:center;min-height:76px}.shade-play{display:flex;align-items:center;gap:12px;padding:10px 12px;background:#fff;border:1px solid var(--line);border-radius:14px}.shade-play select{font-size:13px;padding:7px 9px}.shade-options{display:flex;gap:7px}.shade-option{width:28px;height:28px;padding:0;border-radius:7px;background:var(--shade);border:2px solid transparent}.shade-option[aria-pressed=true]{border-color:var(--ink);box-shadow:0 0 0 2px white inset}@media(max-width:600px){.shade-play{flex-wrap:wrap;max-width:100%}}
+
+.paint-feedback{margin-left:auto;align-self:center;display:flex;align-items:center;gap:8px;flex-wrap:wrap}

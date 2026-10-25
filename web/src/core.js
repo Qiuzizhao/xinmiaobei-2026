@@ -62,6 +62,14 @@
     people.forEach(p=>{const id=p.colors?.[key]; counts[id in counts && id!=='blank'?id:'blank']++;});
     return counts;
   }
+  function coloringProgress(colors,keys){
+    const valid=new Set(regions.map(r=>r.id));
+    const filled=keys.filter(k=>valid.has(colors[k.id])).length;
+    const correct=keys.filter(k=>valid.has(colors[k.id])&&colors[k.id]===k.region).length;
+    return {filled,correct,showAccuracy:filled>keys.length/2,
+      accuracy:filled?Math.floor(correct/filled*1000)/10:0,
+      perfect:keys.length>0&&correct===keys.length};
+  }
   function normalizeStates(response) {
     if (!response || response.ok===false || !response.states || typeof response.states!=='object') throw Error('状态数据格式不正确');
     if(response.truncated) throw Error('状态数量超过平台单次读取范围，请更换课堂编号或任务');
@@ -77,7 +85,7 @@
     return [...map.values()].sort((a,b)=>(b.createdAt||0)-(a.createdAt||0)||a.id.localeCompare(b.id));
   }
   function roomCode(bytes){const alphabet='23456789ABCDEFGHJKLMNPQRSTUVWXYZ';return Array.from(bytes,b=>alphabet[b%alphabet.length]).join('');}
-  const api={regions,themes,quota,levelInfo,theme,swatch,targetAt,typingKey,stats,distribution,normalizeStates,mergeClassrooms,roomCode};
+  const api={regions,themes,quota,levelInfo,theme,swatch,targetAt,typingKey,stats,distribution,coloringProgress,normalizeStates,mergeClassrooms,roomCode};
   if(typeof module!=='undefined' && module.exports) module.exports=api;
   else root.Lesson=api;
 })(typeof window!=='undefined'?window:globalThis);
