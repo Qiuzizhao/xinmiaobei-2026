@@ -18,3 +18,26 @@
 .typing-main .typing-task{container-type:inline-size}@container(max-width:720px){.typing-main .target-char.current{width:62px;height:80px;font-size:40px;border-radius:12px;box-shadow:0 5px 0 #18543f}.typing-main .target-char.current .char-kind{font-size:10px;bottom:4px}}@media(max-width:600px){.typing-main .target-char.current{width:42px;height:64px;font-size:29px;border-radius:11px}.typing-main .target-char.current .char-kind{font-size:8px}}
 
 .target-char.letter-o .char-glyph{font-family:Arial,'Segoe UI',sans-serif;font-weight:500;font-variant-numeric:normal;font-feature-settings:normal}
+
+/* Keep async updates from moving the classroom layout. */
+html{overflow-y:scroll;scrollbar-gutter:stable}
+body{overflow-anchor:none}
+.badge,.status,.level-tag,.hist-row,.typing-bottom{font-variant-numeric:tabular-nums}
+#sync{width:120px;max-width:26vw;white-space:nowrap;overflow:hidden;flex-shrink:0}
+.collection-list{min-height:256px;align-items:flex-start;align-content:flex-start}
+.mini-card{height:112px;flex:0 0 105px}
+.mini-card small{height:30px;line-height:15px}
+.typing-task>.section-head{min-height:40px}
+.input-hint{height:3.6em;min-height:3.6em;line-height:1.8;display:grid;align-items:center}
+#paint-count{min-width:138px;justify-content:center}
+#paint-accuracy{width:126px;justify-content:center}
+#paint-accuracy.hidden{display:inline-flex!important;visibility:hidden}
+#shade-play.hidden{display:flex!important;visibility:hidden}
+#saved-note.hidden,#empty-hint.hidden{display:block!important;visibility:hidden}
+#complete{min-width:142px}
+.teacher-bar select{width:340px;flex:0 1 340px;min-width:0}
+#new-room{width:132px;flex-shrink:0}
+#answer-toggle{min-width:146px}
+#histogram{height:280px;overflow-y:auto;scrollbar-gutter:stable;overscroll-behavior:contain}
+#snapshots{height:196px;overflow-y:auto;scrollbar-gutter:stable;overscroll-behavior:contain}
+#snapshot-message{min-height:3.6em;line-height:1.8}

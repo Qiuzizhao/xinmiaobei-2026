@@ -19,4 +19,27 @@
 .typing-main .typing-task{container-type:inline-size}@container(max-width:720px){.typing-main .target-char.current{width:62px;height:80px;font-size:40px;border-radius:12px;box-shadow:0 5px 0 #18543f}.typing-main .target-char.current .char-kind{font-size:10px;bottom:4px}}@media(max-width:600px){.typing-main .target-char.current{width:42px;height:64px;font-size:29px;border-radius:11px}.typing-main .target-char.current .char-kind{font-size:8px}}
 
 .target-char.letter-o .char-glyph{font-family:Arial,'Segoe UI',sans-serif;font-weight:500;font-variant-numeric:normal;font-feature-settings:normal}
+
+/* Keep async updates from moving the classroom layout. */
+html{overflow-y:scroll;scrollbar-gutter:stable}
+body{overflow-anchor:none}
+.badge,.status,.level-tag,.hist-row,.typing-bottom{font-variant-numeric:tabular-nums}
+#sync{width:120px;max-width:26vw;white-space:nowrap;overflow:hidden;flex-shrink:0}
+.collection-list{min-height:256px;align-items:flex-start;align-content:flex-start}
+.mini-card{height:112px;flex:0 0 105px}
+.mini-card small{height:30px;line-height:15px}
+.typing-task>.section-head{min-height:40px}
+.input-hint{height:3.6em;min-height:3.6em;line-height:1.8;display:grid;align-items:center}
+#paint-count{min-width:138px;justify-content:center}
+#paint-accuracy{width:126px;justify-content:center}
+#paint-accuracy.hidden{display:inline-flex!important;visibility:hidden}
+#shade-play.hidden{display:flex!important;visibility:hidden}
+#saved-note.hidden,#empty-hint.hidden{display:block!important;visibility:hidden}
+#complete{min-width:142px}
+.teacher-bar select{width:340px;flex:0 1 340px;min-width:0}
+#new-room{width:132px;flex-shrink:0}
+#answer-toggle{min-width:146px}
+#histogram{height:280px;overflow-y:auto;scrollbar-gutter:stable;overscroll-behavior:contain}
+#snapshots{height:196px;overflow-y:auto;scrollbar-gutter:stable;overscroll-behavior:contain}
+#snapshot-message{min-height:3.6em;line-height:1.8}
 </style></head><body><header><div class="brand"><span class="brandmark">▦</span><span>认识键盘<small>三年级信息科技 · 课堂互动</small></span></div><span class="badge">第一版 · 动手试一试</span></header><main><div class="eyebrow">观察 · 尝试 · 发现</div><h1>从认识键盘，<br>到点亮每一种颜色。</h1><p>两项独立活动，让每个孩子都有自己的尝试节奏。无需填写姓名或座位号。</p><div class="home-grid"><section class="panel home-card"><div class="home-art"><i style="--c:#ed6874"></i><i style="--c:#f1bf52"></i><i style="--c:#54b997"></i><i style="--c:#688ee6"></i><i style="--c:#a287cf"></i></div><div class="eyebrow">任务 01</div><h2>填色盘</h2><p>选一支颜色，给键盘分区。教师看见全班的颜色。</p><a class="primary" style="padding:12px 18px;border-radius:12px" href="coloring/student.html">进入学生端 →</a><a href="coloring/teacher.html">教师看板 ↗</a><p class="tips"><a href="coloring/teacher.html?demo=1">本机示例体验</a></p></section><section class="panel home-card"><div class="home-art"><i style="--c:#ed6874"></i><i style="--c:#f1bf52"></i><i style="--c:#54b997"></i><i style="--c:#688ee6"></i><i style="--c:#a287cf"></i></div><div class="eyebrow">任务 02</div><h2>收集色卡</h2><p>每正确输入一次，点亮一格，收集一片新的色彩。</p><a class="primary" style="padding:12px 18px;border-radius:12px" href="typing/student.html">进入学生端 →</a><a href="typing/teacher.html">教师看板 ↗</a><p class="tips"><a href="typing/teacher.html?demo=1">本机示例体验</a></p></section></div><p class="footer-note">教师先打开看板，新建课堂，再复制该课堂的学生链接。两项活动分别使用独立的 QForm 任务。</p></main></body></html>

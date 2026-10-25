@@ -3,6 +3,11 @@
   document.addEventListener('contextmenu',event=>event.preventDefault(),{capture:true});
   const {regions,keys,levelInfo,theme,swatch,targetAt,stats,distribution,normalizeStates}=Lesson;
   const $=s=>document.querySelector(s), $$=s=>Array.from(document.querySelectorAll(s));
+  function replaceHTML(target,html){
+    if(target.innerHTML===html)return;
+    const scrollTop=target.scrollTop;
+    target.innerHTML=html;target.scrollTop=scrollTop;
+  }
   const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const cfg=window.APP_CONFIG, kind=cfg.kind, teacher=cfg.role==='teacher';
   if(!teacher){
@@ -34,7 +39,7 @@
   const demoKey=`${storagePrefix}demo-state:${room}`;
   let toastTimer;
   function toast(message){let e=$('#toast');if(!e){e=document.createElement('div');e.id='toast';e.className='toast';e.setAttribute('role','status');document.body.append(e);}e.textContent=message;clearTimeout(toastTimer);toastTimer=setTimeout(()=>e.remove(),3200);}
-  function status(ok,text){const e=$('#sync');if(!e)return;e.className='status '+(ok?'ok':'error');e.textContent=text;isOnline=ok;}
+  function status(ok,text){const e=$('#sync');if(!e)return;e.className='status '+(ok?'ok':'error');e.textContent=text;e.title=text;isOnline=ok;}
   async function request(path,method='GET',body){
     if(navigator.onLine===false||Date.now()<retryAt)throw Error('等待网络恢复或重试窗口');
     const ctrl=new AbortController(), timer=setTimeout(()=>ctrl.abort(),8000);
@@ -293,7 +298,7 @@
     }catch{$('#snapshots').innerHTML='<p class="tips">历史快照暂时无法读取，实时看板仍可使用。</p>';}
   }
   function renderSnapshots(){
-    const target=$('#snapshots');target.innerHTML=snapshots.length?snapshots.slice().reverse().map((s,i)=>`<div class="snapshot-row"><span>${esc(s.label)} · ${s.people.length} 人<br><small>${new Date(s.createdAt).toLocaleTimeString('zh-CN')}</small></span><button data-snapshot="${snapshots.length-1-i}">查看</button></div>`).join(''):'<p class="tips">还没有保存快照。</p>';
+    const target=$('#snapshots');replaceHTML(target,snapshots.length?snapshots.slice().reverse().map((s,i)=>`<div class="snapshot-row"><span>${esc(s.label)} · ${s.people.length} 人<br><small>${new Date(s.createdAt).toLocaleTimeString('zh-CN')}</small></span><button data-snapshot="${snapshots.length-1-i}">查看</button></div>`).join(''):'<p class="tips">还没有保存快照。</p>');
     $$('[data-snapshot]').forEach(b=>b.onclick=()=>{viewSnapshot=snapshots[Number(b.dataset.snapshot)];showAnswer=false;renderColorTeacher();});
   }
   function teacherTyping(){
@@ -305,7 +310,7 @@
     const s=stats(people);$('#t-count').innerHTML=s.count+'<small>人</small>';$('#t-max').innerHTML=s.count?s.max+'<small>关</small>':'—';$('#t-mean').innerHTML=s.count?s.mean.toFixed(1)+'<small>关</small>':'—';$('#t-total').innerHTML=people.reduce((sum,p)=>sum+(Number(p.total)||0),0)+'<small>个</small>';
     $('#percentiles').innerHTML=s.thresholds.map(x=>`<div class="percentile-card"><span>前 ${x.percent}% 学生至少到</span><strong>${s.count?'第 '+x.level+' 关':'等待加入'}</strong></div>`).join('');
     const counts={};people.forEach(p=>{const lv=levelInfo(p.total).level;counts[lv]=(counts[lv]||0)+1;});
-    $('#histogram').innerHTML=s.count?Object.keys(counts).sort((a,b)=>Number(a)-Number(b)).map(l=>`<div class="hist-row"><span>第 ${l} 关</span><div class="hist-bar"><span style="width:${counts[l]/s.count*100}%;background:${swatch(Number(l),4,12)}"></span></div><span>${counts[l]} 人</span></div>`).join(''):'<div class="empty">学生开始输入后，这里会出现关卡分布。</div>';
+    replaceHTML($('#histogram'),s.count?Object.keys(counts).sort((a,b)=>Number(a)-Number(b)).map(l=>`<div class="hist-row"><span>第 ${l} 关</span><div class="hist-bar"><span style="width:${counts[l]/s.count*100}%;background:${swatch(Number(l),4,12)}"></span></div><span>${counts[l]} 人</span></div>`).join(''):'<div class="empty">学生开始输入后，这里会出现关卡分布。</div>');
     const online=people.filter(p=>Date.now()-p.updatedAt<90000).length;
     $('#typing-observation').textContent=`最近在线 ${online} 人 · 当前关卡为正在挑战的关卡`;
   }
