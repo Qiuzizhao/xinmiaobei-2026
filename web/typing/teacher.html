@@ -12,7 +12,15 @@
   ];
   const themes = [
     ['珊瑚红', 355], ['日落橙', 24], ['向阳黄', 45], ['薄荷绿', 146],
-    ['浅海青', 181], ['晴空蓝', 211], ['鸢尾紫', 266], ['玫瑰粉', 321]
+    ['浅海青', 181], ['晴空蓝', 211], ['鸢尾紫', 266], ['玫瑰粉', 321],
+    ['草莓红', 348, 85], ['蜜桃粉', 10, 65], ['南瓜橙', 28, 86], ['琥珀金', 38, 90],
+    ['柠檬黄', 56, 88], ['青柠绿', 79, 76], ['嫩芽绿', 99, 65], ['青草绿', 120, 60],
+    ['森林绿', 140, 48], ['翡翠绿', 158, 76], ['湖水青', 172, 65], ['冰川青', 190, 56],
+    ['海盐蓝', 201, 48], ['蔚蓝海', 219, 82], ['宝石蓝', 230, 85], ['星夜蓝', 242, 55],
+    ['风信紫', 252, 62], ['薰衣紫', 275, 50], ['葡萄紫', 286, 72], ['丁香紫', 297, 46],
+    ['兰花紫', 309, 66], ['樱花粉', 333, 56], ['西瓜红', 359, 82], ['石榴红', 342, 64],
+    ['奶茶棕', 30, 36], ['可可棕', 19, 32], ['沙滩金', 43, 52], ['橄榄绿', 68, 38],
+    ['鼠尾草', 133, 28], ['孔雀青', 183, 84], ['雾霭蓝', 214, 30], ['暮云紫', 263, 30]
   ];
   function quota(level) { return level === 1 ? 12 : level === 2 ? 20 : 30; }
   function levelInfo(total) {
@@ -23,11 +31,11 @@
   }
   function theme(level) {
     const item = themes[(level-1)%themes.length];
-    return {name:item[0], hue:(item[1]+Math.floor((level-1)/themes.length)*7)%360};
+    return {name:item[0], hue:(item[1]+Math.floor((level-1)/themes.length)*7)%360, saturation:item[2]??73};
   }
   function swatch(level, i, n) {
     const t = theme(level), light=36 + (i/Math.max(1,n-1))*48;
-    return `hsl(${t.hue + (i%4-1.5)*3} 73% ${light}%)`;
+    return `hsl(${t.hue + (i%4-1.5)*3} ${t.saturation}% ${light}%)`;
   }
   const alphabet='abcdefghijklmnopqrstuvwxyz', digits='1234567890';
   function targetAt(total) {
