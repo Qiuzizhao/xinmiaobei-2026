@@ -51,7 +51,7 @@
     catch{dirty=true;status(false,'正在重连');}
     finally{busy=false;}
   }
-  document.body.innerHTML=`<header><div class="brand"><span class="brandmark">${kind==='coloring'?'▦':'◈'}</span><span>${cfg.title}<small>认识键盘 · ${teacher?'教师看板':'一起动手试一试'}</small></span></div><div style="display:flex;gap:8px;align-items:center"><span class="badge">${teacher?'教师端':'学生端'}</span><span class="status" id="sync">正在连接</span></div></header><main id="main"></main>`;
+  document.body.innerHTML=`<header><div class="brand"><span class="brandmark">${kind==='coloring'?'▦':'◈'}</span><span>${cfg.title}${teacher?'<small>认识键盘 · 教师看板</small>':''}</span></div><div style="display:flex;gap:8px;align-items:center"><span class="badge">${teacher?'教师端':'学生端'}</span><span class="status" id="sync">正在连接</span></div></header><main id="main"></main>`;
   const main=$('#main');
   if(demo)main.insertAdjacentHTML('beforebegin','<div class="offline-banner" style="margin:12px 4vw 0">示例体验 · 不计入课堂</div>');
   function intro(title,desc,tag){return `<div class="intro"><div><h1>${title}</h1>${desc?`<p>${desc}</p>`:''}</div></div>`;}
