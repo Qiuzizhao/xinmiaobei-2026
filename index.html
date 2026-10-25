@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>认识键盘 · 课程入口</title>
+  <style>
+    :root { color-scheme: light; font-family: "Microsoft YaHei", "PingFang SC", system-ui, sans-serif; color: #243b33; background: #f5f7f2; }
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    main { max-width: 940px; margin: 0 auto; padding: 72px 28px 40px; }
+    .label { margin: 0 0 10px; font-size: 13px; color: #708275; letter-spacing: .12em; }
+    h1 { margin: 0 0 36px; font-size: clamp(30px, 5vw, 42px); }
+    .activities { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; }
+    .card { padding: 28px; border: 1px solid #dfe7dd; border-radius: 20px; background: #fff; }
+    .swatches { display: flex; gap: 7px; margin-bottom: 27px; }
+    .swatches span { width: 29px; height: 29px; border-radius: 7px; background: var(--color); }
+    .number { font-size: 12px; font-weight: 600; color: #7d8d81; }
+    h2 { margin: 9px 0 22px; font-size: 23px; }
+    .links { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    a { color: inherit; text-decoration: none; }
+    .button { display: block; padding: 13px 12px; text-align: center; border: 1px solid #cfdfd3; border-radius: 11px; font-size: 15px; font-weight: 600; background: #f3f7f1; transition: background .15s; }
+    .button.primary { color: #fff; background: #27765c; border-color: #27765c; }
+    .button:hover { background: #e7f0e5; }
+    .button.primary:hover { background: #1e604a; }
+    a:focus-visible { outline: 3px solid #7db99a; outline-offset: 4px; }
+    .document { display: flex; justify-content: space-between; align-items: center; gap: 18px; margin-top: 22px; padding: 23px 28px; border: 1px solid #dfe7dd; border-radius: 17px; background: #fff; }
+    .document strong { display: block; font-size: 18px; }
+    .document span { display: block; margin-top: 5px; color: #7b8b7d; font-size: 13px; }
+    .document .button { min-width: 120px; }
+    footer { margin-top: 24px; color: #7b8b7d; font-size: 13px; line-height: 1.8; }
+    @media (max-width: 650px) { main { padding: 38px 18px; } .activities { grid-template-columns: 1fr; } .card { padding: 24px; } .document { padding: 21px; } }
+    @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <p class="label">小学三年级 · 信息科技</p>
+      <h1>认识键盘</h1>
+    </header>
+    <div class="activities">
+      <section class="card" aria-labelledby="coloring-title">
+        <div class="swatches" aria-hidden="true">
+          <span style="--color:#ed6874"></span><span style="--color:#f1bf52"></span><span style="--color:#688ee6"></span><span style="--color:#54b997"></span><span style="--color:#a287cf"></span>
+        </div>
+        <span class="number">活动 01</span>
+        <h2 id="coloring-title">键盘填色</h2>
+        <div class="links">
+          <a class="button primary" href="https://qiuform.qiuzizhao.com/p/urw467xtz4n7/student.html" target="_blank" rel="noopener noreferrer" aria-label="键盘填色学生端，新标签页打开">学生端 ↗</a>
+          <a class="button" href="https://qiuform.qiuzizhao.com/p/urw467xtz4n7/teacher.html" target="_blank" rel="noopener noreferrer" aria-label="键盘填色教师端，新标签页打开">教师端 ↗</a>
+        </div>
+      </section>
+      <section class="card" aria-labelledby="typing-title">
+        <div class="swatches" aria-hidden="true">
+          <span style="--color:#a91f38"></span><span style="--color:#c73c52"></span><span style="--color:#e16070"></span><span style="--color:#ef8a96"></span><span style="--color:#f6b6bc"></span>
+        </div>
+        <span class="number">活动 02</span>
+        <h2 id="typing-title">打字点亮色卡</h2>
+        <div class="links">
+          <a class="button primary" href="https://qiuform.qiuzizhao.com/p/cujbj48aycbw/student.html" target="_blank" rel="noopener noreferrer" aria-label="打字练习学生端，新标签页打开">学生端 ↗</a>
+          <a class="button" href="https://qiuform.qiuzizhao.com/p/cujbj48aycbw/teacher.html" target="_blank" rel="noopener noreferrer" aria-label="打字练习教师端，新标签页打开">教师端 ↗</a>
+        </div>
+      </section>
+    </div>
+    <section class="document" aria-labelledby="document-title">
+      <div><strong id="document-title">教学流程</strong><span>40 分钟 · 环节安排与教师提示语</span></div>
+      <a class="button" href="认识键盘-教学流程.html" target="_blank" rel="noopener" aria-label="教学流程文档，新标签页打开">打开文档 ↗</a>
+    </section>
+    <footer>上课前，在教师端新建课堂，再复制学生链接下发。</footer>
+  </main>
+</body>
+</html>
