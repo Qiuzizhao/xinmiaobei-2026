@@ -295,7 +295,7 @@
   }
   function showTip(k,b,e){
     const tip=$('#tooltip'),data=shownPeople(),counts=distribution(data,k.id),mix=mixShares(counts),filled=mix.filled;
-    tip.innerHTML=`<strong>${esc(k.label||'空格键')}${k.region==='indicator'?' 指示灯':''}</strong>`+regions.map(r=>`<div class="tiprow"><span><i class="dot" style="--c:${r.color}"></i>${r.name}</span><span>${counts[r.id]} 人 · ${filled?Math.round(counts[r.id]/filled*100):0}%</span></div>`).join('')+(counts.blank?`<div class="tiptotal">未填 ${counts.blank} 人（不计入混色）</div>`:'');
+    tip.innerHTML=`<strong>${esc(k.label||'空格键')}${k.region==='indicator'?' 指示灯':''}</strong>`+regions.map(r=>`<div class="tiprow"><span><i class="dot" style="--c:${r.color}"></i>${r.name}</span><span>${counts[r.id]} 人 · ${filled?Math.round(counts[r.id]/filled*100):0}%</span></div>`).join('');
     tip.classList.remove('hidden');const rect=b.getBoundingClientRect();positionTip(e?.clientX||rect.x,e?.clientY||rect.y);
   }
   function positionTip(x,y){const tip=$('#tooltip');tip.style.left=Math.max(8,Math.min(x+15,innerWidth-tip.offsetWidth-8))+'px';tip.style.top=Math.max(8,Math.min(y+15,innerHeight-tip.offsetHeight-12))+'px';}
