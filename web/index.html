@@ -91,4 +91,61 @@ body{overflow-anchor:none}
 @media(max-width:900px){.quiz-match,.home-grid{grid-template-columns:1fr}.kb-sil{max-width:100%}}
 
 @media(min-width:901px){.coloring-metrics{grid-template-columns:repeat(5,minmax(0,1fr))}}
+/* Knowledge practice: compact progress, readable choices and stable feedback. */
+.quiz-main{max-width:1080px;padding-top:28px}
+.quiz-topline{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:14px;min-height:44px}
+.quiz-counter{color:var(--muted);font-size:16px;font-variant-numeric:tabular-nums}
+.quiz-counter strong{color:var(--ink);font-size:28px;margin:0 4px}
+.quiz-progress{height:7px;margin-bottom:22px}
+.quiz-card{padding:30px 34px}
+.quiz-type{display:inline-block;margin-bottom:12px;color:var(--green);font-size:13px;font-weight:700}
+.quiz-card h2{font-size:clamp(21px,2.1vw,27px);margin-bottom:26px;line-height:1.5}
+.quiz-choices{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;min-height:182px;align-content:start}
+.quiz-choice{display:flex;align-items:center;gap:14px;min-height:84px;padding:18px;text-align:left;font-size:18px;line-height:1.5;transition:border-color .15s,background .15s}
+.choice-letter{display:grid;place-items:center;width:36px;height:36px;flex:none;border-radius:10px;background:#f0f4ee;color:var(--muted);font-size:16px}
+.choice-text{flex:1}
+.choice-result{width:22px;flex:none;font-size:23px}
+.quiz-choice:disabled,.quiz-card .match-item:disabled{opacity:1;cursor:default}
+.quiz-choice.correct .choice-letter{background:#cae9d9;color:#176648}
+.quiz-choice.correct .choice-result:after{content:'✓';color:#176648}
+.quiz-choice.wrong .choice-result:after{content:'×';color:#a14b30}
+.quiz-feedback{display:flex;align-items:center;margin-top:22px;min-height:52px;line-height:1.6}
+.quiz-feedback.hidden{display:flex!important;visibility:hidden}
+#quiz-actions{min-height:48px;margin-top:18px}
+#quiz-actions .primary{min-width:132px}
+.quiz-match{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:36px}
+.match-col{gap:12px}
+.match-item{position:relative;justify-content:center;min-height:100px;padding:16px 18px}
+.match-name{display:flex;align-items:center;gap:12px}
+.match-name strong{font-size:18px}
+.pair-number{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:#e8eee7;color:var(--green);font-size:14px;flex:none}
+.match-item small{padding-left:40px;font-size:13px;line-height:1.5}
+.match-item.active{background:#eff7f2}
+.match-item.paired{border-color:#a8c8b7}
+.match-item.right{min-height:100px;font-size:16px;line-height:1.6;padding-right:58px}
+.match-item.taken{opacity:1;background:#edf5ef;border-color:#a8c8b7}
+.paired-mark{position:absolute;right:12px;top:12px;padding:3px 7px;border-radius:8px;background:#d5e9dc;color:#21664d;font-size:12px}
+.kb-sil{max-width:230px;grid-template-rows:16px 50px;gap:5px}
+.kb-sil-part.row-top{grid-column:1/3;grid-row:1}
+.kb-sil-part.block-light{grid-column:3;grid-row:1}
+.kb-sil-part.block-num{grid-column:3;grid-row:2}
+.quiz-dashboard{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:22px;align-items:start}
+.quiz-dashboard .section-head{min-height:36px;margin-bottom:14px}
+#q-progress-bars,#q-wrong{height:510px;overflow-y:auto;scrollbar-gutter:stable;padding-right:8px}
+#q-progress-bars .hist-row{grid-template-columns:65px 1fr 52px;gap:12px}
+.quiz-wrong-row{padding:16px 0}
+.quiz-wrong-row p{font-size:14px;line-height:1.6}
+.quiz-wrong-head span{font-size:12px;color:var(--muted);white-space:nowrap}
+.quiz-review-row{background:#fff;padding:16px}
+@media(max-width:760px){
+ .quiz-card{padding:24px 20px}.quiz-choices{grid-template-columns:1fr;min-height:0}.quiz-choice{min-height:70px;font-size:17px}
+ .quiz-match{gap:14px}.match-item{padding:12px;min-height:112px}.match-item.right{min-height:112px;padding:12px 12px 30px}
+ .match-name{gap:6px}.match-name strong{font-size:15px}.pair-number{width:23px;height:23px}.match-item small{padding-left:0;font-size:12px}
+ .paired-mark{top:auto;bottom:6px;right:8px}.quiz-dashboard{grid-template-columns:1fr}
+ #q-progress-bars{height:auto;max-height:480px}#q-wrong{height:480px}
+}
+
+.quiz-card .match-item{min-height:82px;padding-top:12px;padding-bottom:12px}
+.quiz-match.shapes .match-item{min-height:100px}
+@media(max-width:760px){.quiz-card .match-item.right{padding-bottom:30px}.quiz-card .match-item{min-height:100px}}
 </style></head><body><header><div class="brand"><span class="brandmark">▦</span><span>认识键盘<small>三年级信息科技 · 课堂互动</small></span></div><span class="badge">第一版 · 动手试一试</span></header><main><div class="eyebrow">观察 · 尝试 · 发现</div><h1>从认识键盘，<br>到点亮每一种颜色。</h1><p>三项独立活动，让每个孩子都有自己的尝试节奏。无需填写姓名或座位号。</p><div class="home-grid"><section class="panel home-card"><div class="home-art"><i style="--c:#ed6874"></i><i style="--c:#f1bf52"></i><i style="--c:#54b997"></i><i style="--c:#688ee6"></i><i style="--c:#a287cf"></i></div><div class="eyebrow">任务 01</div><h2>填色盘</h2><p>选一支颜色，给键盘分区。教师看见全班的颜色。</p><a class="primary" style="padding:12px 18px;border-radius:12px" href="coloring/student.html">进入学生端 →</a><a href="coloring/teacher.html">教师看板 ↗</a><p class="tips"><a href="coloring/teacher.html?demo=1">本机示例体验</a></p></section><section class="panel home-card"><div class="home-art"><i style="--c:#ed6874"></i><i style="--c:#f1bf52"></i><i style="--c:#54b997"></i><i style="--c:#688ee6"></i><i style="--c:#a287cf"></i></div><div class="eyebrow">任务 02</div><h2>收集色卡</h2><p>每正确输入一次，点亮一格，收集一片新的色彩。</p><a class="primary" style="padding:12px 18px;border-radius:12px" href="typing/student.html">进入学生端 →</a><a href="typing/teacher.html">教师看板 ↗</a><p class="tips"><a href="typing/teacher.html?demo=1">本机示例体验</a></p></section><section class="panel home-card"><div class="home-art"><i style="--c:#ed6874"></i><i style="--c:#f1bf52"></i><i style="--c:#54b997"></i><i style="--c:#688ee6"></i><i style="--c:#a287cf"></i></div><div class="eyebrow">任务 03</div><h2>知识点练习</h2><p>区名、作用和位置示意图，答完立刻知道对不对。</p><a class="primary" style="padding:12px 18px;border-radius:12px" href="quiz/student.html">进入学生端 →</a><a href="quiz/teacher.html">教师看板 ↗</a><p class="tips"><a href="quiz/teacher.html?demo=1">本机示例体验</a></p></section></div><p class="footer-note">教师先打开看板，新建课堂，再复制该课堂的学生链接。三项活动分别使用独立的 QForm 任务。</p></main></body></html>

@@ -251,13 +251,13 @@
     const answered=state.answers[q.id];
     quizDraft=answered?.value && typeof answered.value==='object' && !answered.checked ? {...answered.value} : (answered?.checked?{...(typeof answered.value==='object'?answered.value:{})}:{});
     if(answered?.checked && q.type==='mcq') quizDraft={};
-    main.innerHTML=`<div class="intro quiz-intro"><div><div class="eyebrow">知识点练习</div><h1>第 ${state.index+1} / ${quizQuestions.length} 题</h1><p>答完一题立刻知道对不对，再进入下一题。</p></div><span class="badge">已答对 ${progress.correct} 题</span></div>
+    main.innerHTML=`<div class="quiz-topline"><span class="quiz-counter">第 <strong>${state.index+1}</strong> / ${quizQuestions.length} 题</span><span class="badge">已答对 ${progress.correct} 题</span></div>
       <div class="progress-track quiz-progress"><span style="width:${progress.answered/quizQuestions.length*100}%"></span></div>
-      <section class="panel quiz-card" id="quiz-card"><h2>${esc(q.prompt)}</h2><div id="quiz-body"></div><div id="quiz-feedback" class="quiz-feedback hidden" role="status"></div><div class="toolbar" id="quiz-actions"></div></section>`;
+      <section class="panel quiz-card" id="quiz-card"><span class="quiz-type">${q.type==='mcq'?'选一选':'配一配 · 先选左边，再选右边'}</span><h2>${esc(q.prompt)}</h2><div id="quiz-body"></div><div id="quiz-feedback" class="quiz-feedback hidden" role="status"></div><div class="toolbar" id="quiz-actions"></div></section>`;
     const body=$('#quiz-body'), actions=$('#quiz-actions'), feedback=$('#quiz-feedback');
     const locked=!!answered?.checked;
     if(q.type==='mcq'){
-      body.innerHTML=`<div class="quiz-choices">${q.choices.map(c=>`<button type="button" class="quiz-choice" data-choice="${c.id}" ${locked?'disabled':''}>${esc(c.text)}</button>`).join('')}</div>`;
+      body.innerHTML=`<div class="quiz-choices">${q.choices.map((c,i)=>`<button type="button" class="quiz-choice" data-choice="${c.id}" ${locked?'disabled':''}><span class="choice-letter">${String.fromCharCode(65+i)}</span><span class="choice-text">${esc(c.text)}</span><span class="choice-result" aria-hidden="true"></span></button>`).join('')}</div>`;
       if(locked){
         $$('.quiz-choice').forEach(b=>{b.classList.toggle('correct',b.dataset.choice===q.answer);b.classList.toggle('wrong',answered.value===b.dataset.choice&&!answered.correct);b.classList.toggle('picked',answered.value===b.dataset.choice);});
         showQuizFeedback(answered.correct, q);actions.innerHTML=`<span class="spacer"></span><button id="quiz-next" class="primary">下一题</button>`;
@@ -296,6 +296,9 @@
   }
   function showQuizFeedback(correct,q){
     const feedback=$('#quiz-feedback');if(!feedback)return;
+    const progress=quizProgress(state.answers);
+    $('.quiz-topline .badge').textContent=`已答对 ${progress.correct} 题`;
+    $('.quiz-progress span').style.width=progress.answered/quizQuestions.length*100+'%';
     feedback.classList.remove('hidden','ok','bad');feedback.classList.add(correct?'ok':'bad');
     feedback.textContent=correct?'答对了！':'再想一想，正确答案已标出。';
   }
@@ -306,14 +309,14 @@
   function renderMatchBody(q, pairs, locked){
     const body=$('#quiz-body');if(!body)return;
     const usedRight=new Set(Object.values(pairs||{}));
-    body.innerHTML=`<div class="quiz-match"><div class="match-col">${q.left.map(item=>{
+    body.innerHTML=`<div class="quiz-match${q.type==='match-shape'?' shapes':''}"><div class="match-col">${q.left.map((item,index)=>{
       const paired=pairs[item.id];const right=paired&&q.right.find(r=>r.id===paired);
-      const label=right?(q.type==='match-shape'?regionLabelFromShape(right):right.text):'点这里，再点右边配对';
-      return `<button type="button" class="match-item left${quizPickLeft===item.id?' active':''}${paired?' paired':''}${locked?(pairs[item.id]===q.answer[item.id]?' correct':' wrong'):''}" data-left="${item.id}" ${locked?'disabled':''}><strong>${esc(item.text)}</strong><small>${esc(label)}</small></button>`;
+      const label=right?(q.type==='match-shape'?regionLabelFromShape(right):right.text):'选择对应的一项';
+      return `<button type="button" class="match-item left${quizPickLeft===item.id?' active':''}${paired?' paired':''}${locked?(pairs[item.id]===q.answer[item.id]?' correct':' wrong'):''}" data-left="${item.id}" ${locked?'disabled':''}><span class="match-name"><span class="pair-number">${index+1}</span><strong>${esc(item.text)}</strong></span><small>${esc(label)}</small></button>`;
     }).join('')}</div><div class="match-col">${q.right.map(item=>{
-      const taken=usedRight.has(item.id);
+      const taken=usedRight.has(item.id),pairIndex=q.left.findIndex(left=>pairs[left.id]===item.id);
       const content=q.type==='match-shape'?shapeHTML(item.shape):esc(item.text);
-      return `<button type="button" class="match-item right${taken?' taken':''}" data-right="${item.id}" ${locked||taken?'disabled':''}>${content}</button>`;
+      return `<button type="button" class="match-item right${taken?' taken':''}" data-right="${item.id}" ${locked||taken?'disabled':''}>${taken?`<span class="paired-mark" aria-label="已配对 ${pairIndex+1}">${pairIndex+1} ✓</span>`:''}${content}</button>`;
     }).join('')}</div></div>`;
     if(locked)return;
     $$('[data-left]').forEach(b=>b.onclick=()=>{
@@ -335,8 +338,8 @@
   function teacherQuiz(){
     teacherShell();
     $('#teacher-content').innerHTML=`<div class="metrics"><div class="metric"><span class="label">参与练习</span><strong id="q-count">0<small>人</small></strong></div><div class="metric"><span class="label">已完成</span><strong id="q-done">0<small>人</small></strong></div><div class="metric"><span class="label">平均答对</span><strong id="q-mean">—</strong></div><div class="metric"><span class="label">最近在线</span><strong id="q-online">0<small>人</small></strong></div></div>
-      <section class="panel"><div class="section-head"><h2>全班进度</h2><span class="badge" id="q-progress-badge">等待加入</span></div><div id="q-progress-bars"></div></section>
-      <section class="panel" style="margin-top:22px"><div class="section-head"><h2>错题分布</h2><span class="tips">看哪一题最容易错</span></div><div id="q-wrong"></div></section>`;
+      <div class="quiz-dashboard"><section class="panel"><div class="section-head"><h2>全班进度</h2><span class="badge" id="q-progress-badge">等待加入</span></div><div id="q-progress-bars"></div></section>
+      <section class="panel"><div class="section-head"><h2>错题分布</h2><span class="tips">人数 · 比例</span></div><div id="q-wrong"></div></section></div>`;
     renderQuizTeacher();
   }
   function renderQuizTeacher(){
