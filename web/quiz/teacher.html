@@ -156,6 +156,14 @@ body{overflow-anchor:none}
 .quiz-match .match-item{width:100%;min-width:0;overflow-wrap:anywhere}
 .quiz-match .match-item.right.taken:not(:disabled){cursor:pointer}
 @media(max-width:760px){.quiz-match{gap:48px}.quiz-match .match-name{flex-wrap:wrap}.quiz-match .match-item{padding-left:9px;padding-right:9px}.quiz-match .match-name strong{font-size:14px}.quiz-match .match-item.right{font-size:14px}.quiz-match .kb-sil{grid-template-columns:2fr .7fr .9fr;gap:3px}.quiz-match .kb-sil-part{font-size:8px}}
+
+/* Isolated region keys, without the rest of the keyboard or region-name hints. */
+.key-fragment{display:flex;align-items:center;justify-content:center;width:100%;height:124px;min-width:0}
+.region-fragment{display:block;width:100%;height:100%;font-family:Arial,"Microsoft YaHei",sans-serif;font-weight:600}
+.quiz-match.shapes .match-item{min-height:154px}
+.quiz-match.shapes .match-item.right{padding:12px 16px}
+.quiz-match.shapes .paired-mark{top:5px;right:6px}
+@media(max-width:760px){.quiz-match.shapes .match-item{min-height:124px}.quiz-match.shapes .match-item.right{padding:10px 6px}.key-fragment{height:102px}}
 </style></head><body><script>window.APP_CONFIG={"taskId":"6486qb6tyb86","title":"认识键盘-知识点练习","kind":"quiz","role":"teacher"};</script><script>(function (root) {
   'use strict';
   const regions = [
@@ -285,7 +293,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
       left:['indicator','numeric','main','editing','function'].map(id=>({id,text:regions.find(r=>r.id===id).name})),
       right:[{id:'r1',text:'显示键盘的状态'},{id:'r4',text:'移动光标、翻页和编辑'},{id:'r2',text:'集中输入数字'},{id:'r3',text:'输入字母、数字等内容'},{id:'r5',text:'完成一些功能操作'}],
       answer:{indicator:'r1',numeric:'r2',main:'r3',editing:'r4',function:'r5'}},
-    {id:'q14',type:'match-shape',prompt:'把区域名称和对应的键盘位置示意图连起来。',
+    {id:'q14',type:'match-shape',prompt:'把区域名称和对应的一组按键连起来。',
       left:regions.map(r=>({id:r.id,text:r.name})),
       right:['editing','numeric','function','indicator','main'].map(id=>({id:'s-'+id,shape:id})),
       answer:{main:'s-main',function:'s-function',editing:'s-editing',numeric:'s-numeric',indicator:'s-indicator'}}
@@ -583,17 +591,16 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     }
   }
 
-  const regionColor=Object.fromEntries(regions.map(r=>[r.id,r.color]));
   function shapeHTML(shapeId){
-    const highlight=shapeId||'';
-    const blocks=[
-      {id:'function',cls:'row-top',label:'F 区'},
-      {id:'main',cls:'block-main',label:'主键盘'},
-      {id:'editing',cls:'block-edit',label:'编辑'},
-      {id:'indicator',cls:'block-light',label:'灯'},
-      {id:'numeric',cls:'block-num',label:'小键盘'}
-    ];
-    return `<div class="kb-sil" aria-hidden="true">${blocks.map(b=>`<span class="kb-sil-part ${b.cls}${b.id===highlight?' on':''}" style="--c:${regionColor[b.id]}">${b.label}</span>`).join('')}</div>`;
+    const fragment=keys.filter(k=>k.region===shapeId);if(!fragment.length)return '';
+    const left=Math.min(...fragment.map(k=>k.x))-.08,top=Math.min(...fragment.map(k=>k.y))-.08;
+    const width=Math.max(...fragment.map(k=>k.x+k.w-.07))-left+.08,height=Math.max(...fragment.map(k=>k.y+k.h-.08))-top+.08;
+    return `<span class="key-fragment"><svg class="region-fragment" viewBox="${left} ${top} ${width} ${height}" role="img" aria-label="一组键盘按键的局部图" preserveAspectRatio="xMidYMid meet">${fragment.map(k=>{
+      const w=k.w-.07,h=k.h-.08,x=k.x+w/2,y=k.y+h/2,label=k.label||'',size=Math.min(.3,(w-.12)/Math.max(1,label.length*.62));
+      const face=`<rect class="fragment-key" data-fragment-key="${esc(k.id)}" x="${k.x}" y="${k.y}" width="${w}" height="${h}" rx="${shapeId==='indicator'?.24:.08}" fill="#f1f4f0" stroke="#aebdb3" stroke-width=".025"/>`;
+      if(shapeId==='indicator')return face+`<circle cx="${k.x+.25}" cy="${y}" r=".075" fill="#527161"/><text x="${x+.12}" y="${y}" font-size=".25" text-anchor="middle" dominant-baseline="central" fill="#34483e">${esc(label)}</text>`;
+      return face+`<text x="${x}" y="${y}" font-size="${size}" text-anchor="middle" dominant-baseline="central" fill="#34483e">${esc(label)}</text>`;
+    }).join('')}</svg></span>`;
   }
   let quizPickLeft=null, quizDraft={},matchResizeObserver=null,activeMatch=null;
   function studentQuiz(){

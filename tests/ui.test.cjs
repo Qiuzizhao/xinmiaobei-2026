@@ -59,3 +59,15 @@ test('配对题绘制真实连线，重新布局与清空时更新，错误答�
  width=420;ctx.drawMatchLines();assert.equal(viewBox,'0 0 420 400');
  ctx.activeMatch.pairs={};ctx.drawMatchLines();assert.equal(svg.innerHTML,'');
 });
+test('形状连线题只展示对应区域的真实按键，不画整盘或标出区域名称',()=>{
+ const source=fs.readFileSync(path.join(__dirname,'../web/src/app.js'),'utf8');
+ const Lesson=require('../web/src/core.js');vm.runInNewContext(fs.readFileSync(path.join(__dirname,'../web/src/keyboard.js'),'utf8'),{Lesson});
+ const ctx={keys:Lesson.keys,esc:value=>String(value)};vm.createContext(ctx);
+ vm.runInContext(source.slice(source.indexOf('  function shapeHTML('),source.indexOf('  let quizPickLeft=')),ctx);
+ for(const [region,count] of [['main',61],['function',16],['editing',10],['numeric',17],['indicator',3]]){
+  const markup=ctx.shapeHTML(region);assert.equal((markup.match(/class="fragment-key"/g)||[]).length,count);
+  assert.doesNotMatch(markup,/主键盘区|功能键区|编辑键区|小键盘区|指示灯区/);
+ }
+ assert.match(ctx.shapeHTML('function'),/data-fragment-key="PrintScreen"/);assert.doesNotMatch(ctx.shapeHTML('function'),/data-fragment-key="KeyA"/);
+ assert.match(ctx.shapeHTML('numeric'),/data-fragment-key="NumpadEnter"/);assert.doesNotMatch(ctx.shapeHTML('numeric'),/data-fragment-key="Enter"/);
+});

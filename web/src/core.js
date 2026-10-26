@@ -127,7 +127,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
       left:['indicator','numeric','main','editing','function'].map(id=>({id,text:regions.find(r=>r.id===id).name})),
       right:[{id:'r1',text:'显示键盘的状态'},{id:'r4',text:'移动光标、翻页和编辑'},{id:'r2',text:'集中输入数字'},{id:'r3',text:'输入字母、数字等内容'},{id:'r5',text:'完成一些功能操作'}],
       answer:{indicator:'r1',numeric:'r2',main:'r3',editing:'r4',function:'r5'}},
-    {id:'q14',type:'match-shape',prompt:'把区域名称和对应的键盘位置示意图连起来。',
+    {id:'q14',type:'match-shape',prompt:'把区域名称和对应的一组按键连起来。',
       left:regions.map(r=>({id:r.id,text:r.name})),
       right:['editing','numeric','function','indicator','main'].map(id=>({id:'s-'+id,shape:id})),
       answer:{main:'s-main',function:'s-function',editing:'s-editing',numeric:'s-numeric',indicator:'s-indicator'}}

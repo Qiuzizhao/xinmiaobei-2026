@@ -214,17 +214,16 @@
     }
   }
 
-  const regionColor=Object.fromEntries(regions.map(r=>[r.id,r.color]));
   function shapeHTML(shapeId){
-    const highlight=shapeId||'';
-    const blocks=[
-      {id:'function',cls:'row-top',label:'F 区'},
-      {id:'main',cls:'block-main',label:'主键盘'},
-      {id:'editing',cls:'block-edit',label:'编辑'},
-      {id:'indicator',cls:'block-light',label:'灯'},
-      {id:'numeric',cls:'block-num',label:'小键盘'}
-    ];
-    return `<div class="kb-sil" aria-hidden="true">${blocks.map(b=>`<span class="kb-sil-part ${b.cls}${b.id===highlight?' on':''}" style="--c:${regionColor[b.id]}">${b.label}</span>`).join('')}</div>`;
+    const fragment=keys.filter(k=>k.region===shapeId);if(!fragment.length)return '';
+    const left=Math.min(...fragment.map(k=>k.x))-.08,top=Math.min(...fragment.map(k=>k.y))-.08;
+    const width=Math.max(...fragment.map(k=>k.x+k.w-.07))-left+.08,height=Math.max(...fragment.map(k=>k.y+k.h-.08))-top+.08;
+    return `<span class="key-fragment"><svg class="region-fragment" viewBox="${left} ${top} ${width} ${height}" role="img" aria-label="一组键盘按键的局部图" preserveAspectRatio="xMidYMid meet">${fragment.map(k=>{
+      const w=k.w-.07,h=k.h-.08,x=k.x+w/2,y=k.y+h/2,label=k.label||'',size=Math.min(.3,(w-.12)/Math.max(1,label.length*.62));
+      const face=`<rect class="fragment-key" data-fragment-key="${esc(k.id)}" x="${k.x}" y="${k.y}" width="${w}" height="${h}" rx="${shapeId==='indicator'?.24:.08}" fill="#f1f4f0" stroke="#aebdb3" stroke-width=".025"/>`;
+      if(shapeId==='indicator')return face+`<circle cx="${k.x+.25}" cy="${y}" r=".075" fill="#527161"/><text x="${x+.12}" y="${y}" font-size=".25" text-anchor="middle" dominant-baseline="central" fill="#34483e">${esc(label)}</text>`;
+      return face+`<text x="${x}" y="${y}" font-size="${size}" text-anchor="middle" dominant-baseline="central" fill="#34483e">${esc(label)}</text>`;
+    }).join('')}</svg></span>`;
   }
   let quizPickLeft=null, quizDraft={},matchResizeObserver=null,activeMatch=null;
   function studentQuiz(){
