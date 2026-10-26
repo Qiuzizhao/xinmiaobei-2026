@@ -1,7 +1,7 @@
 (async function () {
   'use strict';
   document.addEventListener('contextmenu',event=>event.preventDefault(),{capture:true});
-  const {regions,keys,levelInfo,theme,swatch,targetAt,stats,distribution,normalizeStates}=Lesson;
+  const {regions,keys,levelInfo,theme,swatch,targetAt,stats,distribution,mixShares,normalizeStates}=Lesson;
   const $=s=>document.querySelector(s), $$=s=>Array.from(document.querySelectorAll(s));
   function replaceHTML(target,html){
     if(target.innerHTML===html)return;
@@ -290,12 +290,12 @@
     $('#answer-toggle').textContent=showAnswer?'回到混色键盘':'查看标准分区';
     $$('.key').forEach((b,i)=>{const k=keys[i];
       if(showAnswer)b.style.background=regions.find(r=>r.id===k.region).color;
-      else {const counts=distribution(data,k.id);let angle=0;const parts=[...regions,{id:'blank',color:'#edf1eb'}].filter(r=>counts[r.id]>0).map(r=>{const start=angle;angle+=counts[r.id]/n*360;return `${r.color} ${start}deg ${angle}deg`;});b.style.background=n?`conic-gradient(${parts.join(',')})`:'#edf1eb';}
+      else {const counts=distribution(data,k.id),mix=mixShares(counts);let angle=0;const parts=mix.shares.map(s=>{const start=angle;angle+=s.ratio*360;return `${s.color} ${start}deg ${angle}deg`;});b.style.background=mix.filled?`conic-gradient(${parts.join(',')})`:'#edf1eb';}
     });
   }
   function showTip(k,b,e){
-    const tip=$('#tooltip'),data=shownPeople(),n=data.length,counts=distribution(data,k.id);
-    tip.innerHTML=`<strong>${esc(k.label||'空格键')}${k.region==='indicator'?' 指示灯':''}</strong>`+regions.map(r=>`<div class="tiprow"><span><i class="dot" style="--c:${r.color}"></i>${r.name}</span><span>${counts[r.id]} 人 · ${n?Math.round(counts[r.id]/n*100):0}%</span></div>`).join('');
+    const tip=$('#tooltip'),data=shownPeople(),counts=distribution(data,k.id),mix=mixShares(counts),filled=mix.filled;
+    tip.innerHTML=`<strong>${esc(k.label||'空格键')}${k.region==='indicator'?' 指示灯':''}</strong>`+regions.map(r=>`<div class="tiprow"><span><i class="dot" style="--c:${r.color}"></i>${r.name}</span><span>${counts[r.id]} 人 · ${filled?Math.round(counts[r.id]/filled*100):0}%</span></div>`).join('')+(counts.blank?`<div class="tiptotal">未填 ${counts.blank} 人（不计入混色）</div>`:'');
     tip.classList.remove('hidden');const rect=b.getBoundingClientRect();positionTip(e?.clientX||rect.x,e?.clientY||rect.y);
   }
   function positionTip(x,y){const tip=$('#tooltip');tip.style.left=Math.max(8,Math.min(x+15,innerWidth-tip.offsetWidth-8))+'px';tip.style.top=Math.max(8,Math.min(y+15,innerHeight-tip.offsetHeight-12))+'px';}

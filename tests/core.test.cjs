@@ -18,6 +18,13 @@ test('混色按学生计数，未填色和非法颜色进入未填色',()=>{
   assert.equal(d.main,1);assert.equal(d.editing,1);assert.equal(d.blank,2);
   assert.equal(Object.values(d).reduce((a,b)=>a+b),4);
 });
+test('混色扇区只按已填色学生分比例，空白不稀释',()=>{
+  const d=L.distribution([{colors:{KeyA:'main'}},{colors:{KeyA:'editing'}},{colors:{}},{colors:{KeyA:'bad'}}],'KeyA');
+  const mix=L.mixShares(d);
+  assert.equal(mix.filled,2);
+  assert.deepEqual(mix.shares.map(s=>[s.id,s.count,s.ratio]),[['main',1,0.5],['editing',1,0.5]]);
+  assert.equal(L.mixShares(L.distribution([{colors:{}},{colors:{KeyA:'bad'}}],'KeyA')).filled,0);
+});
 test('任务只包含字母数字，前三关分开练字母和数字',()=>{
   for(let i=0;i<1000;i++)assert.match(L.targetAt(i),/^[a-z0-9]$/);
   for(let i=0;i<32;i++)assert.match(L.targetAt(i),/^[a-z]$/);

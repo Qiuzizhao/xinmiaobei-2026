@@ -76,6 +76,11 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     people.forEach(p=>{const id=p.colors?.[key]; counts[id in counts && id!=='blank'?id:'blank']++;});
     return counts;
   }
+  // 混色比例只统计已填色学生，未填/空白不占扇区，避免把色盘稀释成空白。
+  function mixShares(counts) {
+    const filled=regions.reduce((sum,r)=>sum+(counts[r.id]||0),0);
+    return {filled, shares:filled?regions.filter(r=>counts[r.id]>0).map(r=>({id:r.id,color:r.color,count:counts[r.id],ratio:counts[r.id]/filled})):[]};
+  }
   function coloringProgress(colors,keys){
     const valid=new Set(regions.map(r=>r.id));
     const filled=keys.filter(k=>valid.has(colors[k.id])).length;
@@ -99,7 +104,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     return [...map.values()].sort((a,b)=>(b.createdAt||0)-(a.createdAt||0)||a.id.localeCompare(b.id));
   }
   function roomCode(bytes){const alphabet='23456789ABCDEFGHJKLMNPQRSTUVWXYZ';return Array.from(bytes,b=>alphabet[b%alphabet.length]).join('');}
-  const api={regions,themes,quota,levelInfo,theme,swatch,targetAt,typingKey,stats,distribution,coloringProgress,normalizeStates,mergeClassrooms,roomCode};
+  const api={regions,themes,quota,levelInfo,theme,swatch,targetAt,typingKey,stats,distribution,mixShares,coloringProgress,normalizeStates,mergeClassrooms,roomCode};
   if(typeof module!=='undefined' && module.exports) module.exports=api;
   else root.Lesson=api;
 })(typeof window!=='undefined'?window:globalThis);
