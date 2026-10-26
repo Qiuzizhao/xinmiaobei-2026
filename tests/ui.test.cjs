@@ -45,3 +45,17 @@ test('填满自动记录完成，擦除和重新填色后仍保留完成记录',
  filled=1;ctx.updateColor();assert.equal(state.hasFilledAll,true);
  state.colors={};filled=0;ctx.updateColor();assert.equal(state.hasFilledAll,true);assert.equal(saves,1);
 });
+test('配对题绘制真实连线，重新布局与清空时更新，错误答案使用虚线',()=>{
+ const source=fs.readFileSync(path.join(__dirname,'../web/src/app.js'),'utf8');
+ const code=source.slice(source.indexOf('  function drawMatchLines()'),source.indexOf('  function renderMatchBody('));
+ let width=600,viewBox='';const svg={innerHTML:'',setAttribute:(name,value)=>{if(name==='viewBox')viewBox=value;}};
+ const board={getBoundingClientRect:()=>({left:10,top:20,width,height:400})};
+ const left={dataset:{left:'main'},getBoundingClientRect:()=>({right:210,top:40,height:80})};
+ const right={dataset:{right:'r1'},getBoundingClientRect:()=>({left:410,top:120,height:80})};
+ const ctx={activeMatch:{q:{left:[{id:'main'}],answer:{main:'r2'}},pairs:{main:'r1'},locked:false},$:s=>s==='.quiz-match'?board:svg,$$:s=>s==='[data-left]'?[left]:[right]};
+ vm.createContext(ctx);vm.runInContext(code,ctx);ctx.drawMatchLines();
+ assert.equal(viewBox,'0 0 600 400');assert.match(svg.innerHTML,/<path d="M 200 60 C/);assert.match(svg.innerHTML,/, 400 140"/);
+ ctx.activeMatch.locked=true;ctx.drawMatchLines();assert.match(svg.innerHTML,/stroke-dasharray="6 5"/);
+ width=420;ctx.drawMatchLines();assert.equal(viewBox,'0 0 420 400');
+ ctx.activeMatch.pairs={};ctx.drawMatchLines();assert.equal(svg.innerHTML,'');
+});

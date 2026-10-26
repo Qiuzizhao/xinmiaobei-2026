@@ -147,3 +147,11 @@ body{overflow-anchor:none}
 .quiz-card .match-item{min-height:82px;padding-top:12px;padding-bottom:12px}
 .quiz-match.shapes .match-item{min-height:100px}
 @media(max-width:760px){.quiz-card .match-item.right{padding-bottom:30px}.quiz-card .match-item{min-height:100px}}
+
+/* Real matching lines use the open space between the two columns. */
+.quiz-match{position:relative;gap:clamp(56px,10vw,120px);isolation:isolate}
+.match-lines{position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none;overflow:visible}
+.quiz-match .match-col{position:relative;z-index:2;min-width:0}
+.quiz-match .match-item{width:100%;min-width:0;overflow-wrap:anywhere}
+.quiz-match .match-item.right.taken:not(:disabled){cursor:pointer}
+@media(max-width:760px){.quiz-match{gap:48px}.quiz-match .match-name{flex-wrap:wrap}.quiz-match .match-item{padding-left:9px;padding-right:9px}.quiz-match .match-name strong{font-size:14px}.quiz-match .match-item.right{font-size:14px}.quiz-match .kb-sil{grid-template-columns:2fr .7fr .9fr;gap:3px}.quiz-match .kb-sil-part{font-size:8px}}

@@ -148,6 +148,14 @@ body{overflow-anchor:none}
 .quiz-card .match-item{min-height:82px;padding-top:12px;padding-bottom:12px}
 .quiz-match.shapes .match-item{min-height:100px}
 @media(max-width:760px){.quiz-card .match-item.right{padding-bottom:30px}.quiz-card .match-item{min-height:100px}}
+
+/* Real matching lines use the open space between the two columns. */
+.quiz-match{position:relative;gap:clamp(56px,10vw,120px);isolation:isolate}
+.match-lines{position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none;overflow:visible}
+.quiz-match .match-col{position:relative;z-index:2;min-width:0}
+.quiz-match .match-item{width:100%;min-width:0;overflow-wrap:anywhere}
+.quiz-match .match-item.right.taken:not(:disabled){cursor:pointer}
+@media(max-width:760px){.quiz-match{gap:48px}.quiz-match .match-name{flex-wrap:wrap}.quiz-match .match-item{padding-left:9px;padding-right:9px}.quiz-match .match-name strong{font-size:14px}.quiz-match .match-item.right{font-size:14px}.quiz-match .kb-sil{grid-template-columns:2fr .7fr .9fr;gap:3px}.quiz-match .kb-sil-part{font-size:8px}}
 </style></head><body><script>window.APP_CONFIG={"taskId":"cujbj48aycbw","title":"收集色卡","kind":"typing","role":"student"};</script><script>(function (root) {
   'use strict';
   const regions = [
@@ -587,7 +595,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     ];
     return `<div class="kb-sil" aria-hidden="true">${blocks.map(b=>`<span class="kb-sil-part ${b.cls}${b.id===highlight?' on':''}" style="--c:${regionColor[b.id]}">${b.label}</span>`).join('')}</div>`;
   }
-  let quizPickLeft=null, quizDraft={};
+  let quizPickLeft=null, quizDraft={},matchResizeObserver=null,activeMatch=null;
   function studentQuiz(){
     main.classList.add('quiz-main');
     if(state.quizVersion!==2){state={quizVersion:2,answers:{},index:0};persist();}
@@ -598,6 +606,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     renderQuizStudent();
   }
   function renderQuizStudent(){
+    matchResizeObserver?.disconnect();activeMatch=null;
     const progress=quizProgress(state.answers);
     if(state.index>=quizQuestions.length){
       main.innerHTML=`<div class="intro"><div><h1>练习完成</h1><p>一共 ${progress.total} 题，答对 ${progress.correct} 题。</p></div><span class="badge">正确率 ${progress.accuracy}%</span></div>
@@ -665,33 +674,52 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     $('.quiz-topline .badge').textContent=`已答对 ${progress.correct} 题`;
     $('.quiz-progress span').style.width=progress.answered/quizQuestions.length*100+'%';
     feedback.classList.remove('hidden','ok','bad');feedback.classList.add(correct?'ok':'bad');
-    feedback.textContent=correct?'答对了！':'再想一想，正确答案已标出。';
+    feedback.textContent=correct?'答对了！':q.type==='mcq'?'再想一想，正确答案已标出。':'红色虚线表示这组配对不正确。';
   }
   function updateMatchCheck(q){
     const btn=$('#quiz-check');if(!btn)return;
     const need=Object.keys(q.answer).length;btn.disabled=Object.keys(quizDraft).length!==need;
   }
+  function drawMatchLines(){
+    const board=$('.quiz-match'),svg=$('.match-lines');if(!board||!svg||!activeMatch)return;
+    const rect=board.getBoundingClientRect();if(!rect.width||!rect.height)return;
+    svg.setAttribute('viewBox',`0 0 ${rect.width} ${rect.height}`);
+    const {q,pairs,locked}=activeMatch,colors=['#d28a36','#5483c5','#9672c4','#339c88','#c56885'];
+    svg.innerHTML=q.left.map((item,index)=>{
+      const rightId=pairs[item.id];if(!rightId)return '';
+      const left=$$('[data-left]').find(b=>b.dataset.left===item.id),right=$$('[data-right]').find(b=>b.dataset.right===rightId);if(!left||!right)return '';
+      const a=left.getBoundingClientRect(),b=right.getBoundingClientRect();
+      const x1=a.right-rect.left,y1=a.top+a.height/2-rect.top,x2=b.left-rect.left,y2=b.top+b.height/2-rect.top,curve=(x2-x1)*.45;
+      const correct=q.answer[item.id]===rightId,color=locked?(correct?'#25845e':'#c66553'):colors[index%colors.length];
+      return `<path d="M ${x1} ${y1} C ${x1+curve} ${y1}, ${x2-curve} ${y2}, ${x2} ${y2}" fill="none" stroke="${color}" stroke-width="3" stroke-linecap="round"${locked&&!correct?' stroke-dasharray="6 5"':''}/><circle cx="${x1}" cy="${y1}" r="4" fill="${color}"/><circle cx="${x2}" cy="${y2}" r="4" fill="${color}"/>`;
+    }).join('');
+  }
   function renderMatchBody(q, pairs, locked){
     const body=$('#quiz-body');if(!body)return;
+    matchResizeObserver?.disconnect();activeMatch={q,pairs:{...pairs},locked};
     const usedRight=new Set(Object.values(pairs||{}));
-    body.innerHTML=`<div class="quiz-match${q.type==='match-shape'?' shapes':''}"><div class="match-col">${q.left.map((item,index)=>{
-      const paired=pairs[item.id];const right=paired&&q.right.find(r=>r.id===paired);
-      const label=right?(q.type==='match-shape'?regionLabelFromShape(right):right.text):'选择对应的一项';
+    body.innerHTML=`<div class="quiz-match${q.type==='match-shape'?' shapes':''}"><svg class="match-lines" aria-hidden="true"></svg><div class="match-col">${q.left.map((item,index)=>{
+      const paired=pairs[item.id];
+      const label=locked?(paired?'已连接':'未连接'):quizPickLeft===item.id?'请点右侧连接':paired?'已连接，点击可重连':'点这里开始连线';
       return `<button type="button" class="match-item left${quizPickLeft===item.id?' active':''}${paired?' paired':''}${locked?(pairs[item.id]===q.answer[item.id]?' correct':' wrong'):''}" data-left="${item.id}" ${locked?'disabled':''}><span class="match-name"><span class="pair-number">${index+1}</span><strong>${esc(item.text)}</strong></span><small>${esc(label)}</small></button>`;
     }).join('')}</div><div class="match-col">${q.right.map(item=>{
-      const taken=usedRight.has(item.id),pairIndex=q.left.findIndex(left=>pairs[left.id]===item.id);
+      const taken=usedRight.has(item.id),pairIndex=q.left.findIndex(left=>pairs[left.id]===item.id),ok=taken&&q.answer[q.left[pairIndex].id]===item.id;
       const content=q.type==='match-shape'?shapeHTML(item.shape):esc(item.text);
-      return `<button type="button" class="match-item right${taken?' taken':''}" data-right="${item.id}" ${locked||taken?'disabled':''}>${taken?`<span class="paired-mark" aria-label="已配对 ${pairIndex+1}">${pairIndex+1} ✓</span>`:''}${content}</button>`;
+      return `<button type="button" class="match-item right${taken?' taken':''}${locked&&taken?(ok?' correct':' wrong'):''}" data-right="${item.id}" ${locked?'disabled':''}>${taken?`<span class="paired-mark" aria-label="已连接 ${pairIndex+1}">${pairIndex+1}${locked?(ok?' ✓':' ×'):''}</span>`:''}${content}</button>`;
     }).join('')}</div></div>`;
+    drawMatchLines();
+    if(typeof ResizeObserver!=='undefined'){
+      matchResizeObserver=new ResizeObserver(drawMatchLines);matchResizeObserver.observe($('.quiz-match'));
+      $$('[data-left],[data-right]').forEach(b=>matchResizeObserver.observe(b));
+    }
     if(locked)return;
     $$('[data-left]').forEach(b=>b.onclick=()=>{
       quizPickLeft=b.dataset.left;
-      if(quizDraft[quizPickLeft]){delete quizDraft[quizPickLeft];}
+      if(quizDraft[quizPickLeft])delete quizDraft[quizPickLeft];
       renderMatchBody(q,quizDraft,false);updateMatchCheck(q);
     });
     $$('[data-right]').forEach(b=>b.onclick=()=>{
-      if(!quizPickLeft){toast('先点左边的名称，再点右边配对');return;}
-      // remove if this right was paired elsewhere
+      if(!quizPickLeft){toast('先点左边的名称，再点右边连线');return;}
       for(const [k,v] of Object.entries(quizDraft)){if(v===b.dataset.right)delete quizDraft[k];}
       quizDraft[quizPickLeft]=b.dataset.right;quizPickLeft=null;
       renderMatchBody(q,quizDraft,false);updateMatchCheck(q);
