@@ -125,7 +125,7 @@
   }
   function studentColor(){
     main.innerHTML=`<div class="intro coloring-intro"><h1>给键盘涂色</h1><div id="shade-play" class="shade-play hidden"><div id="shade-options" class="shade-options"></div></div></div>`+
-      `<div class="palette">${regions.map(r=>`<button class="color-choice${r.id===selected?' active':''}" data-color="${r.id}" aria-pressed="${r.id===selected}"><i class="dot" style="--c:${r.color}"></i>${r.name}</button>`).join('')}<button class="color-choice" data-color="blank" aria-pressed="false">◇ 擦除</button><span class="paint-feedback"><span class="badge" id="paint-count"></span><span class="badge hidden" id="paint-accuracy" title="已填格子中，分区选择正确的比例"></span></span></div>
+      `<div class="palette">${regions.map(r=>`<button class="color-choice${r.id===selected?' active':''}" data-color="${r.id}" aria-pressed="${r.id===selected}"><i class="dot" style="--c:${r.color}"></i>${r.name}</button>`).join('')}<button class="color-choice" data-color="blank" aria-pressed="false">◇ 擦除</button><span class="paint-feedback"><span class="badge" id="paint-count"></span></span></div>
       <section class="panel"><div class="keyboard-scroll"><div id="keyboard"></div></div><div class="toolbar"><button id="clear" class="quiet">重新填色</button><span class="spacer"></span><button id="complete" class="primary">我填好了 ✓</button></div><div id="saved-note" class="notice hidden">已完成，还可以修改。</div></section>`;
     Lesson.drawKeyboard($('#keyboard'),(b,k)=>{
       const paint=()=>{if(selected==='blank')delete state.colors[k.id];else state.colors[k.id]=selected;state.completed=false;persist();updateColor();};
@@ -147,8 +147,6 @@
     if(!state.completed||!progress.perfect||selected==='blank')dismissShadeGuide();
     $('#complete').disabled=!allFilled;
     $('#shade-play').classList.toggle('hidden',!state.completed||!progress.perfect||selected==='blank');
-    $('#paint-accuracy').classList.toggle('hidden',!progress.showAccuracy);
-    $('#paint-accuracy').textContent=`正确率 ${progress.accuracy}%`;
     $$('[data-color] .dot').forEach(dot=>{dot.style.background=displayColor(dot.parentElement.dataset.color);});
     $$('.key').forEach(b=>{const id=state.colors[b.dataset.key],r=regions.find(x=>x.id===id);b.style.background=displayColor(id);b.setAttribute('aria-label',`${keys.find(k=>k.id===b.dataset.key)?.label||'空格键'}，${r?.name||'未填色'}`);});
     $('#paint-count').textContent=`已填 ${filled} / ${keys.length} 格`;
