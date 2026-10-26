@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>《认识键盘》课堂逐字稿</title>
+  <style>
+    :root { color-scheme: light; --ink: #273632; --muted: #697871; --green: #27765c; --line: #e1e8e2; --teacher: #f7f9f5; --student: #eef5ee; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f3f5f1; color: var(--ink); font: 16px/1.85 "Microsoft YaHei", "PingFang SC", system-ui, sans-serif; }
+    main { max-width: 980px; margin: 36px auto; padding: 48px 60px; background: white; border: 1px solid var(--line); border-radius: 16px; }
+    header { padding-bottom: 24px; border-bottom: 2px solid var(--green); }
+    .eyebrow { margin: 0; color: var(--green); font-size: 13px; letter-spacing: .12em; }
+    h1 { margin: 8px 0 10px; font-size: 36px; line-height: 1.4; }
+    .meta { margin: 0; color: var(--muted); font-size: 14px; }
+    h2 { margin: 34px 0 14px; font-size: 22px; line-height: 1.5; }
+    h3 { margin: 20px 0 8px; font-size: 17px; color: var(--ink); }
+    p { margin: 10px 0; }
+    .time { color: var(--green); font-size: 15px; font-weight: normal; white-space: nowrap; }
+    .summary { padding: 17px 21px; margin: 22px 0; background: #eef5ee; border-radius: 10px; }
+    .summary p { margin: 4px 0; }
+    ul { margin: 8px 0; padding-left: 24px; }
+    li { margin: 4px 0; }
+    blockquote.teacher { margin: 12px 0; padding: 11px 18px; border-left: 3px solid #78a68b; background: var(--teacher); }
+    blockquote.teacher p { margin: 5px 0; }
+    .student { margin: 8px 0 8px 12px; padding: 8px 14px; background: var(--student); border-radius: 8px; }
+    .who { display: inline-block; min-width: 1.6em; margin-right: 8px; color: var(--green); font-weight: 700; }
+    .op { color: var(--muted); font-size: 14px; padding: 8px 14px; background: #fafbf8; border-radius: 8px; border: 1px dashed var(--line); }
+    .tag { display: inline-block; margin-right: 8px; padding: 0 7px; border-radius: 4px; background: #e8efe8; color: var(--green); font-size: 12px; font-weight: 600; vertical-align: 1px; }
+    .note { color: var(--muted); font-size: 14px; }
+    section { scroll-margin-top: 24px; }
+    footer { margin-top: 36px; padding-top: 18px; border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; }
+    @media (max-width: 700px) {
+      body { font-size: 15px; }
+      main { margin: 0; padding: 28px 20px; border: 0; border-radius: 0; }
+      h1 { font-size: 29px; } h2 { font-size: 20px; }
+    }
+    @page { size: A4; margin: 18mm 17mm; }
+    @media print {
+      body { background: white; font-size: 10.5pt; line-height: 1.7; }
+      main { max-width: none; margin: 0; padding: 0; border: 0; border-radius: 0; }
+      h1 { font-size: 23pt; } h2 { font-size: 15pt; margin-top: 22px; }
+      h3 { font-size: 11pt; }
+      h2, h3 { break-after: avoid; }
+      blockquote.teacher, .student, .op { break-inside: avoid; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+      .time, .note, .meta, footer, .op { font-size: 9.5pt; }
+    }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <p class="eyebrow">小学三年级 · 信息科技公开课</p>
+    <h1>《认识键盘》课堂逐字稿</h1>
+    <p class="meta">1课时（40分钟） · 执教：邱梓钊</p>
+  </header>
+
+  <div class="summary">
+    <p><strong>活动主线：</strong>键盘填色 → 认识五区 → 打字点亮色卡</p>
+    <p><strong>使用说明：</strong>“师：”后为教师可直接照念的话；“生：”为预设学生回答，仅供参考；【操作】【巡视】为课件、网页和动作提示，不需要念出。全程约29分钟为学生自主操作，教师讲述集中在导入、讲解、示范和总结。</p>
+  </div>
+  <section>
+    <h2>课前准备（不计入40分钟）</h2>
+    <ul>
+      <li>提前在教师机登录填色、打字两套教师看板，先在填色看板“新建课堂”，把填色学生链接分发到学生电脑；打字链接在第二个活动前再分发。</li>
+      <li>逐一检查学生机能否正常打开网页、键盘是否就位，确认网络与看板同步正常。</li>
+    </ul>
+    <p class="op"><span class="tag">预备</span>预备铃后，学生坐好，把键盘轻轻放到面前正中。</p>
+  </section>
+
+  <section>
+    <h2>一、复习导入，引出键盘 <span class="time">0—2分钟</span></h2>
+    <blockquote class="teacher"><p><span class="who">师</span>上课！</p></blockquote>
+    <p class="student"><span class="who">生</span>老师好！</p>
+    <blockquote class="teacher"><p><span class="who">师</span>同学们好，请坐。</p></blockquote>
+    <blockquote class="teacher"><p><span class="who">师</span>前面几节课，我们认识了一位电脑好帮手，还学会了它的五种用法。大家还记得是哪一位好帮手吗？</p></blockquote>
+    <p class="student"><span class="who">生</span>鼠标！</p>
+    <blockquote class="teacher"><p><span class="who">师</span>对，是鼠标。谁还记得鼠标的五种用法？我们一边做一边说。老师把鼠标移动一下，这叫——</p></blockquote>
+    <p class="student"><span class="who">生</span>指向！</p>
+    <blockquote class="teacher"><p><span class="who">师</span>（按住鼠标移动）这样呢？</p></blockquote>
+    <p class="student"><span class="who">生</span>拖动！</p>
+    <blockquote class="teacher"><p><span class="who">师</span>（轻按一下左键）</p></blockquote>
+    <p class="student"><span class="who">生</span>单击！</p>
+    <blockquote class="teacher"><p><span class="who">师</span>（快速按两下）</p></blockquote>
+    <p class="student"><span class="who">生</span>双击！</p>
+    <blockquote class="teacher"><p><span class="who">师</span>（按一下右键）</p></blockquote>
+    <p class="student"><span class="who">生</span>右击！</p>
+    <blockquote class="teacher"><p><span class="who">师</span>真棒，五种用法都还记得。鼠标可以帮我们向电脑发出指令。那老师有个问题：如果想在电脑上输入字母和数字、写点什么，光靠鼠标点来点去，行不行？</p></blockquote>
+    <p class="student"><span class="who">生</span>不行。</p>
+    <blockquote class="teacher"><p><span class="who">师</span>那要请哪位好帮手来帮忙呢？</p></blockquote>
+    <p class="student"><span class="who">生</span>键盘！</p>
+    <blockquote class="teacher"><p><span class="who">师</span>没错！键盘也是电脑非常重要的输入设备。今天这节课，我们就一起来——认识键盘。</p></blockquote>
+    <p class="op"><span class="tag">操作</span>板书课题：认识键盘。</p>
+  </section>
+
+  <section>
+    <h2>二、明确任务，学习操作 <span class="time">2—3分钟</span></h2>
+    <blockquote class="teacher"><p><span class="who">师</span>大家看面前的键盘，上面有好多键，排得整整齐齐。其实这些键是分成五个区域的，就像我们的教室分成了不同的功能区一样。</p></blockquote>
+    <blockquote class="teacher"><p><span class="who">师</span>请看大屏幕。老师给五个区域准备了五种颜色：主键盘区是红色，功能键区是黄色，编辑键区是蓝色，小键盘区是绿色，指示灯区是紫色。</p></blockquote>
+    <blockquote class="teacher"><p><span class="who">师</span>等会儿请你在网页上先选一种颜色，再点一个键，就能给它涂色。先看老师做一遍：点一下红色，再点这个键，你看——变红了。还可以按住鼠标左键轻轻拖过去，连着涂一片。万一涂错了呢？换一种颜色，再点一下，就改过来了。</p></blockquote>
+    <blockquote class="teacher"><p><span class="who">师</span>老师先不公布标准答案。请你看看网页上的键盘，也看看面前真正的键盘，按自己的判断大胆试一试。能做到吗？</p></blockquote>
+    <p class="student"><span class="who">生</span>能！</p>
+    <p class="op"><span class="tag">操作</span>切到填色学生网页，确认链接已分发；学生端颜色图例常驻。</p>
+  </section>
+
+  <section>
+    <h2>三、自主尝试，键盘填色 <span class="time">3—13分钟，约10分钟</span></h2>
+    <blockquote class="teacher"><p><span class="who">师</span>好，开始！请大家一边看真键盘，一边在网页上涂色。</p></blockquote>
+    <p class="op"><span class="tag">操作</span>学生对照实物键盘自主填色，页面自动同步。教师巡视并打开教师混色看板，悬停查看各键颜色人数与比例，记录易混淆位置；本轮不公布答案。</p>
+    <h3>巡视引导（学生问“这个涂什么颜色”时）</h3>
+    <blockquote class="teacher"><p><span class="who">师</span>你先别急，看看它在什么位置、周围都是些什么键，再想想它属于哪个区域，按你的想法涂，错了也没关系。</p></blockquote>
+    <h3>个别应对</h3>
+    <blockquote class="teacher"><p><span class="who">师</span>（对不会操作的学生）先点上面的颜色，再点下面的键，你试试看。</p></blockquote>
+    <blockquote class="teacher"><p><span class="who">师</span>（对很快涂完的学生）可以再看看真键盘，检查有没有涂得不一样的地方。</p></blockquote>
+    <blockquote class="teacher"><p><span class="who">师</span>（巡视提醒）背挺直，手指轻轻按，不要用力敲键盘。</p></blockquote>
+    <blockquote class="teacher"><p><span class="who">师</span>（约第12分钟）还没涂完的同学抓紧时间，把每一个键都涂上颜色。</p></blockquote>
+    <p class="op"><span class="tag">操作</span>教师在看板保存“讲解前”全班快照。</p>
+  </section>
+
+  <section>
+    <h2>四、查看反馈，认识五区 <span class="time">13—16分钟，约3分钟</span></h2>
+    <blockquote class="teacher"><p><span class="who">师</span>好，时间到，请大家先停下，手放好，眼睛看大屏幕。</p></blockquote>
+    <p class="op"><span class="tag">操作</span>打开教师混色看板，展示全班填色结果；随后切换到标准分区图。</p>
+    <blockquote class="teacher"><p><span class="who">师</span>我们一起来看看大家的作品。老师发现，有些地方大家涂的颜色特别一致，可有的地方五颜六色，意见不太一样。这说明我们对键盘区域是怎么划分的，心里还有不同的想法。没关系，接下来我们一起把这五个区域认清楚。</p></blockquote>
+    <blockquote class="teacher"><p><span class="who">师</span>（指中间较大区域）先看中间这一大块，面积最大，上面有字母、有数字，我们今天打字、输入主要就靠它，它叫——主键盘区。大家在自己的键盘上找到主键盘区，用手指一指。</p></blockquote>
+    <p class="student"><span class="who">生</span>（指认主键盘区）</p>
+    <blockquote class="teacher"><p><span class="who">师</span>再看最上面一排，有 Esc，还有 F1 到 F12，它们能帮我们完成一些快捷的功能操作，这是功能键区。找一找。</p></blockquote>
+    <blockquote class="teacher"><p><span class="who">师</span>在主键盘区右边，这里有上下左右四个方向键，还有 Home、Page Up、Delete 这些键，用来移动光标、翻页和编辑内容，叫编辑键区。指一指。</p></blockquote>
+    <blockquote class="teacher"><p><span class="who">师</span>最右边，数字密密麻麻集中在一起，方便我们快速输入大量数字，这是小键盘区。</p></blockquote>
+    <blockquote class="teacher"><p><span class="who">师</span>最后看右上角，有三盏小灯，它能显示键盘的状态，这是指示灯区。</p></blockquote>
+    <blockquote class="teacher"><p><span class="who">师</span>我们一起读一遍：主键盘区、功能键区、编辑键区、小键盘区、指示灯区。</p></blockquote>
+    <p class="student"><span class="who">生</span>（齐读五个区域名称）</p>
+    <p class="op"><span class="tag">操作</span>只讲分区位置和用途；本环节不展开双字符键、控制键和大小写转换。</p>
+  </section>
+
+  <section>
+    <h2>五、修改填色，巩固认识 <span class="time">16—19分钟，约3分钟</span></h2>
+    <blockquote class="teacher"><p><span class="who">师</span>现在请大家回到自己的网页，对照刚刚学到的五个区域，把涂错的地方改过来。改的时候再看一眼面前的真键盘，确认它们是一一对应的。</p></blockquote>
+    <p class="op"><span class="tag">操作</span>学生修改填色；教师对仍有混淆的学生个别辅导。</p>
+    <blockquote class="teacher"><p><span class="who">师</span>（对完成快的学生）改好了的同学，可以跟同桌互相考一考：“请你指出主键盘区”“哪个区域是用小灯显示状态的？”</p></blockquote>
+    <p class="op"><span class="tag">操作</span>教师保存“修正后”快照。</p>
+    <blockquote class="teacher"><p><span class="who">师</span>（约第18分半）大家看，刚才这一块五颜六色，现在颜色统一多了，说明大家都学会了。</p></blockquote>
+  </section>
+
+  <section>
+    <h2>六、示范玩法，进入打字 <span class="time">19—21分钟，约2分钟</span></h2>
+    <blockquote class="teacher"><p><span class="who">师</span>认识了五个区域，我们就要真正用键盘来打字了。请大家打开第二个网页——打字。</p></blockquote>
+    <p class="op"><span class="tag">操作</span>切换/分发打字学生链接，打开打字学生页。</p>
+    <blockquote class="teacher"><p><span class="who">师</span>打字之前，先找到我们刚才说的主键盘区。今天输入字母和数字，主要就用它。</p></blockquote>
+    <blockquote class="teacher"><p><span class="who">师</span>先跟老师一起做好准备：身体坐正，两脚放平，手指轻轻放在键盘上，轻轻按，不要用力敲。</p></blockquote>
+    <blockquote class="teacher"><p><span class="who">师</span>（示范）看屏幕，上面有一个绿色的目标字符，比如这个“a”。你直接在键盘上找到 a 键按一下——注意，不用点输入框，直接按键就可以。按对了，你看，点亮了一个格子！</p></blockquote>
+    <blockquote class="teacher"><p><span class="who">师</span>如果按错了呢？没关系，已经点亮的格子不会少，你再找一找、重新按，按对了它照样亮。</p></blockquote>
+    <blockquote class="teacher"><p><span class="who">师</span>一张色卡上，第一关有 12 个格子，第二关 20 个，再往后一关有 30 个。把这张色卡的格子全部点亮，就可以收藏它，自动进入下一关。</p></blockquote>
+    <blockquote class="teacher"><p><span class="who">师</span>小提示：大小写都可以，今天不要求大小写转换，按对字母就行；请大家把输入法调到英文状态。准备好了吗？</p></blockquote>
+    <p class="student"><span class="who">生</span>准备好了！</p>
+  </section>
+
+  <section>
+    <h2>七、打字闯关，收集色卡 <span class="time">21—37分钟，约16分钟</span></h2>
+    <blockquote class="teacher"><p><span class="who">师</span>好，开始闯关！请大家看清目标，找到键，再轻轻按下去。</p></blockquote>
+    <p class="op"><span class="tag">操作</span>学生按自己节奏练习：先单字母，再字母短序列，然后主键盘区数字，最后简单字母数字组合；每关收集一种色系色卡。教师巡视，用进度看板查看最高关卡、平均关卡和前25%、50%、75%学生到达的关卡，允许进度快的学生继续。</p>
+    <h3>巡视指导</h3>
+    <blockquote class="teacher"><p><span class="who">师</span>（对找不到键的学生）别着急，一个字母一个字母找，你看字母是排在一起的，先找到它旁边的字母。</p></blockquote>
+    <blockquote class="teacher"><p><span class="who">师</span>（对误用小键盘数字的学生）今天我们用中间主键盘区的数字，你看，在最上面一排。</p></blockquote>
+    <blockquote class="teacher"><p><span class="who">师</span>（对用力敲的学生）轻轻一按就行，键盘很灵敏。</p></blockquote>
+    <blockquote class="teacher"><p><span class="who">师</span>（对进度快的学生）已经点亮一张色卡了，真棒！继续挑战下一关。</p></blockquote>
+    <h3>共性提醒（若较多学生卡在起步关，约第28分钟）</h3>
+    <blockquote class="teacher"><p><span class="who">师</span>大家停一下，看老师这个键——它在……（指认一个易错键的位置）。好，继续。</p></blockquote>
+    <blockquote class="teacher"><p><span class="who">师</span>（约第36分钟）还有最后一分钟，请大家完成手上这一组，看看今天已经收集了几张色卡。</p></blockquote>
+  </section>
+
+  <section>
+    <h2>八、交流收获，回顾总结 <span class="time">37—40分钟，约3分钟</span></h2>
+    <blockquote class="teacher"><p><span class="who">师</span>好，请大家停下操作，把椅子轻轻转过来，面向老师。</p></blockquote>
+    <blockquote class="teacher"><p><span class="who">师</span>这节课我们一起认识了键盘。谁来说说，键盘可以分成哪五个区域？</p></blockquote>
+    <p class="student"><span class="who">生</span>主键盘区、功能键区、编辑键区、小键盘区、指示灯区。</p>
+    <blockquote class="teacher"><p><span class="who">师</span>非常好！那今天我们输入字母和数字，主要用的是哪个区域？</p></blockquote>
+    <p class="student"><span class="who">生</span>主键盘区！</p>
+    <blockquote class="teacher"><p><span class="who">师</span>对。今天我们先自己尝试涂颜色，再听老师讲、动手修改，认识了五个区域；又用主键盘区，一个一个点亮了色卡。可能有同学还觉得有些键找得慢，没关系，课后多练，就会越来越熟悉。</p></blockquote>
+    <blockquote class="teacher"><p><span class="who">师</span>今天的作业：基础作业是回家在纸上画一画键盘的五个区域，写上名字，再向爸爸妈妈介绍主键盘区是做什么的；如果家里有电脑，可以输入几组字母和数字，留意一个你最容易找错的键，下节课我们一起交流。</p></blockquote>
+    <blockquote class="teacher"><p><span class="who">师</span>这节课就上到这里，下课！</p></blockquote>
+    <p class="student"><span class="who">生</span>老师再见！</p>
+    <blockquote class="teacher"><p><span class="who">师</span>同学们再见！</p></blockquote>
+    <p class="op"><span class="tag">操作</span>板书：认识键盘；主键盘区 / 功能键区 / 编辑键区 / 小键盘区 / 指示灯区；主键盘区：输入字母和数字。</p>
+  </section>
+
+  <footer>可直接照念“师”后内容；“生”为预设回答，仅供参考；带【操作】【预备】的提示不上台念出。<br>修改本页后同步更新 Word 逐字稿，便于打印与存档。</footer>
+</main>
+</body>
+</html>
