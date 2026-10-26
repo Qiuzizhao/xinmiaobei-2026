@@ -113,6 +113,20 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     return {id:'q'+(index+1),type:'mcq',prompt:key+'属于哪个区域？',
       choices,answer:choices[order.indexOf(region)].id};
   });
+  quizQuestions.push(
+    {id:'q12',type:'match',prompt:'把区域名称和它的作用连起来。',
+      left:regions.map(r=>({id:r.id,text:r.name})),
+      right:[{id:'d3',text:'移动光标、翻页和编辑'},{id:'d1',text:'输入字母、数字等内容'},{id:'d5',text:'显示键盘的状态'},{id:'d2',text:'完成一些功能操作'},{id:'d4',text:'集中输入数字'}],
+      answer:{main:'d1',function:'d2',editing:'d3',numeric:'d4',indicator:'d5'}},
+    {id:'q13',type:'match',prompt:'再练一遍：把名称和作用配对。',
+      left:['indicator','numeric','main','editing','function'].map(id=>({id,text:regions.find(r=>r.id===id).name})),
+      right:[{id:'r1',text:'显示键盘的状态'},{id:'r4',text:'移动光标、翻页和编辑'},{id:'r2',text:'集中输入数字'},{id:'r3',text:'输入字母、数字等内容'},{id:'r5',text:'完成一些功能操作'}],
+      answer:{indicator:'r1',numeric:'r2',main:'r3',editing:'r4',function:'r5'}},
+    {id:'q14',type:'match-shape',prompt:'把区域名称和对应的键盘位置示意图连起来。',
+      left:regions.map(r=>({id:r.id,text:r.name})),
+      right:['editing','numeric','function','indicator','main'].map(id=>({id:'s-'+id,shape:id})),
+      answer:{main:'s-main',function:'s-function',editing:'s-editing',numeric:'s-numeric',indicator:'s-indicator'}}
+  );
   function gradeMcq(question, value){
     return !!question && question.type==='mcq' && value===question.answer;
   }

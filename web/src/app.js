@@ -344,8 +344,8 @@
     renderQuizTeacher();
   }
   function renderQuizTeacher(){
-    const n=people.length, done=people.filter(p=>p.finished||quizProgress(p.answers||{}).finished).length;
-    const corrects=people.map(p=>Number(p.correct??quizProgress(p.answers||{}).correct)||0);
+    const n=people.length, done=people.filter(p=>quizProgress(p.answers||{}).finished).length;
+    const corrects=people.map(p=>Number(quizProgress(p.answers||{}).correct)||0);
     const mean=n?corrects.reduce((a,b)=>a+b,0)/n:0;
     const online=people.filter(p=>Date.now()-p.updatedAt<90000).length;
     $('#q-count').innerHTML=n+'<small>人</small>';
@@ -354,7 +354,7 @@
     $('#q-online').innerHTML=online+'<small>人</small>';
     $('#q-progress-badge').textContent=n?`完成 ${done} / ${n}`:'等待加入';
     const buckets=Array.from({length:quizQuestions.length+1},()=>0);
-    people.forEach(p=>{const a=Number(p.answered??quizProgress(p.answers||{}).answered)||0;buckets[Math.min(quizQuestions.length,Math.max(0,a))]++;});
+    people.forEach(p=>{const a=Number(quizProgress(p.answers||{}).answered)||0;buckets[Math.min(quizQuestions.length,Math.max(0,a))]++;});
     replaceHTML($('#q-progress-bars'),n?buckets.map((count,i)=>`<div class="hist-row"><span>${i===quizQuestions.length?'完成':'答到 '+i}</span><div class="hist-bar"><span style="width:${count/n*100}%;background:${i===quizQuestions.length?'#36a97c':'#7fb399'}"></span></div><span>${count} 人</span></div>`).join(''):'<div class="empty">学生开始作答后，这里会出现进度。</div>');
     const wrong=quizWrongStats(people);
     replaceHTML($('#q-wrong'),n?wrong.map((w,i)=>{
