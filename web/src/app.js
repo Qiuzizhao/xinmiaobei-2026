@@ -1,7 +1,7 @@
 (async function () {
   'use strict';
   document.addEventListener('contextmenu',event=>event.preventDefault(),{capture:true});
-  const {regions,keys,levelInfo,theme,swatch,targetAt,stats,distribution,mixShares,normalizeStates,quizQuestions,gradeQuizAnswer,quizProgress,quizWrongStats}=Lesson;
+  const {regions,keys,levelInfo,theme,swatch,targetAt,completedCards,stats,distribution,mixShares,normalizeStates,quizQuestions,gradeQuizAnswer,quizProgress,quizWrongStats}=Lesson;
   const $=s=>document.querySelector(s), $$=s=>Array.from(document.querySelectorAll(s));
   function replaceHTML(target,html){
     if(target.innerHTML===html)return;
@@ -469,17 +469,17 @@
     $$('[data-snapshot]').forEach(b=>b.onclick=()=>{viewSnapshot=snapshots[Number(b.dataset.snapshot)];showAnswer=false;renderColorTeacher();});
   }
   function teacherTyping(){
-    teacherShell();$('#teacher-content').innerHTML=`<div class="metrics"><div class="metric"><span class="label">参与练习</span><strong id="t-count">0<small>人</small></strong></div><div class="metric"><span class="label">目前最高</span><strong id="t-max">—</strong></div><div class="metric"><span class="label">平均关卡</span><strong id="t-mean">—</strong></div><div class="metric"><span class="label">累计正确输入</span><strong id="t-total">0<small>个</small></strong></div></div>
-      <section class="panel"><h2>分层进度</h2><div class="percentile" id="percentiles"></div></section>
-      <section class="panel" style="margin-top:22px"><h2>关卡分布</h2><div id="histogram"></div><p class="tips" id="typing-observation"></p></section>`;renderTypingTeacher();
+    teacherShell();$('#teacher-content').innerHTML=`<div class="metrics"><div class="metric"><span class="label">参与练习</span><strong id="t-count">0<small>人</small></strong></div><div class="metric"><span class="label">最多获得</span><strong id="t-max">—</strong></div><div class="metric"><span class="label">平均获得</span><strong id="t-mean">—</strong></div><div class="metric"><span class="label">累计正确输入</span><strong id="t-total">0<small>个</small></strong></div></div>
+      <section class="panel"><h2>色卡收集进度</h2><div class="percentile" id="percentiles"></div></section>
+      <section class="panel" style="margin-top:22px"><h2>色卡数量分布</h2><div id="histogram"></div><p class="tips" id="typing-observation"></p></section>`;renderTypingTeacher();
   }
   function renderTypingTeacher(){
-    const s=stats(people);$('#t-count').innerHTML=s.count+'<small>人</small>';$('#t-max').innerHTML=s.count?s.max+'<small>关</small>':'—';$('#t-mean').innerHTML=s.count?s.mean.toFixed(1)+'<small>关</small>':'—';$('#t-total').innerHTML=people.reduce((sum,p)=>sum+(Number(p.total)||0),0)+'<small>个</small>';
-    $('#percentiles').innerHTML=s.thresholds.map(x=>`<div class="percentile-card"><span>前 ${x.percent}% 学生至少到</span><strong>${s.count?'第 '+x.level+' 关':'等待加入'}</strong></div>`).join('');
-    const counts={};people.forEach(p=>{const lv=levelInfo(p.total).level;counts[lv]=(counts[lv]||0)+1;});
-    replaceHTML($('#histogram'),s.count?Object.keys(counts).sort((a,b)=>Number(a)-Number(b)).map(l=>`<div class="hist-row"><span>第 ${l} 关</span><div class="hist-bar"><span style="width:${counts[l]/s.count*100}%;background:${swatch(Number(l),4,12)}"></span></div><span>${counts[l]} 人</span></div>`).join(''):'<div class="empty">学生开始输入后，这里会出现关卡分布。</div>');
+    const s=stats(people);$('#t-count').innerHTML=s.count+'<small>人</small>';$('#t-max').innerHTML=s.count?s.max+'<small>张色卡</small>':'—';$('#t-mean').innerHTML=s.count?s.mean.toFixed(1)+'<small>张色卡</small>':'—';$('#t-total').innerHTML=people.reduce((sum,p)=>sum+(Number(p.total)||0),0)+'<small>个</small>';
+    $('#percentiles').innerHTML=s.thresholds.map(x=>`<div class="percentile-card"><span>前 ${x.percent}% 学生至少获得</span><strong>${s.count?x.cards+' 张色卡':'等待加入'}</strong></div>`).join('');
+    const counts={};people.forEach(p=>{const lv=completedCards(p.total);counts[lv]=(counts[lv]||0)+1;});
+    replaceHTML($('#histogram'),s.count?Object.keys(counts).sort((a,b)=>Number(a)-Number(b)).map(l=>`<div class="hist-row"><span>${l} 张色卡</span><div class="hist-bar"><span style="width:${counts[l]/s.count*100}%;background:${swatch(Math.max(1,Number(l)),4,12)}"></span></div><span>${counts[l]} 人</span></div>`).join(''):'<div class="empty">学生开始输入后，这里会显示已获得色卡的数量分布。</div>');
     const online=people.filter(p=>Date.now()-p.updatedAt<90000).length;
-    $('#typing-observation').textContent=`最近在线 ${online} 人 · 当前关卡为正在挑战的关卡`;
+    $('#typing-observation').textContent=`最近在线 ${online} 人 · 只统计完整获得的色卡`;
   }
   let peopleSignature='',lastTeacherRender=0;
   async function pollTeacher(){

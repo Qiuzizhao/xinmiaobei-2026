@@ -7,10 +7,10 @@ test('色卡边界正确，首关12格，第二关20格，之后30格',()=>{
   assert.deepEqual(L.levelInfo(32),{level:3,within:0,target:30});
   assert.deepEqual(L.levelInfo(62),{level:4,within:0,target:30});
 });
-test('累计数量是关卡与百分位的唯一依据，小样本向上取整',()=>{
+test('教师统计已获得色卡，未完成的关卡不计入，百分位按人数向上取整',()=>{
   const s=L.stats([{total:0},{total:12},{total:32},{total:62}]);
-  assert.equal(s.max,4);assert.equal(s.mean,2.5);
-  assert.deepEqual(s.thresholds.map(x=>x.level),[4,4,3,2]);
+  assert.equal(s.max,3);assert.equal(s.mean,1.5);
+  assert.deepEqual(s.thresholds.map(x=>x.cards),[3,3,2,1]);
   assert.equal(L.stats([]).count,0);
 });
 test('混色按学生计数，未填色和非法颜色进入未填色',()=>{
@@ -79,4 +79,11 @@ test('40张色卡使用协调色阶，每格不同且明度连续递增',()=>{
     palettes.push(colors.join('|'));
   }
   assert.equal(new Set(palettes).size,40);
+});
+
+test('色卡获得数量在完整通关时增加，与学生收藏数量一致',()=>{
+ for(const [total,cards] of [[0,0],[11,0],[12,1],[31,1],[32,2],[61,2],[62,3]])assert.equal(L.completedCards(total),cards);
+ assert.equal(L.stats([{total:11}]).max,0);
+ assert.equal(L.stats([{total:12}]).max,1);
+ assert.equal(L.stats([]).max,0);
 });
