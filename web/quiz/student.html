@@ -839,7 +839,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
   }
   function renderTypingTeacher(){
     const s=stats(people);$('#t-count').innerHTML=s.count+'<small>人</small>';$('#t-max').innerHTML=s.count?s.max+'<small>张色卡</small>':'—';$('#t-mean').innerHTML=s.count?s.mean.toFixed(1)+'<small>张色卡</small>':'—';$('#t-total').innerHTML=people.reduce((sum,p)=>sum+(Number(p.total)||0),0)+'<small>个</small>';
-    $('#percentiles').innerHTML=s.thresholds.map(x=>`<div class="percentile-card"><span>前 ${x.percent}% 学生至少获得</span><strong>${s.count?x.cards+' 张色卡':'等待加入'}</strong></div>`).join('');
+    $('#percentiles').innerHTML=s.thresholds.map(x=>`<div class="percentile-card"><span>前 ${x.percent}% 学生</span><strong>${s.count?x.cards+' 张色卡':'等待加入'}</strong></div>`).join('');
     const counts={};people.forEach(p=>{const lv=collectedCardCount(p);counts[lv]=(counts[lv]||0)+1;});
     replaceHTML($('#histogram'),s.count?Object.keys(counts).sort((a,b)=>Number(a)-Number(b)).map(l=>`<div class="hist-row"><span>${l} 张色卡</span><div class="hist-bar"><span style="width:${counts[l]/s.count*100}%;background:${swatch(Math.max(1,Number(l)),4,12)}"></span></div><span>${counts[l]} 人</span></div>`).join(''):'<div class="empty">学生开始输入后，这里会显示已获得色卡的数量分布。</div>');
     const online=people.filter(p=>Date.now()-p.updatedAt<90000).length;
