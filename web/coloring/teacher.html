@@ -272,7 +272,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     if(busy||document.hidden||navigator.onLine===false||now<retryAt||now-lastUploadAttempt<uploadDelay)return;
     if(!force&&!dirty&&now-lastSent<60000)return;
     busy=true;dirty=false;lastUploadAttempt=now;
-    try{const outgoing=payload();await put(`${kind}:${room}:${studentId}`,outgoing);lastSent=Date.now();status(true,'已同步');if(kind==='coloring'&&outgoing.completed&&!dirty)showShadeGuide();}
+    try{const outgoing=payload();await put(`${kind}:${room}:${studentId}`,outgoing);lastSent=Date.now();status(true,'已同步');}
     catch{dirty=true;status(false,'正在重连');}
     finally{busy=false;}
   }
@@ -318,7 +318,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     });
     $$('[data-color]').forEach(b=>b.onclick=()=>{selected=b.dataset.color;$$('[data-color]').forEach(x=>{x.classList.toggle('active',x===b);x.setAttribute('aria-pressed',String(x===b));});renderShades();updateColor();});
     $('#clear').onclick=()=>{if(confirm('清空这次填色，重新试一试吗？')){state.colors={};state.completed=false;persist();updateColor();}};
-    $('#complete').onclick=async()=>{if(paintedCount()!==keys.length)return;state.completed=true;persist();updateColor();await syncStudent(true);toast(isOnline?'选择已同步，可以继续观察键盘。':'选择已保存在本机，连接恢复后自动同步。');};
+    $('#complete').onclick=()=>{if(paintedCount()!==keys.length)return;state.completed=true;persist();updateColor();showShadeGuide();syncStudent(true);toast(isOnline?'选择已同步，可以继续观察键盘。':'选择已保存在本机，连接恢复后自动同步。');};
     renderShades();
     updateColor();
   }
