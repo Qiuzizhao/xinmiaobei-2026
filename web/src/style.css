@@ -165,3 +165,8 @@ body{overflow-anchor:none}
 @media(max-width:760px){.quiz-match.shapes .match-item{min-height:124px}.quiz-match.shapes .match-item.right{padding:10px 6px}.key-fragment{height:102px}}
 
 #quiz-actions{flex-wrap:wrap}#quiz-prev{min-width:90px}
+
+.quiz-feedback{flex-direction:column;align-items:stretch;justify-content:center;gap:6px;font-weight:400;min-height:96px}
+.quiz-feedback strong{font-size:16px;line-height:1.6;min-height:1.6em}
+.quiz-feedback .quiz-explanation{margin:0;font-size:14px;line-height:1.8;font-weight:400}
+@media(max-width:760px){.quiz-feedback strong{min-height:3.2em}}

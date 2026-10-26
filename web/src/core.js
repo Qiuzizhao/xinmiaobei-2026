@@ -132,6 +132,8 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
       right:['editing','numeric','function','indicator','main'].map(id=>({id:'s-'+id,shape:id})),
       answer:{main:'s-main',function:'s-function',editing:'s-editing',numeric:'s-numeric',indicator:'s-indicator'}}
   );
+  const quizExplanations=["Caps Lock 在字母键 A 的左边，属于主键盘区。这个大区域里还有字母键、数字键和空格键。","Esc 在键盘左上角，和 F1—F12 位于同一排，属于功能键区。","PrtSc 在键盘顶排靠右的位置，和 Scroll Lock、Pause 一起属于功能键区。","Scroll Lock 在键盘顶排，通常位于 PrtSc 与 Pause 之间，属于功能键区。","Pause 在键盘顶排靠右的位置，属于功能键区。它的键帽上有时还会写着 Break。","Insert 和 Home、Page Up 等键排在一起，属于编辑键区。","Home 在六个编辑键组成的小区域中，属于编辑键区。这个区域还包括下方的四个方向键。","Page Down 通常在 Page Up 的下面，和 Insert、Home 等键同属编辑键区。","Backspace 在主键盘区的右上方，和字母、数字所在的这一大块区域在一起。","Num Lock 在最右侧数字键的上方，属于小键盘区。","这里问的是最右侧的 Enter 键，它和右侧集中排列的数字键同属小键盘区。","主键盘区输入内容，功能键区完成一些功能操作，编辑键区移动光标和编辑，小键盘区集中输入数字，指示灯区显示状态。","看用途来配对：输入字母和数字用主键盘区；完成一些功能操作用功能键区；移动、翻页和编辑用编辑键区；集中输入数字用小键盘区；显示状态的是指示灯区。","一长排按键是功能键区；带字母键和长空格键的是主键盘区；六个编辑键加方向键是编辑键区；像计算器的是小键盘区；三盏小灯是指示灯区。"];
+  quizQuestions.forEach((question,index)=>{question.explanation=quizExplanations[index];});
   function gradeMcq(question, value){
     return !!question && question.type==='mcq' && value===question.answer;
   }

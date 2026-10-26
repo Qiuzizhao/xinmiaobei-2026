@@ -80,3 +80,14 @@ test('上一题保留已提交答案和未提交连线草稿，首题不回退�
  assert.equal(state.index,0);assert.equal(state.answers.q1.correct,true);assert.equal(state.answers.q2.value.main,'r1');assert.equal(state.answers.q2.checked,false);assert.equal(saved,1);assert.equal(rendered,1);assert.match(ctx.quizPreviousButton(),/disabled/);
  ctx.goPreviousQuiz();assert.equal(saved,1);state.index=2;ctx.goPreviousQuiz();assert.equal(state.index,1);assert.doesNotMatch(ctx.quizPreviousButton(),/disabled/);
 });
+test('答对和答错均显示本题解析',()=>{
+ const source=fs.readFileSync(path.join(__dirname,'../web/src/app.js'),'utf8');
+ const code=source.slice(source.indexOf('  function showQuizFeedback('),source.indexOf('  function updateMatchCheck('));
+ const feedback={innerHTML:'',classList:{remove(){},add(){}}},badge={},bar={style:{}};
+ const ctx={state:{answers:{}},quizQuestions:[{}],quizProgress:()=>({correct:1,answered:1}),esc:value=>String(value),$:s=>s==='#quiz-feedback'?feedback:s==='.quiz-topline .badge'?badge:bar};
+ vm.createContext(ctx);vm.runInContext(code,ctx);
+ const q={type:'mcq',explanation:'Esc位于顶排，属于功能键区。'};
+ ctx.showQuizFeedback(true,q);assert.match(feedback.innerHTML,/答对了/);assert.ok(feedback.innerHTML.includes(q.explanation));
+ ctx.showQuizFeedback(false,q);assert.match(feedback.innerHTML,/正确答案已标出/);assert.ok(feedback.innerHTML.includes(q.explanation));
+ q.type='match';ctx.showQuizFeedback(false,q);assert.match(feedback.innerHTML,/红色虚线/);assert.ok(feedback.innerHTML.includes(q.explanation));
+});

@@ -44,3 +44,9 @@ test('原有11道题完成后，仍需完成新增连线，原选择题作答保
  for(const q of L.quizQuestions.slice(11)){assert.equal(L.gradeQuizAnswer(q,q.answer),true);answers[q.id]={value:q.answer,correct:true,checked:true};}
  p=L.quizProgress(answers);assert.equal(p.finished,true);assert.equal(p.correct,14);
 });
+test('每一道选择题和连线题都有简短解析，选择题解析说明正确区域',()=>{
+ for(const q of L.quizQuestions){
+  assert.equal(typeof q.explanation,'string');assert.ok(q.explanation.length>10&&q.explanation.length<130);
+  if(q.type==='mcq')assert.ok(q.explanation.includes(q.choices.find(c=>c.id===q.answer).text),q.id);
+ }
+});

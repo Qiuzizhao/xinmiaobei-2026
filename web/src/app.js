@@ -265,7 +265,7 @@
     if(answered?.checked && q.type==='mcq') quizDraft={};
     main.innerHTML=`<div class="quiz-topline"><span class="quiz-counter">第 <strong>${state.index+1}</strong> / ${quizQuestions.length} 题</span><span class="badge">已答对 ${progress.correct} 题</span></div>
       <div class="progress-track quiz-progress"><span style="width:${progress.answered/quizQuestions.length*100}%"></span></div>
-      <section class="panel quiz-card" id="quiz-card"><span class="quiz-type">${q.type==='mcq'?'选一选':'配一配 · 先选左边，再选右边'}</span><h2>${esc(q.prompt)}</h2><div id="quiz-body"></div><div id="quiz-feedback" class="quiz-feedback hidden" role="status"></div><div class="toolbar" id="quiz-actions"></div></section>`;
+      <section class="panel quiz-card" id="quiz-card"><span class="quiz-type">${q.type==='mcq'?'选一选':'配一配 · 先选左边，再选右边'}</span><h2>${esc(q.prompt)}</h2><div id="quiz-body"></div><div id="quiz-feedback" class="quiz-feedback hidden" role="status"><strong>答题反馈</strong><p class="quiz-explanation">${esc(q.explanation)}</p></div><div class="toolbar" id="quiz-actions"></div></section>`;
     const body=$('#quiz-body'), actions=$('#quiz-actions'), feedback=$('#quiz-feedback');
     const locked=!!answered?.checked;actions.innerHTML=quizPreviousButton();
     if(q.type==='mcq'){
@@ -312,7 +312,8 @@
     $('.quiz-topline .badge').textContent=`已答对 ${progress.correct} 题`;
     $('.quiz-progress span').style.width=progress.answered/quizQuestions.length*100+'%';
     feedback.classList.remove('hidden','ok','bad');feedback.classList.add(correct?'ok':'bad');
-    feedback.textContent=correct?'答对了！':q.type==='mcq'?'再想一想，正确答案已标出。':'红色虚线表示这组配对不正确。';
+    const message=correct?'答对了！':q.type==='mcq'?'再想一想，正确答案已标出。':'红色虚线表示这组配对不正确。';
+    feedback.innerHTML=`<strong>${esc(message)}</strong><p class="quiz-explanation">${esc(q.explanation)}</p>`;
   }
   function updateMatchCheck(q){
     const btn=$('#quiz-check');if(!btn)return;

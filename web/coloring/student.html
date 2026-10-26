@@ -166,6 +166,11 @@ body{overflow-anchor:none}
 @media(max-width:760px){.quiz-match.shapes .match-item{min-height:124px}.quiz-match.shapes .match-item.right{padding:10px 6px}.key-fragment{height:102px}}
 
 #quiz-actions{flex-wrap:wrap}#quiz-prev{min-width:90px}
+
+.quiz-feedback{flex-direction:column;align-items:stretch;justify-content:center;gap:6px;font-weight:400;min-height:96px}
+.quiz-feedback strong{font-size:16px;line-height:1.6;min-height:1.6em}
+.quiz-feedback .quiz-explanation{margin:0;font-size:14px;line-height:1.8;font-weight:400}
+@media(max-width:760px){.quiz-feedback strong{min-height:3.2em}}
 </style></head><body><script>window.APP_CONFIG={"taskId":"urw467xtz4n7","title":"填色盘","kind":"coloring","role":"student"};</script><script>(function (root) {
   'use strict';
   const regions = [
@@ -300,6 +305,8 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
       right:['editing','numeric','function','indicator','main'].map(id=>({id:'s-'+id,shape:id})),
       answer:{main:'s-main',function:'s-function',editing:'s-editing',numeric:'s-numeric',indicator:'s-indicator'}}
   );
+  const quizExplanations=["Caps Lock 在字母键 A 的左边，属于主键盘区。这个大区域里还有字母键、数字键和空格键。","Esc 在键盘左上角，和 F1—F12 位于同一排，属于功能键区。","PrtSc 在键盘顶排靠右的位置，和 Scroll Lock、Pause 一起属于功能键区。","Scroll Lock 在键盘顶排，通常位于 PrtSc 与 Pause 之间，属于功能键区。","Pause 在键盘顶排靠右的位置，属于功能键区。它的键帽上有时还会写着 Break。","Insert 和 Home、Page Up 等键排在一起，属于编辑键区。","Home 在六个编辑键组成的小区域中，属于编辑键区。这个区域还包括下方的四个方向键。","Page Down 通常在 Page Up 的下面，和 Insert、Home 等键同属编辑键区。","Backspace 在主键盘区的右上方，和字母、数字所在的这一大块区域在一起。","Num Lock 在最右侧数字键的上方，属于小键盘区。","这里问的是最右侧的 Enter 键，它和右侧集中排列的数字键同属小键盘区。","主键盘区输入内容，功能键区完成一些功能操作，编辑键区移动光标和编辑，小键盘区集中输入数字，指示灯区显示状态。","看用途来配对：输入字母和数字用主键盘区；完成一些功能操作用功能键区；移动、翻页和编辑用编辑键区；集中输入数字用小键盘区；显示状态的是指示灯区。","一长排按键是功能键区；带字母键和长空格键的是主键盘区；六个编辑键加方向键是编辑键区；像计算器的是小键盘区；三盏小灯是指示灯区。"];
+  quizQuestions.forEach((question,index)=>{question.explanation=quizExplanations[index];});
   function gradeMcq(question, value){
     return !!question && question.type==='mcq' && value===question.answer;
   }
@@ -644,7 +651,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     if(answered?.checked && q.type==='mcq') quizDraft={};
     main.innerHTML=`<div class="quiz-topline"><span class="quiz-counter">第 <strong>${state.index+1}</strong> / ${quizQuestions.length} 题</span><span class="badge">已答对 ${progress.correct} 题</span></div>
       <div class="progress-track quiz-progress"><span style="width:${progress.answered/quizQuestions.length*100}%"></span></div>
-      <section class="panel quiz-card" id="quiz-card"><span class="quiz-type">${q.type==='mcq'?'选一选':'配一配 · 先选左边，再选右边'}</span><h2>${esc(q.prompt)}</h2><div id="quiz-body"></div><div id="quiz-feedback" class="quiz-feedback hidden" role="status"></div><div class="toolbar" id="quiz-actions"></div></section>`;
+      <section class="panel quiz-card" id="quiz-card"><span class="quiz-type">${q.type==='mcq'?'选一选':'配一配 · 先选左边，再选右边'}</span><h2>${esc(q.prompt)}</h2><div id="quiz-body"></div><div id="quiz-feedback" class="quiz-feedback hidden" role="status"><strong>答题反馈</strong><p class="quiz-explanation">${esc(q.explanation)}</p></div><div class="toolbar" id="quiz-actions"></div></section>`;
     const body=$('#quiz-body'), actions=$('#quiz-actions'), feedback=$('#quiz-feedback');
     const locked=!!answered?.checked;actions.innerHTML=quizPreviousButton();
     if(q.type==='mcq'){
@@ -691,7 +698,8 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     $('.quiz-topline .badge').textContent=`已答对 ${progress.correct} 题`;
     $('.quiz-progress span').style.width=progress.answered/quizQuestions.length*100+'%';
     feedback.classList.remove('hidden','ok','bad');feedback.classList.add(correct?'ok':'bad');
-    feedback.textContent=correct?'答对了！':q.type==='mcq'?'再想一想，正确答案已标出。':'红色虚线表示这组配对不正确。';
+    const message=correct?'答对了！':q.type==='mcq'?'再想一想，正确答案已标出。':'红色虚线表示这组配对不正确。';
+    feedback.innerHTML=`<strong>${esc(message)}</strong><p class="quiz-explanation">${esc(q.explanation)}</p>`;
   }
   function updateMatchCheck(q){
     const btn=$('#quiz-check');if(!btn)return;
