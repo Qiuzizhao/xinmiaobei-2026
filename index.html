@@ -33,7 +33,20 @@
     @media (max-width: 900px) { main { padding: 38px 18px; } .activities { grid-template-columns: 1fr; } .card { padding: 24px; } .document { padding: 21px; } }
     @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
   </style>
-</head>
+<style id="mobile-layout">
+
+html{-webkit-text-size-adjust:100%}body{overflow-wrap:anywhere}.activities>*{min-width:0}
+@media screen and (max-width:640px){
+ main{padding:28px max(16px,env(safe-area-inset-right)) 32px max(16px,env(safe-area-inset-left))}
+ h1{font-size:30px;margin-bottom:24px}.activities{gap:14px}.card{padding:20px;border-radius:16px}
+ .swatches{margin-bottom:18px}.swatches span{width:24px;height:24px}h2{margin:8px 0 18px;font-size:22px}
+ .links{gap:10px;min-width:0}.button{min-height:46px;display:flex;align-items:center;justify-content:center;padding:12px 8px}
+ .document{flex-direction:column;align-items:stretch;gap:16px;margin-top:14px;padding:20px;border-radius:16px}
+ .document>div{min-width:0}.document span{line-height:1.7}.document .links{width:100%;min-width:0!important;grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ .document .button{min-width:0}.document>.button{width:100%}
+}
+
+</style></head>
 <body>
   <main>
     <header>
