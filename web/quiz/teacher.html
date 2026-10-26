@@ -1,0 +1,834 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light"><title>认识键盘-知识点练习 · 教师端</title><style>:root{color-scheme:light;--ink:#243840;--muted:#71817d;--paper:#f7f8f3;--line:#dfe7df;--green:#23765e;--mint:#e7f1e8;--white:#fff;--shadow:0 12px 40px #294c3410;font-family:'Microsoft YaHei','PingFang SC',system-ui,sans-serif;color:var(--ink);background:var(--paper)}
+*{box-sizing:border-box}body{margin:0}button,input,select{font:inherit}button,a,input,select{-webkit-tap-highlight-color:transparent}button{cursor:pointer}a{color:inherit}button:focus-visible,a:focus-visible{outline:3px solid #2d9179;outline-offset:4px}button:disabled{cursor:wait;opacity:.55}button,input,select{border-radius:12px}input,select{border:1px solid var(--line);padding:10px 12px;background:white;color:var(--ink)}input{min-width:0}button{border:1px solid var(--line);background:white;color:var(--ink);padding:11px 17px;font-weight:600}button:hover{border-color:#98b7a3}.primary{background:var(--green);color:white;border-color:var(--green)}.quiet{background:transparent}.danger{color:#ac4f45}header{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:22px 4vw;border-bottom:1px solid var(--line);background:#fcfdf9}.brand{display:flex;gap:13px;align-items:center;font-weight:800}.brandmark{display:grid;place-items:center;width:38px;height:38px;background:var(--green);color:white;border-radius:12px;font-size:24px}.brand small{display:block;font-weight:400;letter-spacing:.13em;color:var(--muted);font-size:10px;margin-top:3px}.badge,.status{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);padding:7px 12px;border-radius:99px;font-size:12px;background:#fff}.status:before{content:'';width:7px;height:7px;background:#a9b5ac;border-radius:50%}.status.ok:before{background:#36a97c}.status.error:before{background:#db8263}.status.error{color:#a14b30}main{max-width:1500px;margin:auto;padding:30px 4vw 45px}.eyebrow{color:var(--green);font-size:12px;font-weight:700;letter-spacing:.16em}.intro{display:flex;justify-content:space-between;gap:20px;align-items:end;margin-bottom:26px}h1{font-size:clamp(28px,3vw,43px);letter-spacing:-.04em;margin:9px 0 10px;line-height:1.3}h2{font-size:20px;margin:0 0 12px}h3{font-size:16px;margin:0 0 8px}p{line-height:1.8;color:var(--muted);margin:8px 0}.panel{background:white;border:1px solid var(--line);border-radius:22px;padding:24px;box-shadow:var(--shadow)}.palette{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:22px}.color-choice{display:flex;align-items:center;gap:8px;padding:13px 17px;border:2px solid transparent;background:#fff;box-shadow:0 0 0 1px var(--line)}.color-choice.active{border-color:var(--ink);box-shadow:0 4px 10px #253c2310}.dot{display:inline-block;flex-shrink:0;width:17px;height:17px;border-radius:6px;background:var(--c,#e8ede9);vertical-align:middle}.keyboard-scroll{overflow-x:auto;padding:12px 2px 5px}.keyboard{position:relative;aspect-ratio:23.3/6.85;min-width:770px;user-select:none;touch-action:pan-y}.key{position:absolute;padding:0;border:1px solid #d6ded7;border-bottom:3px solid #c9d3cb;border-radius:7px;background:#f0f3ef;color:#273c40;font-size:clamp(9px,1vw,14px);font-weight:600;box-shadow:0 2px 2px #27472b06;transition:filter .12s,transform .12s}.key:hover{filter:brightness(.94);transform:translateY(-2px)}.key.indicator{border-radius:14px;font-size:11px;border-bottom-width:1px}.key.indicator:before{content:'';display:inline-block;width:7px;height:7px;background:#566b5b;border-radius:50%;margin-right:5px}.keyboard-note{display:flex;justify-content:space-between;gap:16px;font-size:12px;color:var(--muted);margin:12px 0 0}.toolbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:22px}.toolbar .spacer{flex:1}.progress-track{height:7px;background:#edf1ea;border-radius:99px;overflow:hidden}.progress-track>span{display:block;background:var(--green);height:100%;transition:width .25s}.footer-note{margin:20px 0;font-size:13px;color:var(--muted)}.notice{padding:12px 16px;background:var(--mint);border-radius:12px;color:var(--green);font-size:14px;margin:16px 0}.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%);padding:13px 23px;background:var(--ink);color:white;border-radius:99px;box-shadow:var(--shadow);z-index:20;max-width:90vw;text-align:center}.hidden{display:none!important}.teacher-bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:24px}.teacher-bar label{font-size:13px;color:var(--muted)}.teacher-bar input{max-width:205px}.teacher-bar select{max-width:100%;min-width:290px}.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:23px}.metric{border:1px solid var(--line);background:white;border-radius:18px;padding:19px 22px}.metric .label{font-size:13px;color:var(--muted)}.metric strong{display:block;font-size:34px;margin-top:6px;font-weight:700;font-variant-numeric:tabular-nums}.metric small{font-size:13px;font-weight:400;margin-left:5px}.section-head{display:flex;justify-content:space-between;gap:14px;align-items:center;margin-bottom:12px}.section-head h2{margin:0}.legend{display:flex;gap:15px;flex-wrap:wrap;font-size:12px;margin:14px 0}.legend span{display:flex;gap:6px;align-items:center}.tooltip{position:fixed;z-index:40;background:#243840;color:white;border-radius:12px;padding:10px 12px;width:max-content;max-width:min(92vw,210px);box-shadow:0 15px 40px #0002;pointer-events:none;white-space:nowrap}.tooltip strong{display:block;margin-bottom:6px}.tooltip .tiprow{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:12px;padding:3px 0}.tooltip .tiprow span:first-child{display:flex;align-items:center;gap:6px}.tooltip .tiptotal{font-size:11px;color:#c8d6ce;margin:7px 0 0}.below{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:22px}.empty{padding:35px 15px;text-align:center;color:var(--muted)}.snapshot-row{display:flex;justify-content:space-between;border-bottom:1px solid var(--line);padding:12px 0;font-size:14px;gap:10px}.stage-buttons{display:flex;gap:8px;flex-wrap:wrap}.stage-buttons button.active{background:var(--green);color:white;border-color:var(--green)}.typing-layout{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(310px,.8fr);gap:24px}.typing-task{display:flex;flex-direction:column;min-height:385px}.lesson-label{font-size:13px;color:var(--muted)}.target-strip{display:flex;align-items:center;justify-content:center;gap:10px;min-height:132px;margin:24px 0 18px}.target-char{display:grid;place-items:center;font-family:ui-monospace,Consolas,monospace;font-size:31px;color:#a1ada4;width:48px;height:65px;border-radius:12px;background:#f4f6f1}.target-char.current{font-size:53px;width:85px;height:95px;background:var(--green);color:white;box-shadow:0 7px 0 #18543f}.target-strip.error .target-char.current{background:#b85249;box-shadow:0 7px 0 #843d35;animation:shake .18s 2}.input-hint{min-height:28px;text-align:center;font-size:14px;margin-top:12px}.typing-task .progress-track{margin-top:auto}.typing-bottom{display:flex;justify-content:space-between;font-size:13px;margin:14px 0 0}.swatch-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:9px;margin:22px 0}.swatch{aspect-ratio:1;border-radius:9px;background:#edf0e9;position:relative;transition:background .3s,transform .3s}.swatch.lit{background:var(--paint);box-shadow:inset 0 0 0 1px #00000008}.swatch.just-lit{animation:pop .3s ease-out}.swatch:not(.lit):before{content:'';position:absolute;inset:40%;border-radius:50%;background:#dce3d8}.swatch-count{font-size:13px;color:var(--muted)}.level-tag{font-size:12px;border-radius:99px;padding:6px 10px;background:var(--mint);color:var(--green)}.collection{margin-top:24px}.collection-list{display:flex;flex-wrap:wrap;gap:12px;padding:10px 0}.mini-card{width:105px;min-width:105px;padding:10px;border:1px solid var(--line);border-radius:13px;background:white}.mini-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:3px}.mini-grid span{height:14px;border-radius:3px}.mini-card small{display:block;margin-top:8px;color:var(--muted);font-size:11px}.celebration{color:var(--green);font-weight:700;text-align:center;padding:9px;background:var(--mint);border-radius:12px;min-height:38px}.percentile{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.percentile-card{padding:20px;border:1px solid var(--line);border-radius:15px}.percentile-card strong{display:block;font-size:28px;margin-top:10px}.percentile-card span{color:var(--muted);font-size:13px}.hist-row{display:grid;grid-template-columns:75px 1fr 65px;align-items:center;gap:15px;margin:17px 0;font-size:13px}.hist-bar{height:22px;background:#eef2eb;border-radius:6px;overflow:hidden}.hist-bar span{height:100%;display:block;background:#7fb399;border-radius:6px}.home-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:36px}.home-card{padding:35px}.home-art{height:150px;display:flex;align-items:center;justify-content:center;gap:8px;margin:5px 0 25px;background:#eff3e9;border-radius:15px}.home-art i{width:36px;height:65px;border-radius:8px;transform:rotate(-7deg);background:var(--c)}.home-art i:nth-child(2n){transform:rotate(8deg) translateY(12px)}.home-card a{display:inline-block;text-decoration:none;margin-top:20px;margin-right:10px}.tips{font-size:13px;color:var(--muted)}.new-room{background:#fff8e7;padding:14px;border-radius:12px;margin-bottom:18px;font-size:13px;line-height:1.8}.chip{display:inline-block;padding:5px 9px;border-radius:8px;background:#f0f4ed;margin:4px;font-size:12px}.student-list{max-height:190px;overflow-y:auto}.teacher-heading{font-size:32px}.offline-banner{background:#fff4df;color:#916526;padding:12px 16px;border-radius:12px;margin-bottom:18px;font-size:13px}@keyframes pop{50%{transform:scale(1.16)}}@keyframes shake{50%{transform:translateX(4px)}}@media(min-width:1500px){.key{font-size:14px}}@media(max-width:900px){.typing-layout,.below,.home-grid{grid-template-columns:1fr}.metrics,.percentile{grid-template-columns:repeat(2,1fr)}.intro{align-items:start;flex-direction:column}.panel{padding:18px}main{padding:24px 18px}.typing-task{min-height:340px}.color-choice{padding:10px;font-size:13px}.target-char{width:33px;font-size:24px}.target-strip{gap:7px}header{padding:17px 18px}}@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+#complete:disabled{cursor:not-allowed}
+
+.coloring-intro{align-items:center;min-height:76px}.shade-play{display:flex;align-items:center;gap:12px;padding:10px 12px;background:#fff;border:1px solid var(--line);border-radius:14px}.shade-play select{font-size:13px;padding:7px 9px}.shade-options{display:flex;gap:7px}.shade-option{width:28px;height:28px;padding:0;border-radius:7px;background:var(--shade);border:2px solid transparent}.shade-option[aria-pressed=true]{border-color:var(--ink);box-shadow:0 0 0 2px white inset}@media(max-width:600px){.shade-play{flex-wrap:wrap;max-width:100%}}
+
+.paint-feedback{margin-left:auto;align-self:center;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+
+.target-strip{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));align-items:center;justify-items:center;gap:10px;overflow:hidden;min-height:150px;padding:16px 24px}.target-char{width:48px;height:65px;font-size:31px;border-radius:12px;transition:background .15s,color .15s,box-shadow .15s}.target-char.current{width:85px;height:95px;font-size:53px;border-radius:12px;background:var(--green);color:white;box-shadow:0 7px 0 #18543f;z-index:1}.target-char.done{background:#dceee6;color:#23745d;box-shadow:inset 0 -3px 0 #b5d8c8}.target-strip.round-out{animation:round-out .18s ease-in forwards}.target-strip.round-in{animation:round-in .22s ease-out}@keyframes round-out{to{opacity:0;transform:translateX(-36px)}}@keyframes round-in{from{opacity:0;transform:translateX(36px)}to{opacity:1;transform:translateX(0)}}@media(max-width:600px){.target-strip{gap:7px;padding:16px 4px}.target-char{width:33px;height:55px;font-size:24px}.target-char.current{width:52px;height:76px;font-size:38px}}
+
+.target-char{position:relative;font-family:Consolas,'Cascadia Code','DejaVu Sans Mono',monospace;font-variant-numeric:slashed-zero;font-feature-settings:'zero' 1}.target-char.clarified .char-glyph{transform:translateY(-5px)}.char-kind{position:absolute;bottom:4px;left:0;right:0;text-align:center;font-family:system-ui,'Microsoft YaHei',sans-serif;font-size:9px;font-weight:500;line-height:1.2;letter-spacing:0}.target-char.current .char-kind{font-size:11px;bottom:6px}@media(max-width:600px){.char-kind{font-size:8px}.target-char.current .char-kind{font-size:9px}}
+
+.typing-card{display:flex;flex-direction:column;min-height:385px}.typing-card .section-head{min-height:32px}.typing-card .swatch-grid{grid-template-columns:repeat(6,32px);grid-template-rows:repeat(5,32px);gap:8px;margin:14px 0;flex-shrink:0;align-content:start;justify-content:start}.typing-card .swatch{width:32px;height:32px;border-radius:7px}.typing-card .celebration{margin-top:auto}.typing-card .swatch-count{margin:0;min-height:24px}
+
+.typing-card .swatch-grid{align-self:center}@media(min-width:1100px){.typing-main{max-width:1360px;padding-left:32px;padding-right:32px}.typing-main .typing-layout{grid-template-columns:minmax(0,1fr) minmax(320px,420px)}.typing-main .typing-task,.typing-main .typing-card{min-height:430px}.typing-main .target-strip{min-height:210px;gap:16px;padding:22px 24px;margin:20px 0 12px}.typing-main .target-char{width:clamp(52px,3.7vw,76px);height:clamp(72px,4.8vw,96px);font-size:clamp(36px,2.6vw,52px);border-radius:14px}.typing-main .target-char.current{width:clamp(88px,5.2vw,108px);height:clamp(100px,6.1vw,128px);font-size:clamp(56px,3.8vw,76px);border-radius:16px}.typing-main .input-hint{font-size:16px}.typing-main .lesson-label{font-size:14px}.typing-card .swatch-grid{width:100%;grid-template-columns:repeat(8,minmax(0,1fr));grid-template-rows:repeat(4,minmax(0,1fr));aspect-ratio:2/1;gap:8px;margin:18px 0}.typing-card .swatch{width:100%;height:auto;aspect-ratio:1;align-self:center;border-radius:7px}.typing-card .section-head h2{font-size:22px}.typing-main .char-kind{font-size:11px}.typing-main .target-char.current .char-kind{font-size:13px}}
+
+.typing-main .typing-task{container-type:inline-size}@container(max-width:720px){.typing-main .target-char.current{width:62px;height:80px;font-size:40px;border-radius:12px;box-shadow:0 5px 0 #18543f}.typing-main .target-char.current .char-kind{font-size:10px;bottom:4px}}@media(max-width:600px){.typing-main .target-char.current{width:42px;height:64px;font-size:29px;border-radius:11px}.typing-main .target-char.current .char-kind{font-size:8px}}
+
+.target-char.letter-o .char-glyph{font-family:Arial,'Segoe UI',sans-serif;font-weight:500;font-variant-numeric:normal;font-feature-settings:normal}
+
+/* Keep async updates from moving the classroom layout. */
+html{overflow-y:scroll;scrollbar-gutter:stable}
+body{overflow-anchor:none}
+.badge,.status,.level-tag,.hist-row,.typing-bottom{font-variant-numeric:tabular-nums}
+#sync{width:120px;max-width:26vw;white-space:nowrap;overflow:hidden;flex-shrink:0}
+.collection-list{min-height:256px;align-items:flex-start;align-content:flex-start}
+.mini-card{height:112px;flex:0 0 105px}
+.mini-card small{height:30px;line-height:15px}
+.typing-task>.section-head{min-height:40px}
+.input-hint{height:3.6em;min-height:3.6em;line-height:1.8;display:grid;align-items:center}
+#paint-count{min-width:138px;justify-content:center}
+#paint-accuracy{width:126px;justify-content:center}
+#paint-accuracy.hidden{display:inline-flex!important;visibility:hidden}
+#shade-play.hidden{display:flex!important;visibility:hidden}
+#saved-note.hidden,#empty-hint.hidden{display:block!important;visibility:hidden}
+#complete{min-width:142px}
+.teacher-bar select{width:340px;flex:0 1 340px;min-width:0}
+#new-room{width:132px;flex-shrink:0}
+#answer-toggle{min-width:146px}
+#histogram{height:280px;overflow-y:auto;scrollbar-gutter:stable;overscroll-behavior:contain}
+#snapshots{height:196px;overflow-y:auto;scrollbar-gutter:stable;overscroll-behavior:contain}
+#snapshot-message{min-height:3.6em;line-height:1.8}
+
+.shade-play{position:relative}.shade-play.guide-active{outline:3px solid #23765e;outline-offset:5px;box-shadow:0 0 0 10px #23765e15}.shade-guide{position:absolute;z-index:30;top:calc(100% + 18px);right:0;width:264px;max-width:calc(100vw - 48px);padding:16px;background:white;border:1px solid #a8cbb8;border-radius:14px;box-shadow:0 12px 32px #24384026;text-align:left;cursor:default}.shade-guide strong{display:block;font-size:16px;color:var(--green)}.shade-guide p{font-size:13px;line-height:1.7;margin:8px 0 12px}.shade-guide button{font-size:13px;padding:7px 16px}.shade-guide:before{content:'';position:absolute;width:12px;height:12px;right:25px;top:-7px;background:white;border-left:1px solid #a8cbb8;border-top:1px solid #a8cbb8;transform:rotate(45deg)}@media(max-width:640px){.shade-guide{right:auto;left:0}.shade-guide:before{right:auto;left:25px}}
+
+
+/* 知识点练习 */
+.quiz-main{max-width:980px}
+.quiz-intro{margin-bottom:18px}
+.quiz-progress{margin-bottom:18px}
+.quiz-card h2{font-size:20px;line-height:1.55;margin-bottom:18px}
+.quiz-choices{display:grid;gap:12px}
+.quiz-choice{text-align:left;padding:14px 16px;border:2px solid var(--line);background:#fff;border-radius:14px;font-weight:600}
+.quiz-choice:hover:not(:disabled){border-color:#98b7a3}
+.quiz-choice.picked{border-color:var(--ink)}
+.quiz-choice.correct{border-color:#36a97c;background:#e8f6ef}
+.quiz-choice.wrong{border-color:#db8263;background:#fbebe7}
+.quiz-feedback{margin-top:16px;padding:12px 16px;border-radius:12px;font-weight:700}
+.quiz-feedback.ok{background:var(--mint);color:var(--green)}
+.quiz-feedback.bad{background:#fbebe7;color:#a14b30}
+.quiz-match{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.match-col{display:flex;flex-direction:column;gap:10px}
+.match-item{text-align:left;padding:12px 14px;border:2px solid var(--line);background:#fff;border-radius:14px;display:flex;flex-direction:column;gap:6px;align-items:stretch}
+.match-item strong{font-size:15px}
+.match-item small{font-size:12px;color:var(--muted);font-weight:500}
+.match-item.active{border-color:var(--green);box-shadow:0 0 0 3px #23765e22}
+.match-item.paired{background:#f4f8f3}
+.match-item.taken{opacity:.55}
+.match-item.correct{border-color:#36a97c;background:#e8f6ef}
+.match-item.wrong{border-color:#db8263;background:#fbebe7}
+.match-item.right{min-height:64px;justify-content:center}
+.kb-sil{display:grid;grid-template-columns:2.2fr .7fr .9fr;grid-template-rows:18px 52px 18px;gap:4px;width:100%;max-width:220px}
+.kb-sil-part{display:grid;place-items:center;border-radius:6px;background:#e7ece6;color:#708075;font-size:10px;font-weight:700}
+.kb-sil-part.row-top{grid-column:1/-1}
+.kb-sil-part.block-main{grid-row:2;grid-column:1}
+.kb-sil-part.block-edit{grid-row:2;grid-column:2}
+.kb-sil-part.block-num{grid-row:2;grid-column:3}
+.kb-sil-part.block-light{grid-row:3;grid-column:3}
+.kb-sil-part.on{background:var(--c);color:#fff}
+.quiz-review{margin-top:18px;display:grid;gap:10px}
+.quiz-review-row{padding:12px 14px;border:1px solid var(--line);border-radius:12px}
+.quiz-review-row.ok{border-color:#b7ddc8}
+.quiz-review-row.bad{border-color:#e7b5a8}
+.quiz-review-row p{margin:6px 0 0;font-size:13px}
+.quiz-review-row span{float:right;font-size:12px;color:var(--muted)}
+.quiz-wrong-row{padding:14px 0;border-bottom:1px solid var(--line)}
+.quiz-wrong-row:last-child{border-bottom:0}
+.quiz-wrong-head{display:flex;justify-content:space-between;gap:12px;align-items:baseline;margin-bottom:6px}
+.quiz-wrong-row p{font-size:13px;margin:0 0 8px}
+.home-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+@media(max-width:900px){.quiz-match,.home-grid{grid-template-columns:1fr}.kb-sil{max-width:100%}}
+</style></head><body><script>window.APP_CONFIG={"taskId":"6486qb6tyb86","title":"认识键盘-知识点练习","kind":"quiz","role":"teacher"};</script><script>(function (root) {
+  'use strict';
+  const regions = [
+    {id:'main', name:'主键盘区', color:'#ed6874', desc:'输入字母、数字等内容'},
+    {id:'function', name:'功能键区', color:'#f1bf52', desc:'完成一些功能操作'},
+    {id:'editing', name:'编辑键区', color:'#688ee6', desc:'移动光标、翻页和编辑'},
+    {id:'numeric', name:'小键盘区', color:'#54b997', desc:'集中输入数字'},
+    {id:'indicator', name:'指示灯区', color:'#a287cf', desc:'显示键盘的状态'}
+  ];
+  const themes = [
+    ['珊瑚红', 355], ['日落橙', 24], ['向阳黄', 45], ['薄荷绿', 146],
+    ['浅海青', 181], ['晴空蓝', 211], ['鸢尾紫', 266], ['玫瑰粉', 321],
+    ['草莓红', 348, 85], ['蜜桃粉', 10, 65], ['南瓜橙', 28, 86], ['琥珀金', 38, 90],
+    ['柠檬黄', 56, 88], ['青柠绿', 79, 76], ['嫩芽绿', 99, 65], ['青草绿', 120, 60],
+    ['森林绿', 140, 48], ['翡翠绿', 158, 76], ['湖水青', 172, 65], ['冰川青', 190, 56],
+    ['海盐蓝', 201, 48], ['蔚蓝海', 219, 82], ['宝石蓝', 230, 85], ['星夜蓝', 242, 55],
+    ['风信紫', 252, 62], ['薰衣紫', 275, 50], ['葡萄紫', 286, 72], ['丁香紫', 297, 46],
+    ['兰花紫', 309, 66], ['樱花粉', 333, 56], ['西瓜红', 359, 82], ['石榴红', 342, 64],
+    ['奶茶棕', 30, 36], ['可可棕', 19, 32], ['沙滩金', 43, 52], ['橄榄绿', 68, 38],
+    ['鼠尾草', 133, 28], ['孔雀青', 183, 84], ['雾霭蓝', 214, 30], ['暮云紫', 263, 30]
+  ];
+  function quota(level) { return level === 1 ? 12 : level === 2 ? 20 : 30; }
+  function levelInfo(total) {
+    total = Math.max(0, Math.floor(Number(total) || 0));
+    if (total < 12) return {level:1, within:total, target:12};
+    if (total < 32) return {level:2, within:total-12, target:20};
+    return {level:3+Math.floor((total-32)/30), within:(total-32)%30, target:30};
+  }
+  function theme(level) {
+    const item = themes[(level-1)%themes.length];
+    return {name:item[0], hue:(item[1]+Math.floor((level-1)/themes.length)*7)%360, saturation:item[2]??73};
+  }
+/* Color anchors adapted from Open Color https://yeun.github.io/open-color/
+MIT License
+Copyright (c) 2016 heeyeun
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+*/
+  const cardPalettes=[["#f14337","#fa574b","#ff7063","#ff8b80","#ffaba2","#ffcbc5"],["#f76e06","#fd8412","#ff9829","#ffae4b","#ffc476","#ffdaa6"],["#f59b01","#faac06","#fcc01a","#ffd13c","#ffdd67","#ffea9a"],["#1baa69","#22bb76","#31cb86","#49da99","#71e7b1","#a0f2cd"],["#0f9ca0","#14aeb1","#22bcc1","#3acdce","#65dcde","#98ebeb"],["#1b81d1","#208fe1","#319eec","#4baff4","#72c3fa","#a4dafd"],["#694ce8","#7254f2","#7e62f7","#9279fa","#ac99fc","#cdc0ff"],["#d13477","#e1498b","#ec649f","#f482b4","#f7a1c7","#fac2db"],["#ea3b4a","#f5505e","#fb6a76","#fd8690","#fea6ae","#fec7cc"],["#e58787","#ed9993","#f2aaa0","#f6baae","#f9cbbd","#fbdacd"],["#f6620e","#fd791b","#ff8d33","#ffa554","#ffbd7e","#ffd6ac"],["#f68603","#fb9a0c","#fdae21","#ffc143","#ffd26e","#ffe3a0"],["#e6a203","#ecb308","#f0c61b","#f5d63d","#f7e168","#faed9a"],["#8bb412","#98c41a","#a7d429","#b8e048","#cbe972","#dff3a0"],["#62b626","#6ec62f","#80d53e","#96e15a","#b0ea80","#cdf4aa"],["#3eb346","#48c150","#59d05f","#71dc76","#92e996","#b7f2b8"],["#28ae5c","#30bd67","#40cd77","#58da8c","#7ee8a7","#a8f2c5"],["#11a773","#18b980","#26ca91","#3ed9a4","#68e6ba","#99f2d4"],["#0da480","#12b68f","#20c69f","#38d7b0","#63e4c4","#96f1db"],["#1293b4","#17a4c6","#25b3d5","#3ec4e0","#69d4ec","#9be6f4"],["#2575bd","#368cd6","#4b9fe6","#67b3f1","#89c7f8","#b3dcfc"],["#217bd9","#2788e8","#3896f1","#52a8f8","#77bdfc","#a8d6ff"],["#376be5","#3f77f0","#5085f7","#6897fa","#88aefe","#b4cdff"],["#4360d0","#5674e4","#6b86ef","#849bf6","#9fb2fa","#c2cefc"],["#5d53e9","#665df3","#736bf8","#8880fb","#a49efd","#c7c3ff"],["#6a49d1","#7b5ae3","#8b6cee","#a084f5","#b8a3f8","#d4c6fc"],["#9842d4","#a64de3","#b35ded","#c376f5","#d398f9","#e4befc"],["#9e41b7","#b556d0","#c76be1","#d886ee","#e4a5f4","#edc5f8"],["#bc3aa8","#cc4abb","#d960cb","#e47bda","#ec9ce4","#f3bfee"],["#da3565","#e94a79","#f2668f","#f884a6","#fba3bd","#fcc3d5"],["#ee3d42","#f85156","#fe6b6e","#fe878a","#ffa8aa","#ffc8ca"],["#e23857","#ef4d6b","#f76882","#fb859b","#fca5b6","#fdc5d1"],["#987055","#ad8262","#bf9676","#d0ad90","#dfc2a9","#ecdbca"],["#755747","#8d6b56","#a5836c","#bd9f86","#d4bea6","#e5d7c5"],["#bd914c","#cda460","#dab777","#e5c891","#edd8af","#f3e5c9"],["#788a42","#90a154","#a7b66d","#bdc98b","#d1dbab","#e2e8c8"],["#568575","#6c9b88","#86af9b","#a2c3b0","#bfd7c6","#d8e8db"],["#0ea08d","#13b29d","#21c2ad","#39d3bd","#64e1cf","#97eee2"],["#2e6ca3","#4a8cc6","#64a5dc","#81bbeb","#9ecef3","#c0e0f9"],["#614bb1","#7e68cf","#947fe1","#ac99ee","#c2b4f4","#dad0f9"]];
+  function swatch(level, i, n) {
+    const palette=cardPalettes[(level-1)%cardPalettes.length];
+    const position=Math.max(0,Math.min(1,i/Math.max(1,n-1)))*(palette.length-1);
+    const index=Math.min(Math.floor(position),palette.length-2),blend=position-index;
+    const a=palette[index],b=palette[index+1];
+    return '#'+[1,3,5].map(offset=>{
+      const channel=parseInt(a.slice(offset,offset+2),16),next=parseInt(b.slice(offset,offset+2),16);
+      return Math.round(channel+(next-channel)*blend).toString(16).padStart(2,'0');
+    }).join('');
+  }
+  const alphabet='abcdefghijklmnopqrstuvwxyz', digits='1234567890';
+  function targetAt(total) {
+    const {level,within}=levelInfo(total);
+    const chars=level<=2 ? alphabet : level===3 ? digits : alphabet+digits;
+    return chars[(within*7 + level*3 + Math.floor(total/9))%chars.length];
+  }
+  function typingKey(event) {
+    if(event.ctrlKey || event.metaKey || event.altKey || event.repeat)return null;
+    const code=event.code||'',key=event.key||'';
+    if(/^Numpad[0-9]$/.test(code))return {text:code.slice(-1),main:false};
+    if(/^[a-z0-9]$/i.test(key))return {text:key.toLowerCase(),main:true};
+    // 中文输入法接管按键时，仍可根据物理字母键和数字键练习。
+    if(key==='Process'||key==='Unidentified'||event.isComposing){
+      if(/^Key[A-Z]$/.test(code))return {text:code.slice(3).toLowerCase(),main:true};
+      if(/^Digit[0-9]$/.test(code))return {text:code.slice(5),main:true};
+    }
+    return null;
+  }
+  function stats(people) {
+    const levels=people.map(p=>levelInfo(p.total).level).sort((a,b)=>b-a), n=levels.length;
+    return {count:n, max:n?levels[0]:0, mean:n?levels.reduce((a,b)=>a+b,0)/n:0,
+      thresholds:[10,25,50,75].map(p=>({percent:p,level:n?levels[Math.ceil(n*p/100)-1]:0}))};
+  }
+  function distribution(people,key) {
+    const counts=Object.fromEntries([...regions.map(r=>r.id),'blank'].map(id=>[id,0]));
+    people.forEach(p=>{const id=p.colors?.[key]; counts[id in counts && id!=='blank'?id:'blank']++;});
+    return counts;
+  }
+  // 混色比例只统计已填色学生，未填/空白不占扇区，避免把色盘稀释成空白。
+  function mixShares(counts) {
+    const filled=regions.reduce((sum,r)=>sum+(counts[r.id]||0),0);
+    return {filled, shares:filled?regions.filter(r=>counts[r.id]>0).map(r=>({id:r.id,color:r.color,count:counts[r.id],ratio:counts[r.id]/filled})):[]};
+  }
+  function coloringProgress(colors,keys){
+    const valid=new Set(regions.map(r=>r.id));
+    const filled=keys.filter(k=>valid.has(colors[k.id])).length;
+    const correct=keys.filter(k=>valid.has(colors[k.id])&&colors[k.id]===k.region).length;
+    return {filled,correct,showAccuracy:filled>keys.length/2,
+      accuracy:filled?Math.floor(correct/filled*1000)/10:0,
+      perfect:keys.length>0&&correct===keys.length};
+  }
+  function normalizeStates(response) {
+    if (!response || response.ok===false || !response.states || typeof response.states!=='object') throw Error('状态数据格式不正确');
+    if(response.truncated) throw Error('状态数量超过平台单次读取范围，请更换课堂编号或任务');
+    return Object.entries(response.states).map(([key,item])=>({key,...item.value}));
+  }
+  function mergeClassrooms(existing,records) {
+    const map=new Map();
+    for(const item of [...existing,...records]){
+      const id=item.id||item.sessionId;if(typeof id!=='string'||!id.trim())continue;
+      const previous=map.get(id),time=Number(item.createdAt)>0?Number(item.createdAt):null;
+      map.set(id,{id,createdAt:previous?.createdAt&&time?Math.min(previous.createdAt,time):previous?.createdAt||time});
+    }
+    return [...map.values()].sort((a,b)=>(b.createdAt||0)-(a.createdAt||0)||a.id.localeCompare(b.id));
+  }
+  function roomCode(bytes){const alphabet='23456789ABCDEFGHJKLMNPQRSTUVWXYZ';return Array.from(bytes,b=>alphabet[b%alphabet.length]).join('');}
+
+  // —— 知识点练习（互动网页3）——
+  const quizQuestions = [
+    {id:'q1', type:'mcq', prompt:'键盘中间最大的一块，上面有字母、数字和标点，主要用来打字输入。这一块是哪个区域？',
+      choices:[{id:'a',text:'主键盘区'},{id:'b',text:'功能键区'},{id:'c',text:'小键盘区'},{id:'d',text:'指示灯区'}], answer:'a'},
+    {id:'q2', type:'mcq', prompt:'最上面一排有 Esc，还有 F1 到 F12。这一整排属于哪个区域？',
+      choices:[{id:'a',text:'编辑键区'},{id:'b',text:'功能键区'},{id:'c',text:'主键盘区'},{id:'d',text:'小键盘区'}], answer:'b'},
+    {id:'q3', type:'mcq', prompt:'F1 到 F12 能不能用来输入数字？',
+      choices:[{id:'a',text:'能，它们就是数字键'},{id:'b',text:'不能，它们是功能按键'},{id:'c',text:'只有 F1 能输入数字'},{id:'d',text:'要先打开小键盘才行'}], answer:'b'},
+    {id:'q4', type:'mcq', prompt:'右边有方向键、Insert、Delete、Home、PgUp 等，用来移动光标、翻页和编辑。这是哪个区域？',
+      choices:[{id:'a',text:'指示灯区'},{id:'b',text:'功能键区'},{id:'c',text:'编辑键区'},{id:'d',text:'主键盘区'}], answer:'c'},
+    {id:'q5', type:'mcq', prompt:'键盘右侧像计算器一样、方便集中输入数字的区域是？',
+      choices:[{id:'a',text:'主键盘区'},{id:'b',text:'功能键区'},{id:'c',text:'编辑键区'},{id:'d',text:'小键盘区'}], answer:'d'},
+    {id:'q6', type:'mcq', prompt:'右上角三盏小灯的作用是？',
+      choices:[{id:'a',text:'装饰键盘'},{id:'b',text:'显示键盘的状态'},{id:'c',text:'调节音量大小'},{id:'d',text:'切换五种颜色'}], answer:'b'},
+    {id:'q7', type:'match', prompt:'把区域名称和它的作用连起来。',
+      left:[{id:'main',text:'主键盘区'},{id:'function',text:'功能键区'},{id:'editing',text:'编辑键区'},{id:'numeric',text:'小键盘区'},{id:'indicator',text:'指示灯区'}],
+      right:[{id:'d1',text:'输入字母、数字等内容'},{id:'d2',text:'完成一些快捷的功能操作'},{id:'d3',text:'移动光标、翻页和编辑'},{id:'d4',text:'集中输入数字'},{id:'d5',text:'显示键盘的状态'}],
+      answer:{main:'d1',function:'d2',editing:'d3',numeric:'d4',indicator:'d5'}},
+    {id:'q8', type:'match', prompt:'再练一遍：把名称和作用配对。',
+      left:[{id:'indicator',text:'指示灯区'},{id:'numeric',text:'小键盘区'},{id:'main',text:'主键盘区'},{id:'editing',text:'编辑键区'},{id:'function',text:'功能键区'}],
+      right:[{id:'r1',text:'显示键盘的状态'},{id:'r2',text:'集中输入数字'},{id:'r3',text:'输入字母、数字等内容'},{id:'r4',text:'移动光标、翻页和编辑'},{id:'r5',text:'完成一些快捷的功能操作'}],
+      answer:{indicator:'r1',numeric:'r2',main:'r3',editing:'r4',function:'r5'}},
+    {id:'q9', type:'match-shape', prompt:'把区域名称和对应的键盘位置示意图连起来。',
+      left:[{id:'main',text:'主键盘区'},{id:'function',text:'功能键区'},{id:'editing',text:'编辑键区'},{id:'numeric',text:'小键盘区'},{id:'indicator',text:'指示灯区'}],
+      right:[{id:'s-main',shape:'main'},{id:'s-function',shape:'function'},{id:'s-editing',shape:'editing'},{id:'s-numeric',shape:'numeric'},{id:'s-indicator',shape:'indicator'}],
+      answer:{main:'s-main',function:'s-function',editing:'s-editing',numeric:'s-numeric',indicator:'s-indicator'}},
+    {id:'q10', type:'mcq', prompt:'今天打字、输入主要靠哪个区域？',
+      choices:[{id:'a',text:'指示灯区'},{id:'b',text:'编辑键区'},{id:'c',text:'主键盘区'},{id:'d',text:'功能键区'}], answer:'c'},
+    {id:'q11', type:'mcq', prompt:'下面哪一组键属于功能键区？',
+      choices:[{id:'a',text:'A、S、D、F'},{id:'b',text:'Esc、F1～F12'},{id:'c',text:'↑ ↓ ← →'},{id:'d',text:'小键盘上的 0～9'}], answer:'b'}
+  ];
+  function gradeMcq(question, value){
+    return !!question && question.type==='mcq' && value===question.answer;
+  }
+  function gradeMatch(question, pairs){
+    if(!question || (question.type!=='match' && question.type!=='match-shape') || !pairs || typeof pairs!=='object') return false;
+    const keys=Object.keys(question.answer);
+    if(keys.length!==Object.keys(pairs).length) return false;
+    return keys.every(k=>pairs[k]===question.answer[k]);
+  }
+  function gradeQuizAnswer(question, value){
+    if(!question) return false;
+    if(question.type==='mcq') return gradeMcq(question, value);
+    return gradeMatch(question, value);
+  }
+  function quizProgress(answers, questions){
+    const list=questions||quizQuestions;
+    let answered=0, correct=0;
+    for(const q of list){
+      const a=answers && answers[q.id];
+      if(a && a.checked){ answered++; if(a.correct) correct++; }
+    }
+    return {total:list.length, answered, correct, finished:answered===list.length,
+      accuracy:answered?Math.floor(correct/answered*1000)/10:0};
+  }
+  function quizWrongStats(people, questions){
+    const list=questions||quizQuestions;
+    return list.map(q=>{
+      const wrong={};
+      let attempts=0, wrongCount=0;
+      for(const p of people||[]){
+        const a=p.answers && p.answers[q.id];
+        if(!a || !a.checked) continue;
+        attempts++;
+        if(!a.correct){
+          wrongCount++;
+          const key=typeof a.value==='string'?a.value:JSON.stringify(a.value||{});
+          wrong[key]=(wrong[key]||0)+1;
+        }
+      }
+      return {id:q.id, prompt:q.prompt, attempts, wrongCount, wrongRate:attempts?Math.round(wrongCount/attempts*100):0, wrong};
+    });
+  }
+  const api={regions,themes,quota,levelInfo,theme,swatch,targetAt,typingKey,stats,distribution,mixShares,coloringProgress,normalizeStates,mergeClassrooms,roomCode,quizQuestions,gradeQuizAnswer,gradeMcq,gradeMatch,quizProgress,quizWrongStats};
+  if(typeof module!=='undefined' && module.exports) module.exports=api;
+  else root.Lesson=api;
+})(typeof window!=='undefined'?window:globalThis);
+
+(function () {
+  const keys=[];
+  const add=(id,label,x,y,w=1,h=1,region='main')=>keys.push({id,label,x,y,w,h,region});
+  add('Escape','Esc',0,0,1,1,'function');
+  for(let i=1;i<=12;i++) add('F'+i,'F'+i,1.6+(i-1)*1.03+Math.floor((i-1)/4)*.45,0,1,1,'function');
+  const row=(items,y)=>{let x=0;items.forEach(([id,label,w=1])=>{add(id,label,x,y,w);x+=w;});};
+  row([['Backquote','`'],...Array.from('1234567890',(n)=>['Digit'+n,n]),['Minus','−'],['Equal','='],['Backspace','Backspace',2]],1.6);
+  row([['Tab','Tab',1.5],...Array.from('QWERTYUIOP',n=>['Key'+n,n]),['BracketLeft','['],['BracketRight',']'],['Backslash','\\',1.5]],2.65);
+  row([['CapsLock','Caps Lock',1.75],...Array.from('ASDFGHJKL',n=>['Key'+n,n]),['Semicolon',';'],['Quote',"'"],['Enter','Enter',2.25]],3.7);
+  row([['ShiftLeft','Shift',2.25],...Array.from('ZXCVBNM',n=>['Key'+n,n]),['Comma',','],['Period','.'],['Slash','/'],['ShiftRight','Shift',2.75]],4.75);
+  row([['ControlLeft','Ctrl',1.25],['MetaLeft','Win',1.25],['AltLeft','Alt',1.25],['Space','',6.25],['AltRight','Alt',1.25],['MetaRight','Win',1.25],['ContextMenu','▤',1.25],['ControlRight','Ctrl',1.25]],5.8);
+  [['PrintScreen','PrtSc'],['ScrollLock','ScrLk'],['Pause','Pause']].forEach(([id,label],i)=>add(id,label,15.65+i,0,1,1,'function'));
+  [['Insert','Ins'],['Home','Home'],['PageUp','PgUp'],['Delete','Del'],['End','End'],['PageDown','PgDn']].forEach(([id,label],i)=>add(id,label,15.65+i%3,1.6+Math.floor(i/3)*1.05,1,1,'editing'));
+  add('ArrowUp','↑',16.65,4.75,1,1,'editing');
+  [['ArrowLeft','←'],['ArrowDown','↓'],['ArrowRight','→']].forEach(([id,label],i)=>add(id,label,15.65+i,5.8,1,1,'editing'));
+  [['LightNum','1'],['LightCaps','A'],['LightScroll','↓']].forEach(([id,label],i)=>add(id,label,19.3+i*1.4,.05,1.25,.8,'indicator'));
+  [['NumLock','Num'],['NumpadDivide','/'],['NumpadMultiply','×'],['NumpadSubtract','−']].forEach(([id,label],i)=>add(id,label,19.3+i,1.6,1,1,'numeric'));
+  ['789','456','123'].forEach((r,j)=>Array.from(r).forEach((n,i)=>add('Numpad'+n,n,19.3+i,2.65+j*1.05,1,1,'numeric')));
+  add('NumpadAdd','+',22.3,2.65,1,2.05,'numeric'); add('NumpadEnter','Enter',22.3,4.75,1,2.05,'numeric');
+  add('Numpad0','0',19.3,5.8,2,1,'numeric');add('NumpadDecimal','.',21.3,5.8,1,1,'numeric');
+  Lesson.keys=keys;
+  Lesson.drawKeyboard=function(el,handler){
+    el.classList.add('keyboard'); el.innerHTML='';
+    keys.forEach(k=>{const b=document.createElement('button');b.type='button';b.className='key'+(k.region==='indicator'?' indicator':'');b.dataset.key=k.id;b.textContent=k.label;
+      b.setAttribute('aria-label', k.region==='indicator'?'指示灯 '+k.label:(k.label||'空格键'));
+      Object.assign(b.style,{left:`${k.x/23.3*100}%`,top:`${k.y/6.85*100}%`,width:`${(k.w-.07)/23.3*100}%`,height:`${(k.h-.08)/6.85*100}%`});
+      handler?.(b,k);el.append(b);});
+  };
+})();
+
+(async function () {
+  'use strict';
+  document.addEventListener('contextmenu',event=>event.preventDefault(),{capture:true});
+  const {regions,keys,levelInfo,theme,swatch,targetAt,stats,distribution,mixShares,normalizeStates,quizQuestions,gradeQuizAnswer,quizProgress,quizWrongStats}=Lesson;
+  const $=s=>document.querySelector(s), $$=s=>Array.from(document.querySelectorAll(s));
+  function replaceHTML(target,html){
+    if(target.innerHTML===html)return;
+    const scrollTop=target.scrollTop;
+    target.innerHTML=html;target.scrollTop=scrollTop;
+  }
+  const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const cfg=window.APP_CONFIG, kind=cfg.kind, teacher=cfg.role==='teacher';
+  if(!teacher){
+    const lessonURL=location.href;
+    const keepLesson=()=>history.pushState({...history.state,keyboardLessonGuard:true},'',lessonURL);
+    if(!history.state?.keyboardLessonGuard)keepLesson();
+    window.addEventListener('popstate',keepLesson);
+    document.addEventListener('keydown',event=>{
+      if(event.key==='BrowserBack'||(event.altKey&&event.key==='ArrowLeft'))event.preventDefault();
+    },{capture:true});
+  }
+  const params=new URLSearchParams(location.search), demo=params.get('demo')==='1';
+  const storagePrefix=`keyboard-v1:${kind}:`, defaultState=kind==='coloring'?{colors:{}}:kind==='quiz'?{answers:{},index:0}:{total:0};
+  let storageOK=true;
+  function load(key,fallback){try{return JSON.parse(localStorage.getItem(storagePrefix+key))??fallback;}catch{storageOK=false;return fallback;}}
+  function save(key,value){try{localStorage.setItem(storagePrefix+key,JSON.stringify(value));}catch{storageOK=false;}}
+  const room=(params.get('room')||(teacher?load('last-room',null):null)||'体验').trim().slice(0,64)||'体验';
+  if(teacher)save('last-room',room);
+  const roomCacheKey=demo?'demo-rooms':'rooms';
+  let classrooms=Lesson.mergeClassrooms(load(roomCacheKey,[]),[{id:room}]),roomListSignature='',creatingRoom=false,pendingClassroom=null;
+  let studentId=load('device',null);
+  if(!studentId){studentId=crypto.randomUUID?.()||Math.random().toString(36).slice(2)+Date.now();save('device',studentId);}
+  const localKey=`${demo?'demo:':''}${room}:student`;
+  let state={...defaultState,...load(localKey,{})}, people=[], snapshots=[], selected='main';
+  let dirty=true, busy=false, lastSent=0, lastUploadAttempt=0, isOnline=false, pollBusy=false;
+  const uploadDelay=kind==='coloring'||kind==='quiz'?5000:10000;
+  let retryAt=0,requestFailures=0,recordsCache=null,recordsCachedAt=0,recordsPending=null,recordsVersion=0;
+  const base=`https://qiuform.qiuzizhao.com/api/${cfg.taskId}`;
+  const demoKey=`${storagePrefix}demo-state:${room}`;
+  let toastTimer;
+  function toast(message){let e=$('#toast');if(!e){e=document.createElement('div');e.id='toast';e.className='toast';e.setAttribute('role','status');document.body.append(e);}e.textContent=message;clearTimeout(toastTimer);toastTimer=setTimeout(()=>e.remove(),3200);}
+  function status(ok,text){const e=$('#sync');if(!e)return;e.className='status '+(ok?'ok':'error');e.textContent=text;e.title=text;isOnline=ok;}
+  async function request(path,method='GET',body){
+    if(navigator.onLine===false||Date.now()<retryAt)throw Error('等待网络恢复或重试窗口');
+    const ctrl=new AbortController(), timer=setTimeout(()=>ctrl.abort(),8000);
+    try {const r=await fetch(base+path,{method,headers:body?{'Content-Type':'application/json'}:undefined,body:body?JSON.stringify(body):undefined,signal:ctrl.signal,cache:'no-store'});
+      if(!r.ok){
+        const error=Error('HTTP '+r.status);error.status=r.status;
+        const value=r.headers.get('Retry-After');
+        error.retryAfter=value?(/^\d+(\.\d+)?$/.test(value)?Number(value)*1000:Math.max(0,Date.parse(value)-Date.now())):0;
+        throw error;
+      }
+      const data=await r.json();if(data.ok===false)throw Error(data.error||'请求未完成');
+      if(Date.now()>=retryAt)requestFailures=0;
+      return data;
+    } catch(error){
+      requestFailures++;
+      const delay=Math.max(error.retryAfter||0,error.status===429?60000:0,Math.min(120000,5000*2**Math.min(requestFailures-1,5)));
+      retryAt=Math.max(retryAt,Date.now()+delay+Math.random()*1000);
+      throw error;
+    } finally {clearTimeout(timer);}
+  }
+  async function readRecords(){
+    if(recordsCache&&Date.now()-recordsCachedAt<60000)return recordsCache;
+    if(recordsPending)return recordsPending;
+    const version=recordsVersion;
+    const pending=request('/all').then(data=>{if(version===recordsVersion){recordsCache=data;recordsCachedAt=Date.now();}return data;});
+    recordsPending=pending;
+    try{return await pending;}finally{if(recordsPending===pending)recordsPending=null;}
+  }
+  function getDemo(){try{return JSON.parse(localStorage.getItem(demoKey))||{};}catch{return {};}}
+  async function put(key,value,ttl=7200){
+    if(demo){const all=getDemo();all[key]={value,expires:Date.now()+ttl*1000};localStorage.setItem(demoKey,JSON.stringify(all));return;}
+    return request(`/state/${encodeURIComponent(key)}?ttl=${ttl}`,'PUT',value);
+  }
+  async function readStates(){
+    if(demo)return Object.entries(getDemo()).filter(([,v])=>v.expires>Date.now()).map(([key,v])=>({key,...v.value}));
+    return normalizeStates(await request('/state'));
+  }
+  async function post(value){
+    if(demo){const all=load('demo-snapshots:'+room,[]);all.push(value);save('demo-snapshots:'+room,all);return;}
+    const result=await request('','POST',value);
+    recordsVersion++;recordsCache=null;recordsPending=null;
+    return result;
+  }
+  function persist(){save(localKey,state);dirty=true;}
+  function payload(){const base={sessionId:room,studentId,kind,updatedAt:Date.now()};if(kind==='coloring')return{...base,colors:state.colors,completed:!!state.completed};if(kind==='quiz'){const p=quizProgress(state.answers);return{...base,answers:state.answers,index:state.index|0,answered:p.answered,correct:p.correct,finished:!!p.finished};}return{...base,total:state.total,level:levelInfo(state.total).level};}
+  async function syncStudent(force=false){
+    const now=Date.now();
+    if(busy||document.hidden||navigator.onLine===false||now<retryAt||now-lastUploadAttempt<uploadDelay)return;
+    if(!force&&!dirty&&now-lastSent<60000)return;
+    busy=true;dirty=false;lastUploadAttempt=now;
+    try{const outgoing=payload();await put(`${kind}:${room}:${studentId}`,outgoing);lastSent=Date.now();status(true,'已同步');}
+    catch{dirty=true;status(false,'正在重连');}
+    finally{busy=false;}
+  }
+  document.body.innerHTML=`<header><div class="brand"><span class="brandmark">${kind==='coloring'?'▦':kind==='quiz'?'▣':'◈'}</span><span>${cfg.title}</span></div><div style="display:flex;gap:8px;align-items:center"><span class="badge">${teacher?'教师端':'学生端'}</span><span class="status" id="sync">正在连接</span></div></header><main id="main"></main>`;
+  const main=$('#main');
+  if(demo)main.insertAdjacentHTML('beforebegin','<div class="offline-banner" style="margin:12px 4vw 0">示例体验 · 不计入课堂</div>');
+  function intro(title,desc,tag){return `<div class="intro"><div><h1>${title}</h1>${desc?`<p>${desc}</p>`:''}</div></div>`;}
+  function legend(){return regions.map(r=>`<span><i class="dot" style="--c:${r.color}"></i>${r.name}</span>`).join('');}
+  // 调色偏好单独保存在本机，不进入 state 或上传内容。
+  const shadeStorageKey=`${localKey}:shades`,localShades=load(shadeStorageKey,{});
+  const shadeHues={main:355,function:43,editing:223,numeric:160,indicator:264};
+  function dismissShadeGuide(){
+    $('#shade-guide')?.remove();$('#shade-play')?.classList.remove('guide-active');
+  }
+  function showShadeGuide(){
+    if(!state.completed||!Lesson.coloringProgress(state.colors,keys).perfect||load(localKey+':shade-guide-seen',false))return;
+    const target=$('#shade-play');if(!target||target.classList.contains('hidden'))return;
+    save(localKey+':shade-guide-seen',true);target.classList.add('guide-active');
+    target.insertAdjacentHTML('beforeend','<div id="shade-guide" class="shade-guide" role="dialog" aria-label="试试调色"><strong>全部正确，试试调色！</strong><p>先选左侧区域，再点这里的色块，换个色调。</p><button id="shade-guide-close" class="primary">试试看</button></div>');
+    $('#shade-guide-close').onclick=dismissShadeGuide;
+    $('#shade-guide').addEventListener('keydown',event=>{if(event.key==='Escape')dismissShadeGuide();});
+    const rect=target.getBoundingClientRect();
+    if(rect.top<0||rect.bottom>innerHeight)target.scrollIntoView({behavior:'smooth',block:'center'});
+    $('#shade-guide-close').focus({preventScroll:true});
+  }
+  function shadeOptions(id){return [regions.find(r=>r.id===id).color,...[52,60,68,76,84].map(light=>`hsl(${shadeHues[id]} 70% ${light}%)`)];}
+  function displayColor(id){const r=regions.find(r=>r.id===id);return r?shadeOptions(id)[localShades[id]]||r.color:'';}
+  function renderShades(){
+    const id=regions.some(r=>r.id===selected)?selected:regions[0].id;
+    $('#shade-options').innerHTML=shadeOptions(id).map((color,i)=>`<button class="shade-option" style="--shade:${color}" data-shade="${i}" aria-label="${regions.find(r=>r.id===id).name}色号 ${i+1}" aria-pressed="${(localShades[id]||0)===i}"></button>`).join('');
+    $$('[data-shade]').forEach(b=>b.onclick=()=>{if(!state.completed||!Lesson.coloringProgress(state.colors,keys).perfect)return;dismissShadeGuide();localShades[id]=Number(b.dataset.shade);save(shadeStorageKey,localShades);renderShades();updateColor();});
+  }
+  function studentColor(){
+    main.innerHTML=`<div class="intro coloring-intro"><h1>给键盘涂色</h1><div id="shade-play" class="shade-play hidden"><div id="shade-options" class="shade-options"></div></div></div>`+
+      `<div class="palette">${regions.map(r=>`<button class="color-choice${r.id===selected?' active':''}" data-color="${r.id}" aria-pressed="${r.id===selected}"><i class="dot" style="--c:${r.color}"></i>${r.name}</button>`).join('')}<button class="color-choice" data-color="blank" aria-pressed="false">◇ 擦除</button><span class="paint-feedback"><span class="badge" id="paint-count"></span><span class="badge hidden" id="paint-accuracy" title="已填格子中，分区选择正确的比例"></span></span></div>
+      <section class="panel"><div class="keyboard-scroll"><div id="keyboard"></div></div><div class="toolbar"><button id="clear" class="quiet">重新填色</button><span class="spacer"></span><button id="complete" class="primary">我填好了 ✓</button></div><div id="saved-note" class="notice hidden">已完成，还可以修改。</div></section>`;
+    Lesson.drawKeyboard($('#keyboard'),(b,k)=>{
+      const paint=()=>{if(selected==='blank')delete state.colors[k.id];else state.colors[k.id]=selected;state.completed=false;persist();updateColor();};
+      b.addEventListener('pointerdown',e=>{if(e.button===0)paint();});
+      b.addEventListener('pointerenter',e=>{if(e.buttons===1&&e.pointerType==='mouse')paint();});
+      b.addEventListener('click',e=>{if(e.detail===0)paint();}); // 保留键盘和辅助操作触发的点击。
+      b.addEventListener('dragstart',e=>e.preventDefault());
+    });
+    $$('[data-color]').forEach(b=>b.onclick=()=>{selected=b.dataset.color;$$('[data-color]').forEach(x=>{x.classList.toggle('active',x===b);x.setAttribute('aria-pressed',String(x===b));});renderShades();updateColor();});
+    $('#clear').onclick=()=>{if(confirm('清空这次填色，重新试一试吗？')){state.colors={};state.completed=false;persist();updateColor();}};
+    $('#complete').onclick=()=>{if(paintedCount()!==keys.length)return;state.completed=true;persist();updateColor();showShadeGuide();syncStudent(true);toast(isOnline?'选择已同步，可以继续观察键盘。':'选择已保存在本机，连接恢复后自动同步。');};
+    renderShades();
+    updateColor();
+  }
+  function paintedCount(){return keys.filter(k=>regions.some(r=>r.id===state.colors[k.id])).length;}
+  function updateColor(){
+    const progress=Lesson.coloringProgress(state.colors,keys),filled=progress.filled,allFilled=filled===keys.length;
+    if(state.completed&&!allFilled){state.completed=false;persist();}
+    if(!state.completed||!progress.perfect||selected==='blank')dismissShadeGuide();
+    $('#complete').disabled=!allFilled;
+    $('#shade-play').classList.toggle('hidden',!state.completed||!progress.perfect||selected==='blank');
+    $('#paint-accuracy').classList.toggle('hidden',!progress.showAccuracy);
+    $('#paint-accuracy').textContent=`正确率 ${progress.accuracy}%`;
+    $$('[data-color] .dot').forEach(dot=>{dot.style.background=displayColor(dot.parentElement.dataset.color);});
+    $$('.key').forEach(b=>{const id=state.colors[b.dataset.key],r=regions.find(x=>x.id===id);b.style.background=displayColor(id);b.setAttribute('aria-label',`${keys.find(k=>k.id===b.dataset.key)?.label||'空格键'}，${r?.name||'未填色'}`);});
+    $('#paint-count').textContent=`已填 ${filled} / ${keys.length} 格`;
+    $('#saved-note').classList.toggle('hidden',!state.completed);$('#complete').textContent=state.completed?'已完成 ✓':'我填好了 ✓';
+  }
+  let renderedLevel=0,typingLocked=false,typingBatchStart=Math.floor((state.total||0)/7)*7;
+  function nextTypingBatch(delay=160){
+    typingLocked=true;
+    setTimeout(()=>{
+      const targets=$('#targets');targets.classList.add('round-out');
+      setTimeout(()=>{typingBatchStart=state.total;updateTyping();targets.classList.remove('round-out');targets.classList.add('round-in');
+        setTimeout(()=>{targets.classList.remove('round-in');typingLocked=false;},220);
+      },180);
+    },delay);
+  }
+  function studentTyping(){
+    main.classList.add('typing-main');
+    main.innerHTML=
+      `<div class="typing-layout"><section class="panel typing-task"><div class="section-head"><span class="lesson-label" id="exercise-label"></span><span class="badge" id="total-count"></span></div><div class="target-strip" id="targets" aria-label="接下来要输入的字符"></div><div class="input-hint" id="input-hint" role="status">看准绿色字符，直接按键。</div><div class="progress-track"><span id="typing-progress"></span></div><div class="typing-bottom" style="justify-content:flex-end"><span id="level-progress"></span></div></section>
+      <section class="panel typing-card"><div class="section-head"><h2 id="theme-name"></h2><span class="level-tag" id="level-name"></span></div><p class="swatch-count" id="swatch-count"></p><div class="swatch-grid" id="swatches"></div><div class="celebration" id="celebration">下一格，会是什么颜色呢？</div></section></div>
+      <section class="collection"><div class="section-head"><h2>色卡收藏</h2><span class="badge" id="collection-count"></span></div><div id="collection-list" class="collection-list"></div></section>`;
+    const targets=$('#targets');
+    document.addEventListener('keydown',e=>{
+      if(e.target instanceof Element && e.target.closest('input,textarea,select,[contenteditable="true"]'))return;
+      const key=Lesson.typingKey(e);if(!key)return;
+      e.preventDefault();if(typingLocked)return;
+      if(key.text===targetAt(state.total) && key.main){
+        const before=levelInfo(state.total);state.total++;persist();targets.classList.remove('error');$('#input-hint').textContent='找对了！又点亮了一格。';
+        const after=levelInfo(state.total);
+        const batchFinished=state.total-typingBatchStart===7;
+        if(before.level!==after.level){
+          // 先让学生看到完整色卡，再进入下一关；过渡期间不接收新字符。
+          typingLocked=true;updateTyping(before.level,before.target);$('#celebration').textContent=`${theme(before.level).name}色卡已收集！`;
+          syncStudent();
+          if(batchFinished)nextTypingBatch(850);
+          else setTimeout(()=>{typingLocked=false;updateTyping();},850);
+        }else{updateTyping();if(batchFinished)nextTypingBatch();}
+      }else{targets.classList.remove('error');void targets.offsetWidth;targets.classList.add('error');$('#input-hint').textContent=!key.main?'请用主键盘区上方的数字键。':'再找找目标字符，已经点亮的颜色会保留。';}
+    });
+    document.addEventListener('paste',e=>{e.preventDefault();});
+    updateTyping();
+  }
+  function updateTyping(displayLevel,displayWithin){
+    const actual=levelInfo(state.total),level=displayLevel||actual.level,within=displayWithin??actual.within,target=Lesson.quota(level);
+    $('#exercise-label').textContent=level<=2?'找一找 · 字母键':level===3?'找一找 · 主键盘数字键':'试一试 · 字母与数字';
+    $('#targets').innerHTML=Array.from({length:7},(_,i)=>{
+      const position=typingBatchStart+i,done=position<state.total,current=position===state.total,char=targetAt(position);
+      const label=({'1':'数字 1','l':'字母 L','0':'数字 0','o':'字母 O'})[char];
+      const glyph=char==='l'?'L':char==='o'?'O':char;
+      return `<span class="target-char${done?' done':current?' current':''}${label?' clarified':''}${char==='o'?' letter-o':''}" ${current?'aria-current="true"':''} aria-label="${label||char}"><span class="char-glyph">${glyph}</span>${label?`<small class="char-kind">${label}</small>`:''}</span>`;
+    }).join('');
+    $('#total-count').textContent=`已正确输入 ${state.total} 个`;
+    $('#theme-name').textContent=theme(level).name+'色卡';$('#level-name').textContent=`第 ${level} 关`;
+    $('#swatch-count').textContent=`已点亮 ${within} / ${target} 格`;
+    $('#swatches').innerHTML=Array.from({length:target},(_,i)=>`<span class="swatch${i<within?' lit':''}${i===within-1?' just-lit':''}" style="--paint:${swatch(level,i,target)}"></span>`).join('');
+    $('#typing-progress').style.width=`${within/target*100}%`;$('#level-progress').textContent=`${within} / ${target}`;
+    if(!displayLevel)$('#celebration').textContent='集满一张，解锁下一关';
+    $('#collection-count').textContent=`已收集 ${actual.level-1} 张`;
+    if(renderedLevel!==actual.level){
+      $('#collection-list').innerHTML=actual.level===1?'<p>完成第一关，收集色卡。</p>':Array.from({length:Math.min(actual.level-1,100)},(_,i)=>{const lv=actual.level-1-i;return `<div class="mini-card"><div class="mini-grid">${Array.from({length:12},(_,j)=>`<span style="background:${swatch(lv,j,12)}"></span>`).join('')}</div><small>第 ${lv} 关 · ${theme(lv).name}</small></div>`;}).join('');renderedLevel=actual.level;
+    }
+  }
+
+  const regionColor=Object.fromEntries(regions.map(r=>[r.id,r.color]));
+  function shapeHTML(shapeId){
+    const highlight=shapeId||'';
+    const blocks=[
+      {id:'function',cls:'row-top',label:'F 区'},
+      {id:'main',cls:'block-main',label:'主键盘'},
+      {id:'editing',cls:'block-edit',label:'编辑'},
+      {id:'indicator',cls:'block-light',label:'灯'},
+      {id:'numeric',cls:'block-num',label:'小键盘'}
+    ];
+    return `<div class="kb-sil" aria-hidden="true">${blocks.map(b=>`<span class="kb-sil-part ${b.cls}${b.id===highlight?' on':''}" style="--c:${regionColor[b.id]}">${b.label}</span>`).join('')}</div>`;
+  }
+  let quizPickLeft=null, quizDraft={};
+  function studentQuiz(){
+    main.classList.add('quiz-main');
+    if(typeof state.index!=='number'||state.index<0)state.index=0;
+    if(!state.answers||typeof state.answers!=='object')state.answers={};
+    const progress=quizProgress(state.answers);
+    if(progress.finished)state.index=quizQuestions.length;
+    renderQuizStudent();
+  }
+  function renderQuizStudent(){
+    const progress=quizProgress(state.answers);
+    if(state.index>=quizQuestions.length){
+      main.innerHTML=`<div class="intro"><div><h1>练习完成</h1><p>一共 ${progress.total} 题，答对 ${progress.correct} 题。</p></div><span class="badge">正确率 ${progress.accuracy}%</span></div>
+        <section class="panel"><div class="progress-track"><span style="width:100%"></span></div><p class="notice" style="margin-top:18px">可以再看一遍错题，也可以关掉页面休息一下。</p>
+        <div class="toolbar"><button id="quiz-review" class="quiet">查看作答</button><span class="spacer"></span><button id="quiz-retry" class="primary">再练一次</button></div>
+        <div id="quiz-review-list" class="quiz-review hidden"></div></section>`;
+      $('#quiz-review').onclick=()=>{
+        const box=$('#quiz-review-list');box.classList.toggle('hidden');
+        if(box.classList.contains('hidden'))return;
+        box.innerHTML=quizQuestions.map((q,i)=>{const a=state.answers[q.id];const ok=a?.correct;return `<div class="quiz-review-row ${ok?'ok':'bad'}"><strong>第 ${i+1} 题</strong><span>${ok?'正确':'再看看'}</span><p>${esc(q.prompt)}</p></div>`;}).join('');
+      };
+      $('#quiz-retry').onclick=()=>{if(!confirm('清空本次作答，重新练习吗？'))return;state={answers:{},index:0};persist();quizDraft={};quizPickLeft=null;renderQuizStudent();syncStudent(true);};
+      return;
+    }
+    const q=quizQuestions[state.index];
+    const answered=state.answers[q.id];
+    quizDraft=answered?.value && typeof answered.value==='object' && !answered.checked ? {...answered.value} : (answered?.checked?{...(typeof answered.value==='object'?answered.value:{})}:{});
+    if(answered?.checked && q.type==='mcq') quizDraft={};
+    main.innerHTML=`<div class="intro quiz-intro"><div><div class="eyebrow">知识点练习</div><h1>第 ${state.index+1} / ${quizQuestions.length} 题</h1><p>答完一题立刻知道对不对，再进入下一题。</p></div><span class="badge">已答对 ${progress.correct} 题</span></div>
+      <div class="progress-track quiz-progress"><span style="width:${progress.answered/quizQuestions.length*100}%"></span></div>
+      <section class="panel quiz-card" id="quiz-card"><h2>${esc(q.prompt)}</h2><div id="quiz-body"></div><div id="quiz-feedback" class="quiz-feedback hidden" role="status"></div><div class="toolbar" id="quiz-actions"></div></section>`;
+    const body=$('#quiz-body'), actions=$('#quiz-actions'), feedback=$('#quiz-feedback');
+    const locked=!!answered?.checked;
+    if(q.type==='mcq'){
+      body.innerHTML=`<div class="quiz-choices">${q.choices.map(c=>`<button type="button" class="quiz-choice" data-choice="${c.id}" ${locked?'disabled':''}>${esc(c.text)}</button>`).join('')}</div>`;
+      if(locked){
+        $$('.quiz-choice').forEach(b=>{b.classList.toggle('correct',b.dataset.choice===q.answer);b.classList.toggle('wrong',answered.value===b.dataset.choice&&!answered.correct);b.classList.toggle('picked',answered.value===b.dataset.choice);});
+        showQuizFeedback(answered.correct, q);actions.innerHTML=`<span class="spacer"></span><button id="quiz-next" class="primary">下一题</button>`;
+        $('#quiz-next').onclick=()=>{state.index++;persist();renderQuizStudent();};
+      }else{
+        $$('.quiz-choice').forEach(b=>b.onclick=()=>{
+          const value=b.dataset.choice;const correct=gradeQuizAnswer(q,value);
+          state.answers[q.id]={value,correct,checked:true};persist();syncStudent();
+          $$('.quiz-choice').forEach(x=>{x.disabled=true;x.classList.toggle('correct',x.dataset.choice===q.answer);x.classList.toggle('wrong',value===x.dataset.choice&&!correct);x.classList.toggle('picked',value===x.dataset.choice);});
+          showQuizFeedback(correct,q);
+          actions.innerHTML=`<span class="spacer"></span><button id="quiz-next" class="primary">下一题</button>`;
+          $('#quiz-next').onclick=()=>{state.index++;persist();renderQuizStudent();};
+        });
+      }
+    }else{
+      quizPickLeft=null;
+      const pairs=locked?(typeof answered.value==='object'?answered.value:{}):quizDraft;
+      renderMatchBody(q, pairs, locked);
+      if(locked){
+        showQuizFeedback(answered.correct,q);
+        actions.innerHTML=`<span class="spacer"></span><button id="quiz-next" class="primary">下一题</button>`;
+        $('#quiz-next').onclick=()=>{state.index++;persist();renderQuizStudent();};
+      }else{
+        actions.innerHTML=`<button id="quiz-clear" class="quiet">清空连线</button><span class="spacer"></span><button id="quiz-check" class="primary" disabled>检查答案</button>`;
+        $('#quiz-clear').onclick=()=>{quizDraft={};quizPickLeft=null;renderMatchBody(q,quizDraft,false);$('#quiz-check').disabled=true;};
+        $('#quiz-check').onclick=()=>{
+          const value={...quizDraft};const correct=gradeQuizAnswer(q,value);
+          state.answers[q.id]={value,correct,checked:true};persist();syncStudent();
+          renderMatchBody(q,value,true);showQuizFeedback(correct,q);
+          actions.innerHTML=`<span class="spacer"></span><button id="quiz-next" class="primary">下一题</button>`;
+          $('#quiz-next').onclick=()=>{state.index++;persist();renderQuizStudent();};
+        };
+        updateMatchCheck(q);
+      }
+    }
+  }
+  function showQuizFeedback(correct,q){
+    const feedback=$('#quiz-feedback');if(!feedback)return;
+    feedback.classList.remove('hidden','ok','bad');feedback.classList.add(correct?'ok':'bad');
+    feedback.textContent=correct?'答对了！':'再想一想，正确答案已标出。';
+  }
+  function updateMatchCheck(q){
+    const btn=$('#quiz-check');if(!btn)return;
+    const need=Object.keys(q.answer).length;btn.disabled=Object.keys(quizDraft).length!==need;
+  }
+  function renderMatchBody(q, pairs, locked){
+    const body=$('#quiz-body');if(!body)return;
+    const usedRight=new Set(Object.values(pairs||{}));
+    body.innerHTML=`<div class="quiz-match"><div class="match-col">${q.left.map(item=>{
+      const paired=pairs[item.id];const right=paired&&q.right.find(r=>r.id===paired);
+      const label=right?(q.type==='match-shape'?regionLabelFromShape(right):right.text):'点这里，再点右边配对';
+      return `<button type="button" class="match-item left${quizPickLeft===item.id?' active':''}${paired?' paired':''}${locked?(pairs[item.id]===q.answer[item.id]?' correct':' wrong'):''}" data-left="${item.id}" ${locked?'disabled':''}><strong>${esc(item.text)}</strong><small>${esc(label)}</small></button>`;
+    }).join('')}</div><div class="match-col">${q.right.map(item=>{
+      const taken=usedRight.has(item.id);
+      const content=q.type==='match-shape'?shapeHTML(item.shape):esc(item.text);
+      return `<button type="button" class="match-item right${taken?' taken':''}" data-right="${item.id}" ${locked||taken?'disabled':''}>${content}</button>`;
+    }).join('')}</div></div>`;
+    if(locked)return;
+    $$('[data-left]').forEach(b=>b.onclick=()=>{
+      quizPickLeft=b.dataset.left;
+      if(quizDraft[quizPickLeft]){delete quizDraft[quizPickLeft];}
+      renderMatchBody(q,quizDraft,false);updateMatchCheck(q);
+    });
+    $$('[data-right]').forEach(b=>b.onclick=()=>{
+      if(!quizPickLeft){toast('先点左边的名称，再点右边配对');return;}
+      // remove if this right was paired elsewhere
+      for(const [k,v] of Object.entries(quizDraft)){if(v===b.dataset.right)delete quizDraft[k];}
+      quizDraft[quizPickLeft]=b.dataset.right;quizPickLeft=null;
+      renderMatchBody(q,quizDraft,false);updateMatchCheck(q);
+    });
+  }
+  function regionLabelFromShape(right){
+    const r=regions.find(x=>x.id===right.shape);return r?r.name:'示意图';
+  }
+  function teacherQuiz(){
+    teacherShell();
+    $('#teacher-content').innerHTML=`<div class="metrics"><div class="metric"><span class="label">参与练习</span><strong id="q-count">0<small>人</small></strong></div><div class="metric"><span class="label">已完成</span><strong id="q-done">0<small>人</small></strong></div><div class="metric"><span class="label">平均答对</span><strong id="q-mean">—</strong></div><div class="metric"><span class="label">最近在线</span><strong id="q-online">0<small>人</small></strong></div></div>
+      <section class="panel"><div class="section-head"><h2>全班进度</h2><span class="badge" id="q-progress-badge">等待加入</span></div><div id="q-progress-bars"></div></section>
+      <section class="panel" style="margin-top:22px"><div class="section-head"><h2>错题分布</h2><span class="tips">看哪一题最容易错</span></div><div id="q-wrong"></div></section>`;
+    renderQuizTeacher();
+  }
+  function renderQuizTeacher(){
+    const n=people.length, done=people.filter(p=>p.finished||quizProgress(p.answers||{}).finished).length;
+    const corrects=people.map(p=>Number(p.correct??quizProgress(p.answers||{}).correct)||0);
+    const mean=n?corrects.reduce((a,b)=>a+b,0)/n:0;
+    const online=people.filter(p=>Date.now()-p.updatedAt<90000).length;
+    $('#q-count').innerHTML=n+'<small>人</small>';
+    $('#q-done').innerHTML=done+'<small>人</small>';
+    $('#q-mean').innerHTML=n?mean.toFixed(1)+'<small> / '+quizQuestions.length+'</small>':'—';
+    $('#q-online').innerHTML=online+'<small>人</small>';
+    $('#q-progress-badge').textContent=n?`完成 ${done} / ${n}`:'等待加入';
+    const buckets=Array.from({length:quizQuestions.length+1},()=>0);
+    people.forEach(p=>{const a=Number(p.answered??quizProgress(p.answers||{}).answered)||0;buckets[Math.min(quizQuestions.length,Math.max(0,a))]++;});
+    replaceHTML($('#q-progress-bars'),n?buckets.map((count,i)=>`<div class="hist-row"><span>${i===quizQuestions.length?'完成':'答到 '+i}</span><div class="hist-bar"><span style="width:${count/n*100}%;background:${i===quizQuestions.length?'#36a97c':'#7fb399'}"></span></div><span>${count} 人</span></div>`).join(''):'<div class="empty">学生开始作答后，这里会出现进度。</div>');
+    const wrong=quizWrongStats(people);
+    replaceHTML($('#q-wrong'),n?wrong.map((w,i)=>{
+      const rate=w.wrongRate;
+      return `<div class="quiz-wrong-row"><div class="quiz-wrong-head"><strong>第 ${i+1} 题</strong><span>${w.attempts?`错误 ${w.wrongCount}/${w.attempts} · ${rate}%`:'尚无人作答'}</span></div><p>${esc(w.prompt)}</p><div class="hist-bar"><span style="width:${rate}%;background:#db8263"></span></div></div>`;
+    }).join(''):'<div class="empty">还没有作答数据。</div>');
+  }
+
+  function teacherShell(){
+    const title=kind==='coloring'?'全班填色':kind==='quiz'?'练习进度':'打字进度';
+    main.innerHTML=
+      `<div class="teacher-bar"><label for="room">课堂</label><select id="room" aria-label="选择课堂"></select><button id="new-room">新建课堂</button><span style="flex:1"></span><button class="primary" id="copy-link">复制学生链接</button><button id="open-student">打开学生端</button></div>${demo?'<div class="new-room"><button id="demo-seed">生成示例学生</button></div>':''}<div id="teacher-content"></div>`;
+    renderClassrooms();
+    $('#room').onchange=()=>switchClassroom($('#room').value);
+    $('#room').onblur=()=>renderClassrooms();
+    $('#new-room').onclick=createClassroom;
+    loadClassrooms();
+    const studentURL=()=>{const u=new URL('student.html',location.href);u.searchParams.set('room',room);if(demo)u.searchParams.set('demo','1');return u.href;};
+    $('#copy-link').onclick=async()=>{try{await navigator.clipboard.writeText(studentURL());toast('学生链接已复制');}catch{prompt('复制这个链接给学生：',studentURL());}};
+    $('#open-student').onclick=()=>window.open(studentURL(),'_blank','noopener');
+    if(demo)$('#demo-seed').onclick=seedDemo;
+  }
+  function switchClassroom(id){
+    if(!id||id===room)return;
+    save('last-room',id);const u=new URL(location.href);u.searchParams.set('room',id);location.href=u;
+  }
+  function rememberClassrooms(records){
+    classrooms=Lesson.mergeClassrooms(classrooms,records);save(roomCacheKey,classrooms);renderClassrooms();
+  }
+  function renderClassrooms(){
+    const select=$('#room');if(!select||document.activeElement===select)return;
+    const signature=JSON.stringify(classrooms);if(signature===roomListSignature)return;
+    roomListSignature=signature;
+    select.innerHTML=classrooms.map(c=>{
+      const name=c.id==='三年级体验'?'体验':c.id.replace(/^三年级-/, '');
+      const time=c.createdAt?new Date(c.createdAt).toLocaleString('zh-CN',{timeZone:'Asia/Shanghai',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false}):'创建时间未记录';
+      return `<option value="${esc(c.id)}"${c.id===room?' selected':''}>${esc(name)} · ${esc(time)}</option>`;
+    }).join('');
+  }
+  async function loadClassrooms(){
+    try{
+      if(document.hidden||navigator.onLine===false||Date.now()<retryAt)return;
+      const data=demo?load('demo-classroom-records',[]):(await readRecords()).submissions;
+      const records=(data||[]).map(x=>x.data||x.payload||x);
+      rememberClassrooms(records.filter(x=>x.type==='classroom').map(x=>({id:x.sessionId,createdAt:x.createdAt})));
+      rememberClassrooms(records.filter(x=>x.type==='coloring-snapshot').map(x=>({id:x.sessionId})));
+    }catch{toast('课堂列表暂未更新，正在显示已保存的课堂');}
+  }
+  async function createClassroom(){
+    if(creatingRoom)return;creatingRoom=true;const button=$('#new-room');button.disabled=true;$('#room').disabled=true;button.textContent='正在创建…';
+    if(!pendingClassroom){
+      let id;do{id=Lesson.roomCode(crypto.getRandomValues(new Uint8Array(6)));}while(classrooms.some(c=>c.id===id));
+      pendingClassroom={type:'classroom',sessionId:id,createdAt:Date.now()};
+    }
+    try{
+      if(demo){const records=load('demo-classroom-records',[]);records.push(pendingClassroom);save('demo-classroom-records',records);}
+      else await post(pendingClassroom);
+      rememberClassrooms([{id:pendingClassroom.sessionId,createdAt:pendingClassroom.createdAt}]);switchClassroom(pendingClassroom.sessionId);
+    }catch{toast('课堂未确认创建成功，请再试一次');}
+    finally{creatingRoom=false;button.disabled=false;$('#room').disabled=false;button.textContent='新建课堂';}
+  }
+  function teacherColor(){
+    teacherShell();$('#teacher-content').innerHTML=`<div class="metrics"><div class="metric"><span class="label">参与学生</span><strong id="m-count">0<small>人</small></strong></div><div class="metric"><span class="label">最近在线</span><strong id="m-online">0<small>人</small></strong></div><div class="metric"><span class="label">平均填色进度</span><strong id="m-progress">0<small>%</small></strong></div><div class="metric"><span class="label">已填完</span><strong id="m-complete">0<small>人</small></strong></div></div>
+      <section class="panel"><div class="section-head"><h2 id="board-title">全班混色键盘</h2><button id="answer-toggle">查看标准分区</button></div><div class="legend">${legend()}</div><div id="empty-hint" class="notice">等待学生进入。同一课堂中的学生填色后，这里会自动更新。</div><div class="keyboard-scroll"><div id="keyboard"></div></div></section>
+      <div class="below"><section class="panel"><h2>保存快照</h2><div class="toolbar"><button id="save-before">保存讲解前</button><button id="save-after">保存修正后</button></div><p class="tips" id="snapshot-message"></p></section>
+      <section class="panel"><div class="section-head"><h2>讲解前后对比</h2><button id="live-view">回到实时</button></div><div id="snapshots"><p class="tips">还没有保存快照。</p></div></section></div><div id="tooltip" role="tooltip" class="tooltip hidden"></div>`;
+    Lesson.drawKeyboard($('#keyboard'),(b,k)=>{
+      b.onpointerenter=e=>showTip(k,b,e);b.onpointermove=e=>positionTip(e.clientX,e.clientY);b.onpointerleave=()=>$('#tooltip').classList.add('hidden');b.onfocus=()=>showTip(k,b);b.onblur=()=>$('#tooltip').classList.add('hidden');b.onclick=e=>showTip(k,b,e);
+    });
+    $('#answer-toggle').onclick=()=>{showAnswer=!showAnswer;renderColorTeacher();};
+    $('#save-before').onclick=()=>takeSnapshot('before');$('#save-after').onclick=()=>takeSnapshot('after');
+    $('#live-view').onclick=()=>{viewSnapshot=null;renderColorTeacher();};
+    loadSnapshots();
+  }
+  let showAnswer=false,viewSnapshot=null;
+  function shownPeople(){return viewSnapshot?viewSnapshot.people:people;}
+  function renderColorTeacher(){
+    const data=shownPeople(),n=data.length,progress=data.map(p=>Lesson.coloringProgress(p.colors||{},keys));
+    $('#m-count').innerHTML=n+'<small>人</small>';$('#m-online').innerHTML=people.filter(p=>Date.now()-p.updatedAt<90000).length+'<small>人</small>';
+    const painted=progress.reduce((sum,p)=>sum+p.filled,0);
+    $('#m-progress').innerHTML=(n?Math.round(painted/(n*keys.length)*100):0)+'<small>%</small>';
+    $('#m-complete').innerHTML=progress.filter(p=>p.filled===keys.length).length+'<small>人</small>';
+    $('#empty-hint').classList.toggle('hidden',n>0);
+    $('#board-title').textContent=showAnswer?'标准分区 · 用于讲解':viewSnapshot?`${viewSnapshot.label} · ${n} 人快照`:'全班混色键盘';
+    $('#answer-toggle').textContent=showAnswer?'回到混色键盘':'查看标准分区';
+    $$('.key').forEach((b,i)=>{const k=keys[i];
+      if(showAnswer)b.style.background=regions.find(r=>r.id===k.region).color;
+      else {const counts=distribution(data,k.id),mix=mixShares(counts);let angle=0;const parts=mix.shares.map(s=>{const start=angle;angle+=s.ratio*360;return `${s.color} ${start}deg ${angle}deg`;});b.style.background=mix.filled?`conic-gradient(${parts.join(',')})`:'#edf1eb';}
+    });
+  }
+  function showTip(k,b,e){
+    const tip=$('#tooltip'),data=shownPeople(),counts=distribution(data,k.id),mix=mixShares(counts),filled=mix.filled;
+    tip.innerHTML=`<strong>${esc(k.label||'空格键')}${k.region==='indicator'?' 指示灯':''}</strong>`+regions.map(r=>`<div class="tiprow"><span><i class="dot" style="--c:${r.color}"></i>${r.name}</span><span>${counts[r.id]} 人 · ${filled?Math.round(counts[r.id]/filled*100):0}%</span></div>`).join('');
+    tip.classList.remove('hidden');const rect=b.getBoundingClientRect();positionTip(e?.clientX||rect.x,e?.clientY||rect.y);
+  }
+  function positionTip(x,y){const tip=$('#tooltip');tip.style.left=Math.max(8,Math.min(x+15,innerWidth-tip.offsetWidth-8))+'px';tip.style.top=Math.max(8,Math.min(y+15,innerHeight-tip.offsetHeight-12))+'px';}
+  async function takeSnapshot(which){
+    if(!people.length)return toast('还没有学生填色，先邀请学生进入');
+    const button=which==='before'?$('#save-before'):$('#save-after');button.disabled=true;
+    const record={type:'coloring-snapshot',sessionId:room,snapshotId:crypto.randomUUID(),label:which==='before'?'讲解前':'修正后',phase:which,createdAt:Date.now(),people:JSON.parse(JSON.stringify(people))};
+    try{await post(record);snapshots.push(record);renderSnapshots();$('#snapshot-message').textContent=record.label+'快照已保存';toast('已保存'+record.label+'全班快照');}catch{$('#snapshot-message').textContent='保存失败，请确认连接后再试；当前实时数据仍保留。';}finally{button.disabled=false;}
+  }
+  async function loadSnapshots(){
+    try{const data=demo?load('demo-snapshots:'+room,[]):(await readRecords()).submissions;
+      snapshots=(data||[]).map(x=>x.data||x.payload||x).filter(x=>x.type==='coloring-snapshot'&&x.sessionId===room&&Array.isArray(x.people));renderSnapshots();
+    }catch{$('#snapshots').innerHTML='<p class="tips">历史快照暂时无法读取，实时看板仍可使用。</p>';}
+  }
+  function renderSnapshots(){
+    const target=$('#snapshots');replaceHTML(target,snapshots.length?snapshots.slice().reverse().map((s,i)=>`<div class="snapshot-row"><span>${esc(s.label)} · ${s.people.length} 人<br><small>${new Date(s.createdAt).toLocaleTimeString('zh-CN')}</small></span><button data-snapshot="${snapshots.length-1-i}">查看</button></div>`).join(''):'<p class="tips">还没有保存快照。</p>');
+    $$('[data-snapshot]').forEach(b=>b.onclick=()=>{viewSnapshot=snapshots[Number(b.dataset.snapshot)];showAnswer=false;renderColorTeacher();});
+  }
+  function teacherTyping(){
+    teacherShell();$('#teacher-content').innerHTML=`<div class="metrics"><div class="metric"><span class="label">参与练习</span><strong id="t-count">0<small>人</small></strong></div><div class="metric"><span class="label">目前最高</span><strong id="t-max">—</strong></div><div class="metric"><span class="label">平均关卡</span><strong id="t-mean">—</strong></div><div class="metric"><span class="label">累计正确输入</span><strong id="t-total">0<small>个</small></strong></div></div>
+      <section class="panel"><h2>分层进度</h2><div class="percentile" id="percentiles"></div></section>
+      <section class="panel" style="margin-top:22px"><h2>关卡分布</h2><div id="histogram"></div><p class="tips" id="typing-observation"></p></section>`;renderTypingTeacher();
+  }
+  function renderTypingTeacher(){
+    const s=stats(people);$('#t-count').innerHTML=s.count+'<small>人</small>';$('#t-max').innerHTML=s.count?s.max+'<small>关</small>':'—';$('#t-mean').innerHTML=s.count?s.mean.toFixed(1)+'<small>关</small>':'—';$('#t-total').innerHTML=people.reduce((sum,p)=>sum+(Number(p.total)||0),0)+'<small>个</small>';
+    $('#percentiles').innerHTML=s.thresholds.map(x=>`<div class="percentile-card"><span>前 ${x.percent}% 学生至少到</span><strong>${s.count?'第 '+x.level+' 关':'等待加入'}</strong></div>`).join('');
+    const counts={};people.forEach(p=>{const lv=levelInfo(p.total).level;counts[lv]=(counts[lv]||0)+1;});
+    replaceHTML($('#histogram'),s.count?Object.keys(counts).sort((a,b)=>Number(a)-Number(b)).map(l=>`<div class="hist-row"><span>第 ${l} 关</span><div class="hist-bar"><span style="width:${counts[l]/s.count*100}%;background:${swatch(Number(l),4,12)}"></span></div><span>${counts[l]} 人</span></div>`).join(''):'<div class="empty">学生开始输入后，这里会出现关卡分布。</div>');
+    const online=people.filter(p=>Date.now()-p.updatedAt<90000).length;
+    $('#typing-observation').textContent=`最近在线 ${online} 人 · 当前关卡为正在挑战的关卡`;
+  }
+  let peopleSignature='',lastTeacherRender=0;
+  async function pollTeacher(){
+    if(pollBusy||document.hidden||navigator.onLine===false||Date.now()<retryAt)return;pollBusy=true;
+    try{const values=await readStates();people=values.filter(v=>v.key.startsWith(kind+':'+room+':')&&v.sessionId===room&&v.kind===kind&&v.studentId);
+      rememberClassrooms(values.filter(v=>v.kind===kind&&v.sessionId&&v.studentId).map(v=>({id:v.sessionId})));
+      const signature=JSON.stringify(people.map(p=>[p.studentId,kind==='coloring'?p.colors:kind==='quiz'?[p.answered,p.correct,p.finished,p.answers]:p.total]));
+      if(signature!==peopleSignature||Date.now()-lastTeacherRender>=30000){
+        if(kind==='coloring')renderColorTeacher();else if(kind==='quiz')renderQuizTeacher();else renderTypingTeacher();
+        peopleSignature=signature;lastTeacherRender=Date.now();
+      }
+      status(true,'看板已同步');
+    }catch{status(false,'连接暂断 · 显示最近结果');}finally{pollBusy=false;}
+  }
+  async function seedDemo(){
+    const all=getDemo();for(let i=0;i<16;i++){
+      const id='demo-'+String(i+1).padStart(2,'0');
+      if(kind==='quiz'){
+        const answers={};let answered=0,correct=0;
+        quizQuestions.forEach((q,qi)=>{if(qi>i%12)return;const ok=qi%3!==1;answers[q.id]={checked:true,correct:ok,value:q.type==='mcq'?q.answer:{...q.answer}};answered++;if(ok)correct++;});
+        const p=quizProgress(answers);all[`${kind}:${room}:${id}`]={expires:Date.now()+7200000,value:{sessionId:room,studentId:id,kind,updatedAt:Date.now(),answers,index:p.answered,answered:p.answered,correct:p.correct,finished:p.finished}};
+      }else{
+        const colors={};keys.forEach((k,j)=>{if((j+i)%19!==0)colors[k.id]=(j+i)%11===0?regions[(i+j)%5].id:k.region;});
+        all[`${kind}:${room}:${id}`]={expires:Date.now()+7200000,value:{sessionId:room,studentId:id,kind,updatedAt:Date.now(),colors,completed:i%3===0,total:i*9}};
+      }
+    }localStorage.setItem(demoKey,JSON.stringify(all));await pollTeacher();toast('已生成 16 位示例学生');
+  }
+  let networkTimer,recordsTimer;
+  function scheduleNetwork(delay){
+    clearTimeout(networkTimer);
+    networkTimer=setTimeout(async()=>{
+      try{if(teacher)await pollTeacher();else await syncStudent();}
+      finally{scheduleNetwork(document.hidden?30000:Math.max(teacher?5000:uploadDelay,retryAt-Date.now())+Math.random()*1000);}
+    },delay);
+  }
+  function scheduleRecords(){
+    clearTimeout(recordsTimer);
+    recordsTimer=setTimeout(async()=>{try{await loadClassrooms();}finally{scheduleRecords();}},180000+Math.random()*5000);
+  }
+  if(teacher){kind==='coloring'?teacherColor():kind==='quiz'?teacherQuiz():teacherTyping();scheduleRecords();}
+  else{kind==='coloring'?studentColor():kind==='quiz'?studentQuiz():studentTyping();}
+  scheduleNetwork(Math.random()*3000);
+  if(!storageOK)toast('浏览器限制了本机保存，请保持网页打开以免丢失进度。');
+  window.addEventListener('online',()=>scheduleNetwork(Math.max(1000,retryAt-Date.now())+Math.random()*2000));
+  document.addEventListener('visibilitychange',()=>scheduleNetwork(document.hidden?30000:1000+Math.random()*2000));
+  // 自动化验收及教师调试只读入口，无上传或修改能力。
+  window.lessonState=()=>({kind,role:cfg.role,room,demo,state:JSON.parse(JSON.stringify(state)),people:JSON.parse(JSON.stringify(people))});
+})();
+</script></body></html>

@@ -1,4 +1,14 @@
 {
-  "coloring": {"taskId": "urw467xtz4n7", "title": "填色盘"},
-  "typing": {"taskId": "cujbj48aycbw", "title": "收集色卡"}
+  "coloring": {
+    "taskId": "urw467xtz4n7",
+    "title": "填色盘"
+  },
+  "typing": {
+    "taskId": "cujbj48aycbw",
+    "title": "收集色卡"
+  },
+  "quiz": {
+    "taskId": "6486qb6tyb86",
+    "title": "认识键盘-知识点练习"
+  }
 }

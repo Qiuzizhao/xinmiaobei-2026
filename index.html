@@ -12,7 +12,7 @@
     main { max-width: 940px; margin: 0 auto; padding: 72px 28px 40px; }
     .label { margin: 0 0 10px; font-size: 13px; color: #708275; letter-spacing: .12em; }
     h1 { margin: 0 0 36px; font-size: clamp(30px, 5vw, 42px); }
-    .activities { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; }
+    .activities { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; }
     .card { padding: 28px; border: 1px solid #dfe7dd; border-radius: 20px; background: #fff; }
     .swatches { display: flex; gap: 7px; margin-bottom: 27px; }
     .swatches span { width: 29px; height: 29px; border-radius: 7px; background: var(--color); }
@@ -30,7 +30,7 @@
     .document span { display: block; margin-top: 5px; color: #7b8b7d; font-size: 13px; }
     .document .button { min-width: 120px; }
     footer { margin-top: 24px; color: #7b8b7d; font-size: 13px; line-height: 1.8; }
-    @media (max-width: 650px) { main { padding: 38px 18px; } .activities { grid-template-columns: 1fr; } .card { padding: 24px; } .document { padding: 21px; } }
+    @media (max-width: 900px) { main { padding: 38px 18px; } .activities { grid-template-columns: 1fr; } .card { padding: 24px; } .document { padding: 21px; } }
     @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
   </style>
 </head>
@@ -61,6 +61,17 @@
         <div class="links">
           <a class="button primary" href="web/typing/student.html" target="_blank" rel="noopener" aria-label="打字练习学生端，新标签页打开">学生端 ↗</a>
           <a class="button" href="web/typing/teacher.html" target="_blank" rel="noopener" aria-label="打字练习教师端，新标签页打开">教师端 ↗</a>
+        </div>
+      </section>
+      <section class="card" aria-labelledby="quiz-title">
+        <div class="swatches" aria-hidden="true">
+          <span style="--color:#23765e"></span><span style="--color:#36a97c"></span><span style="--color:#688ee6"></span><span style="--color:#f1bf52"></span><span style="--color:#ed6874"></span>
+        </div>
+        <span class="number">活动 03</span>
+        <h2 id="quiz-title">知识点练习</h2>
+        <div class="links">
+          <a class="button primary" href="web/quiz/student.html" target="_blank" rel="noopener" aria-label="知识点练习学生端，新标签页打开">学生端 ↗</a>
+          <a class="button" href="web/quiz/teacher.html" target="_blank" rel="noopener" aria-label="知识点练习教师端，新标签页打开">教师端 ↗</a>
         </div>
       </section>
     </div>

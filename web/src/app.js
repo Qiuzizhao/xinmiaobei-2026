@@ -1,7 +1,7 @@
 (async function () {
   'use strict';
   document.addEventListener('contextmenu',event=>event.preventDefault(),{capture:true});
-  const {regions,keys,levelInfo,theme,swatch,targetAt,stats,distribution,mixShares,normalizeStates}=Lesson;
+  const {regions,keys,levelInfo,theme,swatch,targetAt,stats,distribution,mixShares,normalizeStates,quizQuestions,gradeQuizAnswer,quizProgress,quizWrongStats}=Lesson;
   const $=s=>document.querySelector(s), $$=s=>Array.from(document.querySelectorAll(s));
   function replaceHTML(target,html){
     if(target.innerHTML===html)return;
@@ -20,7 +20,7 @@
     },{capture:true});
   }
   const params=new URLSearchParams(location.search), demo=params.get('demo')==='1';
-  const storagePrefix=`keyboard-v1:${kind}:`, defaultState=kind==='coloring'?{colors:{}}:{total:0};
+  const storagePrefix=`keyboard-v1:${kind}:`, defaultState=kind==='coloring'?{colors:{}}:kind==='quiz'?{answers:{},index:0}:{total:0};
   let storageOK=true;
   function load(key,fallback){try{return JSON.parse(localStorage.getItem(storagePrefix+key))??fallback;}catch{storageOK=false;return fallback;}}
   function save(key,value){try{localStorage.setItem(storagePrefix+key,JSON.stringify(value));}catch{storageOK=false;}}
@@ -33,7 +33,7 @@
   const localKey=`${demo?'demo:':''}${room}:student`;
   let state={...defaultState,...load(localKey,{})}, people=[], snapshots=[], selected='main';
   let dirty=true, busy=false, lastSent=0, lastUploadAttempt=0, isOnline=false, pollBusy=false;
-  const uploadDelay=kind==='coloring'?5000:10000;
+  const uploadDelay=kind==='coloring'||kind==='quiz'?5000:10000;
   let retryAt=0,requestFailures=0,recordsCache=null,recordsCachedAt=0,recordsPending=null,recordsVersion=0;
   const base=`https://qiuform.qiuzizhao.com/api/${cfg.taskId}`;
   const demoKey=`${storagePrefix}demo-state:${room}`;
@@ -84,7 +84,7 @@
     return result;
   }
   function persist(){save(localKey,state);dirty=true;}
-  function payload(){return {sessionId:room,studentId,kind,updatedAt:Date.now(),...(kind==='coloring'?{colors:state.colors,completed:!!state.completed}:{total:state.total,level:levelInfo(state.total).level})};}
+  function payload(){const base={sessionId:room,studentId,kind,updatedAt:Date.now()};if(kind==='coloring')return{...base,colors:state.colors,completed:!!state.completed};if(kind==='quiz'){const p=quizProgress(state.answers);return{...base,answers:state.answers,index:state.index|0,answered:p.answered,correct:p.correct,finished:!!p.finished};}return{...base,total:state.total,level:levelInfo(state.total).level};}
   async function syncStudent(force=false){
     const now=Date.now();
     if(busy||document.hidden||navigator.onLine===false||now<retryAt||now-lastUploadAttempt<uploadDelay)return;
@@ -94,7 +94,7 @@
     catch{dirty=true;status(false,'正在重连');}
     finally{busy=false;}
   }
-  document.body.innerHTML=`<header><div class="brand"><span class="brandmark">${kind==='coloring'?'▦':'◈'}</span><span>${cfg.title}</span></div><div style="display:flex;gap:8px;align-items:center"><span class="badge">${teacher?'教师端':'学生端'}</span><span class="status" id="sync">正在连接</span></div></header><main id="main"></main>`;
+  document.body.innerHTML=`<header><div class="brand"><span class="brandmark">${kind==='coloring'?'▦':kind==='quiz'?'▣':'◈'}</span><span>${cfg.title}</span></div><div style="display:flex;gap:8px;align-items:center"><span class="badge">${teacher?'教师端':'学生端'}</span><span class="status" id="sync">正在连接</span></div></header><main id="main"></main>`;
   const main=$('#main');
   if(demo)main.insertAdjacentHTML('beforebegin','<div class="offline-banner" style="margin:12px 4vw 0">示例体验 · 不计入课堂</div>');
   function intro(title,desc,tag){return `<div class="intro"><div><h1>${title}</h1>${desc?`<p>${desc}</p>`:''}</div></div>`;}
@@ -211,8 +211,157 @@
       $('#collection-list').innerHTML=actual.level===1?'<p>完成第一关，收集色卡。</p>':Array.from({length:Math.min(actual.level-1,100)},(_,i)=>{const lv=actual.level-1-i;return `<div class="mini-card"><div class="mini-grid">${Array.from({length:12},(_,j)=>`<span style="background:${swatch(lv,j,12)}"></span>`).join('')}</div><small>第 ${lv} 关 · ${theme(lv).name}</small></div>`;}).join('');renderedLevel=actual.level;
     }
   }
+
+  const regionColor=Object.fromEntries(regions.map(r=>[r.id,r.color]));
+  function shapeHTML(shapeId){
+    const highlight=shapeId||'';
+    const blocks=[
+      {id:'function',cls:'row-top',label:'F 区'},
+      {id:'main',cls:'block-main',label:'主键盘'},
+      {id:'editing',cls:'block-edit',label:'编辑'},
+      {id:'indicator',cls:'block-light',label:'灯'},
+      {id:'numeric',cls:'block-num',label:'小键盘'}
+    ];
+    return `<div class="kb-sil" aria-hidden="true">${blocks.map(b=>`<span class="kb-sil-part ${b.cls}${b.id===highlight?' on':''}" style="--c:${regionColor[b.id]}">${b.label}</span>`).join('')}</div>`;
+  }
+  let quizPickLeft=null, quizDraft={};
+  function studentQuiz(){
+    main.classList.add('quiz-main');
+    if(typeof state.index!=='number'||state.index<0)state.index=0;
+    if(!state.answers||typeof state.answers!=='object')state.answers={};
+    const progress=quizProgress(state.answers);
+    if(progress.finished)state.index=quizQuestions.length;
+    renderQuizStudent();
+  }
+  function renderQuizStudent(){
+    const progress=quizProgress(state.answers);
+    if(state.index>=quizQuestions.length){
+      main.innerHTML=`<div class="intro"><div><h1>练习完成</h1><p>一共 ${progress.total} 题，答对 ${progress.correct} 题。</p></div><span class="badge">正确率 ${progress.accuracy}%</span></div>
+        <section class="panel"><div class="progress-track"><span style="width:100%"></span></div><p class="notice" style="margin-top:18px">可以再看一遍错题，也可以关掉页面休息一下。</p>
+        <div class="toolbar"><button id="quiz-review" class="quiet">查看作答</button><span class="spacer"></span><button id="quiz-retry" class="primary">再练一次</button></div>
+        <div id="quiz-review-list" class="quiz-review hidden"></div></section>`;
+      $('#quiz-review').onclick=()=>{
+        const box=$('#quiz-review-list');box.classList.toggle('hidden');
+        if(box.classList.contains('hidden'))return;
+        box.innerHTML=quizQuestions.map((q,i)=>{const a=state.answers[q.id];const ok=a?.correct;return `<div class="quiz-review-row ${ok?'ok':'bad'}"><strong>第 ${i+1} 题</strong><span>${ok?'正确':'再看看'}</span><p>${esc(q.prompt)}</p></div>`;}).join('');
+      };
+      $('#quiz-retry').onclick=()=>{if(!confirm('清空本次作答，重新练习吗？'))return;state={answers:{},index:0};persist();quizDraft={};quizPickLeft=null;renderQuizStudent();syncStudent(true);};
+      return;
+    }
+    const q=quizQuestions[state.index];
+    const answered=state.answers[q.id];
+    quizDraft=answered?.value && typeof answered.value==='object' && !answered.checked ? {...answered.value} : (answered?.checked?{...(typeof answered.value==='object'?answered.value:{})}:{});
+    if(answered?.checked && q.type==='mcq') quizDraft={};
+    main.innerHTML=`<div class="intro quiz-intro"><div><div class="eyebrow">知识点练习</div><h1>第 ${state.index+1} / ${quizQuestions.length} 题</h1><p>答完一题立刻知道对不对，再进入下一题。</p></div><span class="badge">已答对 ${progress.correct} 题</span></div>
+      <div class="progress-track quiz-progress"><span style="width:${progress.answered/quizQuestions.length*100}%"></span></div>
+      <section class="panel quiz-card" id="quiz-card"><h2>${esc(q.prompt)}</h2><div id="quiz-body"></div><div id="quiz-feedback" class="quiz-feedback hidden" role="status"></div><div class="toolbar" id="quiz-actions"></div></section>`;
+    const body=$('#quiz-body'), actions=$('#quiz-actions'), feedback=$('#quiz-feedback');
+    const locked=!!answered?.checked;
+    if(q.type==='mcq'){
+      body.innerHTML=`<div class="quiz-choices">${q.choices.map(c=>`<button type="button" class="quiz-choice" data-choice="${c.id}" ${locked?'disabled':''}>${esc(c.text)}</button>`).join('')}</div>`;
+      if(locked){
+        $$('.quiz-choice').forEach(b=>{b.classList.toggle('correct',b.dataset.choice===q.answer);b.classList.toggle('wrong',answered.value===b.dataset.choice&&!answered.correct);b.classList.toggle('picked',answered.value===b.dataset.choice);});
+        showQuizFeedback(answered.correct, q);actions.innerHTML=`<span class="spacer"></span><button id="quiz-next" class="primary">下一题</button>`;
+        $('#quiz-next').onclick=()=>{state.index++;persist();renderQuizStudent();};
+      }else{
+        $$('.quiz-choice').forEach(b=>b.onclick=()=>{
+          const value=b.dataset.choice;const correct=gradeQuizAnswer(q,value);
+          state.answers[q.id]={value,correct,checked:true};persist();syncStudent();
+          $$('.quiz-choice').forEach(x=>{x.disabled=true;x.classList.toggle('correct',x.dataset.choice===q.answer);x.classList.toggle('wrong',value===x.dataset.choice&&!correct);x.classList.toggle('picked',value===x.dataset.choice);});
+          showQuizFeedback(correct,q);
+          actions.innerHTML=`<span class="spacer"></span><button id="quiz-next" class="primary">下一题</button>`;
+          $('#quiz-next').onclick=()=>{state.index++;persist();renderQuizStudent();};
+        });
+      }
+    }else{
+      quizPickLeft=null;
+      const pairs=locked?(typeof answered.value==='object'?answered.value:{}):quizDraft;
+      renderMatchBody(q, pairs, locked);
+      if(locked){
+        showQuizFeedback(answered.correct,q);
+        actions.innerHTML=`<span class="spacer"></span><button id="quiz-next" class="primary">下一题</button>`;
+        $('#quiz-next').onclick=()=>{state.index++;persist();renderQuizStudent();};
+      }else{
+        actions.innerHTML=`<button id="quiz-clear" class="quiet">清空连线</button><span class="spacer"></span><button id="quiz-check" class="primary" disabled>检查答案</button>`;
+        $('#quiz-clear').onclick=()=>{quizDraft={};quizPickLeft=null;renderMatchBody(q,quizDraft,false);$('#quiz-check').disabled=true;};
+        $('#quiz-check').onclick=()=>{
+          const value={...quizDraft};const correct=gradeQuizAnswer(q,value);
+          state.answers[q.id]={value,correct,checked:true};persist();syncStudent();
+          renderMatchBody(q,value,true);showQuizFeedback(correct,q);
+          actions.innerHTML=`<span class="spacer"></span><button id="quiz-next" class="primary">下一题</button>`;
+          $('#quiz-next').onclick=()=>{state.index++;persist();renderQuizStudent();};
+        };
+        updateMatchCheck(q);
+      }
+    }
+  }
+  function showQuizFeedback(correct,q){
+    const feedback=$('#quiz-feedback');if(!feedback)return;
+    feedback.classList.remove('hidden','ok','bad');feedback.classList.add(correct?'ok':'bad');
+    feedback.textContent=correct?'答对了！':'再想一想，正确答案已标出。';
+  }
+  function updateMatchCheck(q){
+    const btn=$('#quiz-check');if(!btn)return;
+    const need=Object.keys(q.answer).length;btn.disabled=Object.keys(quizDraft).length!==need;
+  }
+  function renderMatchBody(q, pairs, locked){
+    const body=$('#quiz-body');if(!body)return;
+    const usedRight=new Set(Object.values(pairs||{}));
+    body.innerHTML=`<div class="quiz-match"><div class="match-col">${q.left.map(item=>{
+      const paired=pairs[item.id];const right=paired&&q.right.find(r=>r.id===paired);
+      const label=right?(q.type==='match-shape'?regionLabelFromShape(right):right.text):'点这里，再点右边配对';
+      return `<button type="button" class="match-item left${quizPickLeft===item.id?' active':''}${paired?' paired':''}${locked?(pairs[item.id]===q.answer[item.id]?' correct':' wrong'):''}" data-left="${item.id}" ${locked?'disabled':''}><strong>${esc(item.text)}</strong><small>${esc(label)}</small></button>`;
+    }).join('')}</div><div class="match-col">${q.right.map(item=>{
+      const taken=usedRight.has(item.id);
+      const content=q.type==='match-shape'?shapeHTML(item.shape):esc(item.text);
+      return `<button type="button" class="match-item right${taken?' taken':''}" data-right="${item.id}" ${locked||taken?'disabled':''}>${content}</button>`;
+    }).join('')}</div></div>`;
+    if(locked)return;
+    $$('[data-left]').forEach(b=>b.onclick=()=>{
+      quizPickLeft=b.dataset.left;
+      if(quizDraft[quizPickLeft]){delete quizDraft[quizPickLeft];}
+      renderMatchBody(q,quizDraft,false);updateMatchCheck(q);
+    });
+    $$('[data-right]').forEach(b=>b.onclick=()=>{
+      if(!quizPickLeft){toast('先点左边的名称，再点右边配对');return;}
+      // remove if this right was paired elsewhere
+      for(const [k,v] of Object.entries(quizDraft)){if(v===b.dataset.right)delete quizDraft[k];}
+      quizDraft[quizPickLeft]=b.dataset.right;quizPickLeft=null;
+      renderMatchBody(q,quizDraft,false);updateMatchCheck(q);
+    });
+  }
+  function regionLabelFromShape(right){
+    const r=regions.find(x=>x.id===right.shape);return r?r.name:'示意图';
+  }
+  function teacherQuiz(){
+    teacherShell();
+    $('#teacher-content').innerHTML=`<div class="metrics"><div class="metric"><span class="label">参与练习</span><strong id="q-count">0<small>人</small></strong></div><div class="metric"><span class="label">已完成</span><strong id="q-done">0<small>人</small></strong></div><div class="metric"><span class="label">平均答对</span><strong id="q-mean">—</strong></div><div class="metric"><span class="label">最近在线</span><strong id="q-online">0<small>人</small></strong></div></div>
+      <section class="panel"><div class="section-head"><h2>全班进度</h2><span class="badge" id="q-progress-badge">等待加入</span></div><div id="q-progress-bars"></div></section>
+      <section class="panel" style="margin-top:22px"><div class="section-head"><h2>错题分布</h2><span class="tips">看哪一题最容易错</span></div><div id="q-wrong"></div></section>`;
+    renderQuizTeacher();
+  }
+  function renderQuizTeacher(){
+    const n=people.length, done=people.filter(p=>p.finished||quizProgress(p.answers||{}).finished).length;
+    const corrects=people.map(p=>Number(p.correct??quizProgress(p.answers||{}).correct)||0);
+    const mean=n?corrects.reduce((a,b)=>a+b,0)/n:0;
+    const online=people.filter(p=>Date.now()-p.updatedAt<90000).length;
+    $('#q-count').innerHTML=n+'<small>人</small>';
+    $('#q-done').innerHTML=done+'<small>人</small>';
+    $('#q-mean').innerHTML=n?mean.toFixed(1)+'<small> / '+quizQuestions.length+'</small>':'—';
+    $('#q-online').innerHTML=online+'<small>人</small>';
+    $('#q-progress-badge').textContent=n?`完成 ${done} / ${n}`:'等待加入';
+    const buckets=Array.from({length:quizQuestions.length+1},()=>0);
+    people.forEach(p=>{const a=Number(p.answered??quizProgress(p.answers||{}).answered)||0;buckets[Math.min(quizQuestions.length,Math.max(0,a))]++;});
+    replaceHTML($('#q-progress-bars'),n?buckets.map((count,i)=>`<div class="hist-row"><span>${i===quizQuestions.length?'完成':'答到 '+i}</span><div class="hist-bar"><span style="width:${count/n*100}%;background:${i===quizQuestions.length?'#36a97c':'#7fb399'}"></span></div><span>${count} 人</span></div>`).join(''):'<div class="empty">学生开始作答后，这里会出现进度。</div>');
+    const wrong=quizWrongStats(people);
+    replaceHTML($('#q-wrong'),n?wrong.map((w,i)=>{
+      const rate=w.wrongRate;
+      return `<div class="quiz-wrong-row"><div class="quiz-wrong-head"><strong>第 ${i+1} 题</strong><span>${w.attempts?`错误 ${w.wrongCount}/${w.attempts} · ${rate}%`:'尚无人作答'}</span></div><p>${esc(w.prompt)}</p><div class="hist-bar"><span style="width:${rate}%;background:#db8263"></span></div></div>`;
+    }).join(''):'<div class="empty">还没有作答数据。</div>');
+  }
+
   function teacherShell(){
-    const title=kind==='coloring'?'全班填色':'打字进度';
+    const title=kind==='coloring'?'全班填色':kind==='quiz'?'练习进度':'打字进度';
     main.innerHTML=
       `<div class="teacher-bar"><label for="room">课堂</label><select id="room" aria-label="选择课堂"></select><button id="new-room">新建课堂</button><span style="flex:1"></span><button class="primary" id="copy-link">复制学生链接</button><button id="open-student">打开学生端</button></div>${demo?'<div class="new-room"><button id="demo-seed">生成示例学生</button></div>':''}<div id="teacher-content"></div>`;
     renderClassrooms();
@@ -332,9 +481,9 @@
     if(pollBusy||document.hidden||navigator.onLine===false||Date.now()<retryAt)return;pollBusy=true;
     try{const values=await readStates();people=values.filter(v=>v.key.startsWith(kind+':'+room+':')&&v.sessionId===room&&v.kind===kind&&v.studentId);
       rememberClassrooms(values.filter(v=>v.kind===kind&&v.sessionId&&v.studentId).map(v=>({id:v.sessionId})));
-      const signature=JSON.stringify(people.map(p=>[p.studentId,kind==='coloring'?p.colors:p.total]));
+      const signature=JSON.stringify(people.map(p=>[p.studentId,kind==='coloring'?p.colors:kind==='quiz'?[p.answered,p.correct,p.finished,p.answers]:p.total]));
       if(signature!==peopleSignature||Date.now()-lastTeacherRender>=30000){
-        if(kind==='coloring')renderColorTeacher();else renderTypingTeacher();
+        if(kind==='coloring')renderColorTeacher();else if(kind==='quiz')renderQuizTeacher();else renderTypingTeacher();
         peopleSignature=signature;lastTeacherRender=Date.now();
       }
       status(true,'看板已同步');
@@ -342,8 +491,15 @@
   }
   async function seedDemo(){
     const all=getDemo();for(let i=0;i<16;i++){
-      const id='demo-'+String(i+1).padStart(2,'0'),colors={};keys.forEach((k,j)=>{if((j+i)%19!==0)colors[k.id]=(j+i)%11===0?regions[(i+j)%5].id:k.region;});
-      all[`${kind}:${room}:${id}`]={expires:Date.now()+7200000,value:{sessionId:room,studentId:id,kind,updatedAt:Date.now(),colors,completed:i%3===0,total:i*9}};
+      const id='demo-'+String(i+1).padStart(2,'0');
+      if(kind==='quiz'){
+        const answers={};let answered=0,correct=0;
+        quizQuestions.forEach((q,qi)=>{if(qi>i%12)return;const ok=qi%3!==1;answers[q.id]={checked:true,correct:ok,value:q.type==='mcq'?q.answer:{...q.answer}};answered++;if(ok)correct++;});
+        const p=quizProgress(answers);all[`${kind}:${room}:${id}`]={expires:Date.now()+7200000,value:{sessionId:room,studentId:id,kind,updatedAt:Date.now(),answers,index:p.answered,answered:p.answered,correct:p.correct,finished:p.finished}};
+      }else{
+        const colors={};keys.forEach((k,j)=>{if((j+i)%19!==0)colors[k.id]=(j+i)%11===0?regions[(i+j)%5].id:k.region;});
+        all[`${kind}:${room}:${id}`]={expires:Date.now()+7200000,value:{sessionId:room,studentId:id,kind,updatedAt:Date.now(),colors,completed:i%3===0,total:i*9}};
+      }
     }localStorage.setItem(demoKey,JSON.stringify(all));await pollTeacher();toast('已生成 16 位示例学生');
   }
   let networkTimer,recordsTimer;
@@ -358,8 +514,8 @@
     clearTimeout(recordsTimer);
     recordsTimer=setTimeout(async()=>{try{await loadClassrooms();}finally{scheduleRecords();}},180000+Math.random()*5000);
   }
-  if(teacher){kind==='coloring'?teacherColor():teacherTyping();scheduleRecords();}
-  else{kind==='coloring'?studentColor():studentTyping();}
+  if(teacher){kind==='coloring'?teacherColor():kind==='quiz'?teacherQuiz():teacherTyping();scheduleRecords();}
+  else{kind==='coloring'?studentColor():kind==='quiz'?studentQuiz():studentTyping();}
   scheduleNetwork(Math.random()*3000);
   if(!storageOK)toast('浏览器限制了本机保存，请保持网页打开以免丢失进度。');
   window.addEventListener('online',()=>scheduleNetwork(Math.max(1000,retryAt-Date.now())+Math.random()*2000));

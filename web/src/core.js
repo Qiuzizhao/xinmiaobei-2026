@@ -104,7 +104,81 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     return [...map.values()].sort((a,b)=>(b.createdAt||0)-(a.createdAt||0)||a.id.localeCompare(b.id));
   }
   function roomCode(bytes){const alphabet='23456789ABCDEFGHJKLMNPQRSTUVWXYZ';return Array.from(bytes,b=>alphabet[b%alphabet.length]).join('');}
-  const api={regions,themes,quota,levelInfo,theme,swatch,targetAt,typingKey,stats,distribution,mixShares,coloringProgress,normalizeStates,mergeClassrooms,roomCode};
+
+  // —— 知识点练习（互动网页3）——
+  const quizQuestions = [
+    {id:'q1', type:'mcq', prompt:'键盘中间最大的一块，上面有字母、数字和标点，主要用来打字输入。这一块是哪个区域？',
+      choices:[{id:'a',text:'主键盘区'},{id:'b',text:'功能键区'},{id:'c',text:'小键盘区'},{id:'d',text:'指示灯区'}], answer:'a'},
+    {id:'q2', type:'mcq', prompt:'最上面一排有 Esc，还有 F1 到 F12。这一整排属于哪个区域？',
+      choices:[{id:'a',text:'编辑键区'},{id:'b',text:'功能键区'},{id:'c',text:'主键盘区'},{id:'d',text:'小键盘区'}], answer:'b'},
+    {id:'q3', type:'mcq', prompt:'F1 到 F12 能不能用来输入数字？',
+      choices:[{id:'a',text:'能，它们就是数字键'},{id:'b',text:'不能，它们是功能按键'},{id:'c',text:'只有 F1 能输入数字'},{id:'d',text:'要先打开小键盘才行'}], answer:'b'},
+    {id:'q4', type:'mcq', prompt:'右边有方向键、Insert、Delete、Home、PgUp 等，用来移动光标、翻页和编辑。这是哪个区域？',
+      choices:[{id:'a',text:'指示灯区'},{id:'b',text:'功能键区'},{id:'c',text:'编辑键区'},{id:'d',text:'主键盘区'}], answer:'c'},
+    {id:'q5', type:'mcq', prompt:'键盘右侧像计算器一样、方便集中输入数字的区域是？',
+      choices:[{id:'a',text:'主键盘区'},{id:'b',text:'功能键区'},{id:'c',text:'编辑键区'},{id:'d',text:'小键盘区'}], answer:'d'},
+    {id:'q6', type:'mcq', prompt:'右上角三盏小灯的作用是？',
+      choices:[{id:'a',text:'装饰键盘'},{id:'b',text:'显示键盘的状态'},{id:'c',text:'调节音量大小'},{id:'d',text:'切换五种颜色'}], answer:'b'},
+    {id:'q7', type:'match', prompt:'把区域名称和它的作用连起来。',
+      left:[{id:'main',text:'主键盘区'},{id:'function',text:'功能键区'},{id:'editing',text:'编辑键区'},{id:'numeric',text:'小键盘区'},{id:'indicator',text:'指示灯区'}],
+      right:[{id:'d1',text:'输入字母、数字等内容'},{id:'d2',text:'完成一些快捷的功能操作'},{id:'d3',text:'移动光标、翻页和编辑'},{id:'d4',text:'集中输入数字'},{id:'d5',text:'显示键盘的状态'}],
+      answer:{main:'d1',function:'d2',editing:'d3',numeric:'d4',indicator:'d5'}},
+    {id:'q8', type:'match', prompt:'再练一遍：把名称和作用配对。',
+      left:[{id:'indicator',text:'指示灯区'},{id:'numeric',text:'小键盘区'},{id:'main',text:'主键盘区'},{id:'editing',text:'编辑键区'},{id:'function',text:'功能键区'}],
+      right:[{id:'r1',text:'显示键盘的状态'},{id:'r2',text:'集中输入数字'},{id:'r3',text:'输入字母、数字等内容'},{id:'r4',text:'移动光标、翻页和编辑'},{id:'r5',text:'完成一些快捷的功能操作'}],
+      answer:{indicator:'r1',numeric:'r2',main:'r3',editing:'r4',function:'r5'}},
+    {id:'q9', type:'match-shape', prompt:'把区域名称和对应的键盘位置示意图连起来。',
+      left:[{id:'main',text:'主键盘区'},{id:'function',text:'功能键区'},{id:'editing',text:'编辑键区'},{id:'numeric',text:'小键盘区'},{id:'indicator',text:'指示灯区'}],
+      right:[{id:'s-main',shape:'main'},{id:'s-function',shape:'function'},{id:'s-editing',shape:'editing'},{id:'s-numeric',shape:'numeric'},{id:'s-indicator',shape:'indicator'}],
+      answer:{main:'s-main',function:'s-function',editing:'s-editing',numeric:'s-numeric',indicator:'s-indicator'}},
+    {id:'q10', type:'mcq', prompt:'今天打字、输入主要靠哪个区域？',
+      choices:[{id:'a',text:'指示灯区'},{id:'b',text:'编辑键区'},{id:'c',text:'主键盘区'},{id:'d',text:'功能键区'}], answer:'c'},
+    {id:'q11', type:'mcq', prompt:'下面哪一组键属于功能键区？',
+      choices:[{id:'a',text:'A、S、D、F'},{id:'b',text:'Esc、F1～F12'},{id:'c',text:'↑ ↓ ← →'},{id:'d',text:'小键盘上的 0～9'}], answer:'b'}
+  ];
+  function gradeMcq(question, value){
+    return !!question && question.type==='mcq' && value===question.answer;
+  }
+  function gradeMatch(question, pairs){
+    if(!question || (question.type!=='match' && question.type!=='match-shape') || !pairs || typeof pairs!=='object') return false;
+    const keys=Object.keys(question.answer);
+    if(keys.length!==Object.keys(pairs).length) return false;
+    return keys.every(k=>pairs[k]===question.answer[k]);
+  }
+  function gradeQuizAnswer(question, value){
+    if(!question) return false;
+    if(question.type==='mcq') return gradeMcq(question, value);
+    return gradeMatch(question, value);
+  }
+  function quizProgress(answers, questions){
+    const list=questions||quizQuestions;
+    let answered=0, correct=0;
+    for(const q of list){
+      const a=answers && answers[q.id];
+      if(a && a.checked){ answered++; if(a.correct) correct++; }
+    }
+    return {total:list.length, answered, correct, finished:answered===list.length,
+      accuracy:answered?Math.floor(correct/answered*1000)/10:0};
+  }
+  function quizWrongStats(people, questions){
+    const list=questions||quizQuestions;
+    return list.map(q=>{
+      const wrong={};
+      let attempts=0, wrongCount=0;
+      for(const p of people||[]){
+        const a=p.answers && p.answers[q.id];
+        if(!a || !a.checked) continue;
+        attempts++;
+        if(!a.correct){
+          wrongCount++;
+          const key=typeof a.value==='string'?a.value:JSON.stringify(a.value||{});
+          wrong[key]=(wrong[key]||0)+1;
+        }
+      }
+      return {id:q.id, prompt:q.prompt, attempts, wrongCount, wrongRate:attempts?Math.round(wrongCount/attempts*100):0, wrong};
+    });
+  }
+  const api={regions,themes,quota,levelInfo,theme,swatch,targetAt,typingKey,stats,distribution,mixShares,coloringProgress,normalizeStates,mergeClassrooms,roomCode,quizQuestions,gradeQuizAnswer,gradeMcq,gradeMatch,quizProgress,quizWrongStats};
   if(typeof module!=='undefined' && module.exports) module.exports=api;
   else root.Lesson=api;
 })(typeof window!=='undefined'?window:globalThis);
