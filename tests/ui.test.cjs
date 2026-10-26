@@ -34,3 +34,15 @@ test('调色引导只在全部正确并完成时显示一次，关闭后移除�
  ctx.showShadeGuide();assert.equal(inserted,1);
  nodes['#shade-guide-close'].onclick();assert.equal(removed,1);assert.ok(!classes.has('guide-active'));
 });
+test('填满自动记录完成，擦除和重新填色后仍保留完成记录',()=>{
+ const source=fs.readFileSync(path.join(__dirname,'../web/src/app.js'),'utf8');
+ const code=source.slice(source.indexOf('  function updateColor()'),source.indexOf('  let renderedLevel='));
+ const state={colors:{},completed:false};let filled=1,saves=0;
+ const element={classList:{toggle(){}},textContent:'',disabled:false};
+ const ctx={state,keys:[{},{}],selected:'main',Lesson:{coloringProgress:()=>({filled,perfect:false})},persist:()=>saves++,dismissShadeGuide(){},$:()=>element,$$:()=>[]};
+ vm.createContext(ctx);vm.runInContext(code,ctx);
+ ctx.updateColor();assert.equal(state.hasFilledAll,undefined);
+ filled=2;ctx.updateColor();assert.equal(state.hasFilledAll,true);assert.equal(state.completed,false);assert.equal(saves,1);
+ filled=1;ctx.updateColor();assert.equal(state.hasFilledAll,true);
+ state.colors={};filled=0;ctx.updateColor();assert.equal(state.hasFilledAll,true);assert.equal(saves,1);
+});

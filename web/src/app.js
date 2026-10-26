@@ -84,7 +84,7 @@
     return result;
   }
   function persist(){save(localKey,state);dirty=true;}
-  function payload(){const base={sessionId:room,studentId,kind,updatedAt:Date.now()};if(kind==='coloring')return{...base,colors:state.colors,completed:!!state.completed};if(kind==='quiz'){const p=quizProgress(state.answers);return{...base,answers:state.answers,index:state.index|0,answered:p.answered,correct:p.correct,finished:!!p.finished};}return{...base,total:state.total,level:levelInfo(state.total).level};}
+  function payload(){const base={sessionId:room,studentId,kind,updatedAt:Date.now()};if(kind==='coloring')return{...base,colors:state.colors,hasFilledAll:!!state.hasFilledAll,completed:!!state.completed};if(kind==='quiz'){const p=quizProgress(state.answers);return{...base,answers:state.answers,index:state.index|0,answered:p.answered,correct:p.correct,finished:!!p.finished};}return{...base,total:state.total,level:levelInfo(state.total).level};}
   async function syncStudent(force=false){
     const now=Date.now();
     if(busy||document.hidden||navigator.onLine===false||now<retryAt||now-lastUploadAttempt<uploadDelay)return;
@@ -143,6 +143,7 @@
   function paintedCount(){return keys.filter(k=>regions.some(r=>r.id===state.colors[k.id])).length;}
   function updateColor(){
     const progress=Lesson.coloringProgress(state.colors,keys),filled=progress.filled,allFilled=filled===keys.length;
+    if(!state.hasFilledAll&&(allFilled||state.completed)){state.hasFilledAll=true;persist();}
     if(state.completed&&!allFilled){state.completed=false;persist();}
     if(!state.completed||!progress.perfect||selected==='blank')dismissShadeGuide();
     $('#complete').disabled=!allFilled;
@@ -431,7 +432,7 @@
     $('#m-count').innerHTML=n+'<small>人</small>';$('#m-online').innerHTML=people.filter(p=>Date.now()-p.updatedAt<90000).length+'<small>人</small>';
     const painted=progress.reduce((sum,p)=>sum+p.filled,0);
     $('#m-progress').innerHTML=(n?Math.round(painted/(n*keys.length)*100):0)+'<small>%</small>';
-    $('#m-complete').innerHTML=progress.filter(p=>p.filled===keys.length).length+'<small>人</small>';
+    $('#m-complete').innerHTML=data.filter((p,i)=>p.hasFilledAll||p.completed||progress[i].filled===keys.length).length+'<small>人</small>';
     $('#empty-hint').classList.toggle('hidden',n>0);
     $('#board-title').textContent=showAnswer?'标准分区 · 用于讲解':viewSnapshot?`${viewSnapshot.label} · ${n} 人快照`:'全班混色键盘';
     $('#answer-toggle').textContent=showAnswer?'回到混色键盘':'查看标准分区';
