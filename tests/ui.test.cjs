@@ -71,3 +71,12 @@ test('形状连线题只展示对应区域的真实按键，不画整盘或标�
  assert.match(ctx.shapeHTML('function'),/data-fragment-key="PrintScreen"/);assert.doesNotMatch(ctx.shapeHTML('function'),/data-fragment-key="KeyA"/);
  assert.match(ctx.shapeHTML('numeric'),/data-fragment-key="NumpadEnter"/);assert.doesNotMatch(ctx.shapeHTML('numeric'),/data-fragment-key="Enter"/);
 });
+test('上一题保留已提交答案和未提交连线草稿，首题不回退，完成页可返回末题',()=>{
+ const source=fs.readFileSync(path.join(__dirname,'../web/src/app.js'),'utf8');
+ const code=source.slice(source.indexOf('  function quizPreviousButton('),source.indexOf('  function renderQuizStudent('));
+ let saved=0,rendered=0;const state={index:1,answers:{q1:{checked:true,value:'a',correct:true}}};
+ const ctx={state,quizQuestions:[{id:'q1',type:'mcq'},{id:'q2',type:'match'}],quizDraft:{main:'r1'},quizPickLeft:'editing',persist:()=>saved++,renderQuizStudent:()=>rendered++};
+ vm.createContext(ctx);vm.runInContext(code,ctx);ctx.goPreviousQuiz();
+ assert.equal(state.index,0);assert.equal(state.answers.q1.correct,true);assert.equal(state.answers.q2.value.main,'r1');assert.equal(state.answers.q2.checked,false);assert.equal(saved,1);assert.equal(rendered,1);assert.match(ctx.quizPreviousButton(),/disabled/);
+ ctx.goPreviousQuiz();assert.equal(saved,1);state.index=2;ctx.goPreviousQuiz();assert.equal(state.index,1);assert.doesNotMatch(ctx.quizPreviousButton(),/disabled/);
+});

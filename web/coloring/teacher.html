@@ -164,6 +164,8 @@ body{overflow-anchor:none}
 .quiz-match.shapes .match-item.right{padding:12px 16px}
 .quiz-match.shapes .paired-mark{top:5px;right:6px}
 @media(max-width:760px){.quiz-match.shapes .match-item{min-height:124px}.quiz-match.shapes .match-item.right{padding:10px 6px}.key-fragment{height:102px}}
+
+#quiz-actions{flex-wrap:wrap}#quiz-prev{min-width:90px}
 </style></head><body><script>window.APP_CONFIG={"taskId":"urw467xtz4n7","title":"填色盘","kind":"coloring","role":"teacher"};</script><script>(function (root) {
   'use strict';
   const regions = [
@@ -608,9 +610,17 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     if(state.quizVersion!==2){state={quizVersion:2,answers:{},index:0};persist();}
     if(typeof state.index!=='number'||state.index<0)state.index=0;
     if(!state.answers||typeof state.answers!=='object')state.answers={};
-    const progress=quizProgress(state.answers);
-    if(progress.finished)state.index=quizQuestions.length;
+    main.addEventListener('click',event=>{const button=event.target.closest('#quiz-prev');if(button&&!button.disabled)goPreviousQuiz();});
     renderQuizStudent();
+  }
+  function quizPreviousButton(){return `<button id="quiz-prev" class="quiet" ${state.index===0?'disabled':''}>上一题</button>`;}
+  function goPreviousQuiz(){
+    if(state.index<=0)return;
+    const current=quizQuestions[state.index];
+    if(current&&current.type!=='mcq'&&!state.answers[current.id]?.checked){
+      state.answers[current.id]={value:{...quizDraft},checked:false};
+    }
+    state.index--;quizPickLeft=null;quizDraft={};persist();renderQuizStudent();
   }
   function renderQuizStudent(){
     matchResizeObserver?.disconnect();activeMatch=null;
@@ -618,7 +628,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     if(state.index>=quizQuestions.length){
       main.innerHTML=`<div class="intro"><div><h1>练习完成</h1><p>一共 ${progress.total} 题，答对 ${progress.correct} 题。</p></div><span class="badge">正确率 ${progress.accuracy}%</span></div>
         <section class="panel"><div class="progress-track"><span style="width:100%"></span></div><p class="notice" style="margin-top:18px">可以再看一遍错题，也可以关掉页面休息一下。</p>
-        <div class="toolbar"><button id="quiz-review" class="quiet">查看作答</button><span class="spacer"></span><button id="quiz-retry" class="primary">再练一次</button></div>
+        <div class="toolbar">${quizPreviousButton()}<button id="quiz-review" class="quiet">查看作答</button><span class="spacer"></span><button id="quiz-retry" class="primary">再练一次</button></div>
         <div id="quiz-review-list" class="quiz-review hidden"></div></section>`;
       $('#quiz-review').onclick=()=>{
         const box=$('#quiz-review-list');box.classList.toggle('hidden');
@@ -636,12 +646,12 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
       <div class="progress-track quiz-progress"><span style="width:${progress.answered/quizQuestions.length*100}%"></span></div>
       <section class="panel quiz-card" id="quiz-card"><span class="quiz-type">${q.type==='mcq'?'选一选':'配一配 · 先选左边，再选右边'}</span><h2>${esc(q.prompt)}</h2><div id="quiz-body"></div><div id="quiz-feedback" class="quiz-feedback hidden" role="status"></div><div class="toolbar" id="quiz-actions"></div></section>`;
     const body=$('#quiz-body'), actions=$('#quiz-actions'), feedback=$('#quiz-feedback');
-    const locked=!!answered?.checked;
+    const locked=!!answered?.checked;actions.innerHTML=quizPreviousButton();
     if(q.type==='mcq'){
       body.innerHTML=`<div class="quiz-choices">${q.choices.map((c,i)=>`<button type="button" class="quiz-choice" data-choice="${c.id}" ${locked?'disabled':''}><span class="choice-letter">${String.fromCharCode(65+i)}</span><span class="choice-text">${esc(c.text)}</span><span class="choice-result" aria-hidden="true"></span></button>`).join('')}</div>`;
       if(locked){
         $$('.quiz-choice').forEach(b=>{b.classList.toggle('correct',b.dataset.choice===q.answer);b.classList.toggle('wrong',answered.value===b.dataset.choice&&!answered.correct);b.classList.toggle('picked',answered.value===b.dataset.choice);});
-        showQuizFeedback(answered.correct, q);actions.innerHTML=`<span class="spacer"></span><button id="quiz-next" class="primary">下一题</button>`;
+        showQuizFeedback(answered.correct, q);actions.innerHTML=`${quizPreviousButton()}<span class="spacer"></span><button id="quiz-next" class="primary">下一题</button>`;
         $('#quiz-next').onclick=()=>{state.index++;persist();renderQuizStudent();};
       }else{
         $$('.quiz-choice').forEach(b=>b.onclick=()=>{
@@ -649,7 +659,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
           state.answers[q.id]={value,correct,checked:true};persist();syncStudent();
           $$('.quiz-choice').forEach(x=>{x.disabled=true;x.classList.toggle('correct',x.dataset.choice===q.answer);x.classList.toggle('wrong',value===x.dataset.choice&&!correct);x.classList.toggle('picked',value===x.dataset.choice);});
           showQuizFeedback(correct,q);
-          actions.innerHTML=`<span class="spacer"></span><button id="quiz-next" class="primary">下一题</button>`;
+          actions.innerHTML=`${quizPreviousButton()}<span class="spacer"></span><button id="quiz-next" class="primary">下一题</button>`;
           $('#quiz-next').onclick=()=>{state.index++;persist();renderQuizStudent();};
         });
       }
@@ -659,16 +669,16 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
       renderMatchBody(q, pairs, locked);
       if(locked){
         showQuizFeedback(answered.correct,q);
-        actions.innerHTML=`<span class="spacer"></span><button id="quiz-next" class="primary">下一题</button>`;
+        actions.innerHTML=`${quizPreviousButton()}<span class="spacer"></span><button id="quiz-next" class="primary">下一题</button>`;
         $('#quiz-next').onclick=()=>{state.index++;persist();renderQuizStudent();};
       }else{
-        actions.innerHTML=`<button id="quiz-clear" class="quiet">清空连线</button><span class="spacer"></span><button id="quiz-check" class="primary" disabled>检查答案</button>`;
+        actions.innerHTML=`${quizPreviousButton()}<button id="quiz-clear" class="quiet">清空连线</button><span class="spacer"></span><button id="quiz-check" class="primary" disabled>检查答案</button>`;
         $('#quiz-clear').onclick=()=>{quizDraft={};quizPickLeft=null;renderMatchBody(q,quizDraft,false);$('#quiz-check').disabled=true;};
         $('#quiz-check').onclick=()=>{
           const value={...quizDraft};const correct=gradeQuizAnswer(q,value);
           state.answers[q.id]={value,correct,checked:true};persist();syncStudent();
           renderMatchBody(q,value,true);showQuizFeedback(correct,q);
-          actions.innerHTML=`<span class="spacer"></span><button id="quiz-next" class="primary">下一题</button>`;
+          actions.innerHTML=`${quizPreviousButton()}<span class="spacer"></span><button id="quiz-next" class="primary">下一题</button>`;
           $('#quiz-next').onclick=()=>{state.index++;persist();renderQuizStudent();};
         };
         updateMatchCheck(q);

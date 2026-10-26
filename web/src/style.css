@@ -163,3 +163,5 @@ body{overflow-anchor:none}
 .quiz-match.shapes .match-item.right{padding:12px 16px}
 .quiz-match.shapes .paired-mark{top:5px;right:6px}
 @media(max-width:760px){.quiz-match.shapes .match-item{min-height:124px}.quiz-match.shapes .match-item.right{padding:10px 6px}.key-fragment{height:102px}}
+
+#quiz-actions{flex-wrap:wrap}#quiz-prev{min-width:90px}
