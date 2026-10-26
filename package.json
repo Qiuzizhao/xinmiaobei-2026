@@ -1,5 +1,5 @@
 {
-  "name": "xinmiaobei-keyboard-lesson-2026",
+  "name": "xinmiaobei-2026",
   "private": true,
   "scripts": {
     "build": "node web/build.cjs",

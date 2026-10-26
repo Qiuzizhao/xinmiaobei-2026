@@ -4,7 +4,7 @@
 
 打开根目录的 `index.html`，即可进入两套活动的学生端、教师端，或查看《认识键盘》教学流程文档。
 
-在线入口：[GitHub Pages](https://qiuzizhao.github.io/xinmiaobei-keyboard-lesson-2026/)。页面由 GitHub Pages 托管，互动数据继续使用各自独立的 QForm 任务。
+在线入口：[GitHub Pages](https://qiuzizhao.github.io/xinmiaobei-2026/)。页面由 GitHub Pages 托管，互动数据继续使用各自独立的 QForm 任务。
 
 ## 参考资料
 
