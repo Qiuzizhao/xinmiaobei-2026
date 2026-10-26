@@ -84,7 +84,7 @@
     return result;
   }
   function persist(){save(localKey,state);dirty=true;}
-  function payload(){const base={sessionId:room,studentId,kind,updatedAt:Date.now()};if(kind==='coloring')return{...base,colors:state.colors,hasFilledAll:!!state.hasFilledAll,completed:!!state.completed};if(kind==='quiz'){const p=quizProgress(state.answers);return{...base,answers:state.answers,index:state.index|0,answered:p.answered,correct:p.correct,finished:!!p.finished};}return{...base,total:state.total,level:levelInfo(state.total).level};}
+  function payload(){const base={sessionId:room,studentId,kind,updatedAt:Date.now()};if(kind==='coloring')return{...base,colors:state.colors,hasFilledAll:!!state.hasFilledAll,completed:!!state.completed};if(kind==='quiz'){const p=quizProgress(state.answers);return{...base,quizVersion:2,answers:state.answers,index:state.index|0,answered:p.answered,correct:p.correct,finished:!!p.finished};}return{...base,total:state.total,level:levelInfo(state.total).level};}
   async function syncStudent(force=false){
     const now=Date.now();
     if(busy||document.hidden||navigator.onLine===false||now<retryAt||now-lastUploadAttempt<uploadDelay)return;
@@ -226,6 +226,7 @@
   let quizPickLeft=null, quizDraft={};
   function studentQuiz(){
     main.classList.add('quiz-main');
+    if(state.quizVersion!==2){state={quizVersion:2,answers:{},index:0};persist();}
     if(typeof state.index!=='number'||state.index<0)state.index=0;
     if(!state.answers||typeof state.answers!=='object')state.answers={};
     const progress=quizProgress(state.answers);
@@ -244,7 +245,7 @@
         if(box.classList.contains('hidden'))return;
         box.innerHTML=quizQuestions.map((q,i)=>{const a=state.answers[q.id];const ok=a?.correct;return `<div class="quiz-review-row ${ok?'ok':'bad'}"><strong>第 ${i+1} 题</strong><span>${ok?'正确':'再看看'}</span><p>${esc(q.prompt)}</p></div>`;}).join('');
       };
-      $('#quiz-retry').onclick=()=>{if(!confirm('清空本次作答，重新练习吗？'))return;state={answers:{},index:0};persist();quizDraft={};quizPickLeft=null;renderQuizStudent();syncStudent(true);};
+      $('#quiz-retry').onclick=()=>{if(!confirm('清空本次作答，重新练习吗？'))return;state={quizVersion:2,answers:{},index:0};persist();quizDraft={};quizPickLeft=null;renderQuizStudent();syncStudent(true);};
       return;
     }
     const q=quizQuestions[state.index];
@@ -483,7 +484,7 @@
   let peopleSignature='',lastTeacherRender=0;
   async function pollTeacher(){
     if(pollBusy||document.hidden||navigator.onLine===false||Date.now()<retryAt)return;pollBusy=true;
-    try{const values=await readStates();people=values.filter(v=>v.key.startsWith(kind+':'+room+':')&&v.sessionId===room&&v.kind===kind&&v.studentId);
+    try{const values=await readStates();people=values.filter(v=>v.key.startsWith(kind+':'+room+':')&&v.sessionId===room&&v.kind===kind&&v.studentId&&(kind!=='quiz'||v.quizVersion===2));
       rememberClassrooms(values.filter(v=>v.kind===kind&&v.sessionId&&v.studentId).map(v=>({id:v.sessionId})));
       const signature=JSON.stringify(people.map(p=>[p.studentId,kind==='coloring'?p.colors:kind==='quiz'?[p.answered,p.correct,p.finished,p.answers]:p.total]));
       if(signature!==peopleSignature||Date.now()-lastTeacherRender>=30000){

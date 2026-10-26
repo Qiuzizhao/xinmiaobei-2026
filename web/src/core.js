@@ -106,36 +106,13 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
   function roomCode(bytes){const alphabet='23456789ABCDEFGHJKLMNPQRSTUVWXYZ';return Array.from(bytes,b=>alphabet[b%alphabet.length]).join('');}
 
   // —— 知识点练习（互动网页3）——
-  const quizQuestions = [
-    {id:'q1', type:'mcq', prompt:'键盘中间最大的一块，上面有字母、数字和标点，主要用来打字输入。这一块是哪个区域？',
-      choices:[{id:'a',text:'主键盘区'},{id:'b',text:'功能键区'},{id:'c',text:'小键盘区'},{id:'d',text:'指示灯区'}], answer:'a'},
-    {id:'q2', type:'mcq', prompt:'最上面一排有 Esc，还有 F1 到 F12。这一整排属于哪个区域？',
-      choices:[{id:'a',text:'编辑键区'},{id:'b',text:'功能键区'},{id:'c',text:'主键盘区'},{id:'d',text:'小键盘区'}], answer:'b'},
-    {id:'q3', type:'mcq', prompt:'F1 到 F12 能不能用来输入数字？',
-      choices:[{id:'a',text:'能，它们就是数字键'},{id:'b',text:'不能，它们是功能按键'},{id:'c',text:'只有 F1 能输入数字'},{id:'d',text:'要先打开小键盘才行'}], answer:'b'},
-    {id:'q4', type:'mcq', prompt:'右边有方向键、Insert、Delete、Home、PgUp 等，用来移动光标、翻页和编辑。这是哪个区域？',
-      choices:[{id:'a',text:'指示灯区'},{id:'b',text:'功能键区'},{id:'c',text:'编辑键区'},{id:'d',text:'主键盘区'}], answer:'c'},
-    {id:'q5', type:'mcq', prompt:'键盘右侧像计算器一样、方便集中输入数字的区域是？',
-      choices:[{id:'a',text:'主键盘区'},{id:'b',text:'功能键区'},{id:'c',text:'编辑键区'},{id:'d',text:'小键盘区'}], answer:'d'},
-    {id:'q6', type:'mcq', prompt:'右上角三盏小灯的作用是？',
-      choices:[{id:'a',text:'装饰键盘'},{id:'b',text:'显示键盘的状态'},{id:'c',text:'调节音量大小'},{id:'d',text:'切换五种颜色'}], answer:'b'},
-    {id:'q7', type:'match', prompt:'把区域名称和它的作用连起来。',
-      left:[{id:'main',text:'主键盘区'},{id:'function',text:'功能键区'},{id:'editing',text:'编辑键区'},{id:'numeric',text:'小键盘区'},{id:'indicator',text:'指示灯区'}],
-      right:[{id:'d1',text:'输入字母、数字等内容'},{id:'d2',text:'完成一些快捷的功能操作'},{id:'d3',text:'移动光标、翻页和编辑'},{id:'d4',text:'集中输入数字'},{id:'d5',text:'显示键盘的状态'}],
-      answer:{main:'d1',function:'d2',editing:'d3',numeric:'d4',indicator:'d5'}},
-    {id:'q8', type:'match', prompt:'再练一遍：把名称和作用配对。',
-      left:[{id:'indicator',text:'指示灯区'},{id:'numeric',text:'小键盘区'},{id:'main',text:'主键盘区'},{id:'editing',text:'编辑键区'},{id:'function',text:'功能键区'}],
-      right:[{id:'r1',text:'显示键盘的状态'},{id:'r2',text:'集中输入数字'},{id:'r3',text:'输入字母、数字等内容'},{id:'r4',text:'移动光标、翻页和编辑'},{id:'r5',text:'完成一些快捷的功能操作'}],
-      answer:{indicator:'r1',numeric:'r2',main:'r3',editing:'r4',function:'r5'}},
-    {id:'q9', type:'match-shape', prompt:'把区域名称和对应的键盘位置示意图连起来。',
-      left:[{id:'main',text:'主键盘区'},{id:'function',text:'功能键区'},{id:'editing',text:'编辑键区'},{id:'numeric',text:'小键盘区'},{id:'indicator',text:'指示灯区'}],
-      right:[{id:'s-main',shape:'main'},{id:'s-function',shape:'function'},{id:'s-editing',shape:'editing'},{id:'s-numeric',shape:'numeric'},{id:'s-indicator',shape:'indicator'}],
-      answer:{main:'s-main',function:'s-function',editing:'s-editing',numeric:'s-numeric',indicator:'s-indicator'}},
-    {id:'q10', type:'mcq', prompt:'今天打字、输入主要靠哪个区域？',
-      choices:[{id:'a',text:'指示灯区'},{id:'b',text:'编辑键区'},{id:'c',text:'主键盘区'},{id:'d',text:'功能键区'}], answer:'c'},
-    {id:'q11', type:'mcq', prompt:'下面哪一组键属于功能键区？',
-      choices:[{id:'a',text:'A、S、D、F'},{id:'b',text:'Esc、F1～F12'},{id:'c',text:'↑ ↓ ← →'},{id:'d',text:'小键盘上的 0～9'}], answer:'b'}
-  ];
+  const quizQuestions = [["Caps Lock 键","main"],["Esc 键","function"],["PrtSc（Print Screen）键","function"],["Scroll Lock（ScrLk）键","function"],["Pause（Break）键","function"],["Insert（Ins）键","editing"],["Home 键","editing"],["Page Down（PgDn）键","editing"],["Backspace 键","main"],["Num Lock 键","numeric"],["键盘最右侧的 Enter 键","numeric"]].map(([key,region],index)=>{
+    const options=['main','function','editing','numeric'];
+    const order=options.slice(index%4).concat(options.slice(0,index%4));
+    const choices=order.map((id,i)=>({id:String.fromCharCode(97+i),text:regions.find(r=>r.id===id).name}));
+    return {id:'q'+(index+1),type:'mcq',prompt:key+'属于哪个区域？',
+      choices,answer:choices[order.indexOf(region)].id};
+  });
   function gradeMcq(question, value){
     return !!question && question.type==='mcq' && value===question.answer;
   }

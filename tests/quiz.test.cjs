@@ -1,23 +1,23 @@
 const test=require('node:test'), assert=require('node:assert/strict');
 const L=require('../web/src/core.js');
 
-test('知识点练习共 11 题，含选择题与两种连线',()=>{
+test('按键分区练习共11题，顶部易混淆键按课堂标准归入功能键区',()=>{
   assert.equal(L.quizQuestions.length,11);
-  const types=L.quizQuestions.map(q=>q.type);
-  assert.ok(types.filter(t=>t==='mcq').length>=6);
-  assert.ok(types.includes('match'));
-  assert.ok(types.includes('match-shape'));
+  assert.ok(L.quizQuestions.every(q=>q.type==='mcq'));
+  const expected=['主键盘区','功能键区','功能键区','功能键区','功能键区','编辑键区','编辑键区','编辑键区','主键盘区','小键盘区','小键盘区'];
+  L.quizQuestions.forEach((q,i)=>assert.equal(q.choices.find(c=>c.id===q.answer).text,expected[i]));
+  assert.match(L.quizQuestions[10].prompt,/最右侧/);
 });
 
 test('选择题与连线题可判对错',()=>{
   const mcq=L.quizQuestions.find(q=>q.id==='q1');
   assert.equal(L.gradeQuizAnswer(mcq,'a'),true);
   assert.equal(L.gradeQuizAnswer(mcq,'b'),false);
-  const match=L.quizQuestions.find(q=>q.type==='match');
+  const match={type:'match',answer:{main:'d1',function:'d2'}};
   assert.equal(L.gradeQuizAnswer(match,{...match.answer}),true);
   assert.equal(L.gradeQuizAnswer(match,{...match.answer,main:'d2'}),false);
   assert.equal(L.gradeQuizAnswer(match,{main:'d1'}),false);
-  const shape=L.quizQuestions.find(q=>q.type==='match-shape');
+  const shape={type:'match-shape',answer:{main:'s-main',numeric:'s-numeric'}};
   assert.equal(L.gradeQuizAnswer(shape,{...shape.answer}),true);
 });
 
