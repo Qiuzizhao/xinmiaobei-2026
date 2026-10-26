@@ -87,3 +87,13 @@ test('色卡获得数量在完整通关时增加，与学生收藏数量一致',
  assert.equal(L.stats([{total:12}]).max,1);
  assert.equal(L.stats([]).max,0);
 });
+
+test('教师端直接读取学生已收集张数，兼容旧进度数据',()=>{
+ assert.equal(L.collectedCardCount({total:11,collectedCards:1}),1);
+ assert.equal(L.collectedCardCount({total:12}),1);
+ assert.equal(L.collectedCardCount({total:31}),1);
+ assert.equal(L.collectedCardCount({total:32}),2);
+ assert.equal(L.collectedCardCount({total:12,collectedCards:-1}),1);
+ const s=L.stats([{total:11,collectedCards:1},{total:32,collectedCards:2}]);
+ assert.equal(s.max,2);assert.equal(s.mean,1.5);
+});

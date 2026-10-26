@@ -67,8 +67,12 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     return null;
   }
   function completedCards(total){return levelInfo(total).level-1;}
+  function collectedCardCount(person){
+    const value=person.collectedCards;
+    return Number.isInteger(value)&&value>=0?value:completedCards(person.total);
+  }
   function stats(people) {
-    const cards=people.map(p=>completedCards(p.total)).sort((a,b)=>b-a),n=cards.length;
+    const cards=people.map(collectedCardCount).sort((a,b)=>b-a),n=cards.length;
     return {count:n,max:n?cards[0]:0,mean:n?cards.reduce((a,b)=>a+b,0)/n:0,
       thresholds:[10,25,50,75].map(p=>({percent:p,cards:n?cards[Math.ceil(n*p/100)-1]:0}))};
   }
@@ -170,7 +174,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
       return {id:q.id, prompt:q.prompt, attempts, wrongCount, wrongRate:attempts?Math.round(wrongCount/attempts*100):0, wrong};
     });
   }
-  const api={regions,themes,quota,levelInfo,theme,swatch,targetAt,typingKey,completedCards,stats,distribution,mixShares,coloringProgress,normalizeStates,mergeClassrooms,roomCode,quizQuestions,gradeQuizAnswer,gradeMcq,gradeMatch,quizProgress,quizWrongStats};
+  const api={regions,themes,quota,levelInfo,theme,swatch,targetAt,typingKey,completedCards,collectedCardCount,stats,distribution,mixShares,coloringProgress,normalizeStates,mergeClassrooms,roomCode,quizQuestions,gradeQuizAnswer,gradeMcq,gradeMatch,quizProgress,quizWrongStats};
   if(typeof module!=='undefined' && module.exports) module.exports=api;
   else root.Lesson=api;
 })(typeof window!=='undefined'?window:globalThis);

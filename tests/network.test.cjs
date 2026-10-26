@@ -4,7 +4,7 @@ function harness(){
   let now=100000,calls=0,reply=async()=>({ok:true,json:async()=>({ok:true,submissions:[]})});
   const ctx={navigator:{onLine:true},document:{hidden:false},Date:class extends Date{static now(){return now;}},Math:{...Math,random:()=>0,min:Math.min,max:Math.max},
     AbortController,setTimeout:()=>0,clearTimeout(){},base:'https://example.invalid',retryAt:0,requestFailures:0,recordsCache:null,recordsCachedAt:0,recordsPending:null,recordsVersion:0,
-    fetch:async(...args)=>{calls++;return reply(...args);},dirty:true,busy:false,lastSent:0,lastUploadAttempt:0,uploadDelay:5000,kind:'coloring',room:'ABC',studentId:'device',status(){},payload:()=>({value:1})};
+    fetch:async(...args)=>{calls++;return reply(...args);},dirty:true,busy:false,lastSent:0,lastUploadAttempt:0,uploadDelay:5000,milestoneSyncPending:false,kind:'coloring',room:'ABC',studentId:'device',status(){},payload:()=>({value:1})};
   vm.createContext(ctx);
   vm.runInContext(source.slice(source.indexOf('  async function request('),source.indexOf('  function getDemo()')),ctx);
   vm.runInContext(source.slice(source.indexOf('  async function syncStudent('),source.indexOf('  document.body.innerHTML=')),ctx);
@@ -45,4 +45,19 @@ test('网络失败逐步退避，课堂和快照读取合并并短期缓存',asy
   await Promise.all([h.ctx.readRecords(),h.ctx.readRecords()]);assert.equal(h.calls(),3);
   await h.ctx.readRecords();assert.equal(h.calls(),3);
   h.advance(60000);await h.ctx.readRecords();assert.equal(h.calls(),4);
+});
+
+test('打字通关立即上传，不受普通10秒节流限制',async()=>{
+ const h=harness(),c=h.ctx;c.kind='typing';c.uploadDelay=10000;
+ await c.syncStudent();assert.equal(h.calls(),1);
+ h.advance(1000);c.dirty=true;await c.syncStudent();assert.equal(h.calls(),1);
+ await c.syncStudent(true);assert.equal(h.calls(),2);
+ h.advance(1000);c.dirty=true;await c.syncStudent();assert.equal(h.calls(),2);
+});
+test('通关时上一笔上传未结束，结束后补传最新进度且不并发',async()=>{
+ const h=harness(),c=h.ctx;c.kind='typing';let release;
+ h.reply(()=>new Promise(resolve=>release=resolve));
+ const pending=c.syncStudent();await c.syncStudent(true);assert.equal(h.calls(),1);
+ h.reply(async()=>({ok:true,json:async()=>({ok:true})}));
+ release({ok:true,json:async()=>({ok:true})});await pending;assert.equal(h.calls(),2);assert.equal(c.busy,false);
 });

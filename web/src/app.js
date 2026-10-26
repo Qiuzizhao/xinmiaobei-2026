@@ -1,7 +1,7 @@
 (async function () {
   'use strict';
   document.addEventListener('contextmenu',event=>event.preventDefault(),{capture:true});
-  const {regions,keys,levelInfo,theme,swatch,targetAt,completedCards,stats,distribution,mixShares,normalizeStates,quizQuestions,gradeQuizAnswer,quizProgress,quizWrongStats}=Lesson;
+  const {regions,keys,levelInfo,theme,swatch,targetAt,completedCards,collectedCardCount,stats,distribution,mixShares,normalizeStates,quizQuestions,gradeQuizAnswer,quizProgress,quizWrongStats}=Lesson;
   const $=s=>document.querySelector(s), $$=s=>Array.from(document.querySelectorAll(s));
   function replaceHTML(target,html){
     if(target.innerHTML===html)return;
@@ -32,7 +32,7 @@
   if(!studentId){studentId=crypto.randomUUID?.()||Math.random().toString(36).slice(2)+Date.now();save('device',studentId);}
   const localKey=`${demo?'demo:':''}${room}:student`;
   let state={...defaultState,...load(localKey,{})}, people=[], snapshots=[], selected='main';
-  let dirty=true, busy=false, lastSent=0, lastUploadAttempt=0, isOnline=false, pollBusy=false;
+  let dirty=true, busy=false, lastSent=0, lastUploadAttempt=0, isOnline=false, pollBusy=false, milestoneSyncPending=false;
   const uploadDelay=kind==='coloring'||kind==='quiz'?5000:10000;
   let retryAt=0,requestFailures=0,recordsCache=null,recordsCachedAt=0,recordsPending=null,recordsVersion=0;
   const base=`https://qiuform.qiuzizhao.com/api/${cfg.taskId}`;
@@ -84,15 +84,18 @@
     return result;
   }
   function persist(){save(localKey,state);dirty=true;}
-  function payload(){const base={sessionId:room,studentId,kind,updatedAt:Date.now()};if(kind==='coloring')return{...base,colors:state.colors,hasFilledAll:!!state.hasFilledAll,completed:!!state.completed};if(kind==='quiz'){const p=quizProgress(state.answers);return{...base,quizVersion:2,answers:state.answers,index:state.index|0,answered:p.answered,correct:p.correct,finished:!!p.finished};}return{...base,total:state.total,level:levelInfo(state.total).level};}
+  function payload(){const base={sessionId:room,studentId,kind,updatedAt:Date.now()};if(kind==='coloring')return{...base,colors:state.colors,hasFilledAll:!!state.hasFilledAll,completed:!!state.completed};if(kind==='quiz'){const p=quizProgress(state.answers);return{...base,quizVersion:2,answers:state.answers,index:state.index|0,answered:p.answered,correct:p.correct,finished:!!p.finished};}return{...base,total:state.total,level:levelInfo(state.total).level,collectedCards:completedCards(state.total)};}
   async function syncStudent(force=false){
     const now=Date.now();
-    if(busy||document.hidden||navigator.onLine===false||now<retryAt||now-lastUploadAttempt<uploadDelay)return;
+    const milestone=force&&kind==='typing';
+    if(document.hidden||navigator.onLine===false||now<retryAt)return;
+    if(busy){if(milestone){milestoneSyncPending=true;dirty=true;}return;}
+    if(!milestone&&now-lastUploadAttempt<uploadDelay)return;
     if(!force&&!dirty&&now-lastSent<60000)return;
     busy=true;dirty=false;lastUploadAttempt=now;
     try{const outgoing=payload();await put(`${kind}:${room}:${studentId}`,outgoing);lastSent=Date.now();status(true,'已同步');}
     catch{dirty=true;status(false,'正在重连');}
-    finally{busy=false;}
+    finally{busy=false;if(milestoneSyncPending){milestoneSyncPending=false;await syncStudent(true);}}
   }
   document.body.innerHTML=`<header><div class="brand"><span class="brandmark">${kind==='coloring'?'▦':kind==='quiz'?'▣':'◈'}</span><span>${cfg.title}</span></div><div style="display:flex;gap:8px;align-items:center"><span class="badge">${teacher?'教师端':'学生端'}</span><span class="status" id="sync">正在连接</span></div></header><main id="main"></main>`;
   const main=$('#main');
@@ -181,7 +184,7 @@
         if(before.level!==after.level){
           // 先让学生看到完整色卡，再进入下一关；过渡期间不接收新字符。
           typingLocked=true;updateTyping(before.level,before.target);$('#celebration').textContent=`${theme(before.level).name}色卡已收集！`;
-          syncStudent();
+          syncStudent(true);
           if(batchFinished)nextTypingBatch(850);
           else setTimeout(()=>{typingLocked=false;updateTyping();},850);
         }else{updateTyping();if(batchFinished)nextTypingBatch();}
@@ -205,7 +208,7 @@
     $('#swatches').innerHTML=Array.from({length:target},(_,i)=>`<span class="swatch${i<within?' lit':''}${i===within-1?' just-lit':''}" style="--paint:${swatch(level,i,target)}"></span>`).join('');
     $('#typing-progress').style.width=`${within/target*100}%`;$('#level-progress').textContent=`${within} / ${target}`;
     if(!displayLevel)$('#celebration').textContent='集满一张，解锁下一关';
-    $('#collection-count').textContent=`已收集 ${actual.level-1} 张`;
+    $('#collection-count').textContent=`已收集 ${completedCards(state.total)} 张`;
     if(renderedLevel!==actual.level){
       $('#collection-list').innerHTML=actual.level===1?'<p>完成第一关，收集色卡。</p>':Array.from({length:Math.min(actual.level-1,100)},(_,i)=>{const lv=actual.level-1-i;return `<div class="mini-card"><div class="mini-grid">${Array.from({length:12},(_,j)=>`<span style="background:${swatch(lv,j,12)}"></span>`).join('')}</div><small>第 ${lv} 关 · ${theme(lv).name}</small></div>`;}).join('');renderedLevel=actual.level;
     }
@@ -476,7 +479,7 @@
   function renderTypingTeacher(){
     const s=stats(people);$('#t-count').innerHTML=s.count+'<small>人</small>';$('#t-max').innerHTML=s.count?s.max+'<small>张色卡</small>':'—';$('#t-mean').innerHTML=s.count?s.mean.toFixed(1)+'<small>张色卡</small>':'—';$('#t-total').innerHTML=people.reduce((sum,p)=>sum+(Number(p.total)||0),0)+'<small>个</small>';
     $('#percentiles').innerHTML=s.thresholds.map(x=>`<div class="percentile-card"><span>前 ${x.percent}% 学生至少获得</span><strong>${s.count?x.cards+' 张色卡':'等待加入'}</strong></div>`).join('');
-    const counts={};people.forEach(p=>{const lv=completedCards(p.total);counts[lv]=(counts[lv]||0)+1;});
+    const counts={};people.forEach(p=>{const lv=collectedCardCount(p);counts[lv]=(counts[lv]||0)+1;});
     replaceHTML($('#histogram'),s.count?Object.keys(counts).sort((a,b)=>Number(a)-Number(b)).map(l=>`<div class="hist-row"><span>${l} 张色卡</span><div class="hist-bar"><span style="width:${counts[l]/s.count*100}%;background:${swatch(Math.max(1,Number(l)),4,12)}"></span></div><span>${counts[l]} 人</span></div>`).join(''):'<div class="empty">学生开始输入后，这里会显示已获得色卡的数量分布。</div>');
     const online=people.filter(p=>Date.now()-p.updatedAt<90000).length;
     $('#typing-observation').textContent=`最近在线 ${online} 人 · 只统计完整获得的色卡`;
@@ -486,7 +489,7 @@
     if(pollBusy||document.hidden||navigator.onLine===false||Date.now()<retryAt)return;pollBusy=true;
     try{const values=await readStates();people=values.filter(v=>v.key.startsWith(kind+':'+room+':')&&v.sessionId===room&&v.kind===kind&&v.studentId&&(kind!=='quiz'||v.quizVersion===2));
       rememberClassrooms(values.filter(v=>v.kind===kind&&v.sessionId&&v.studentId).map(v=>({id:v.sessionId})));
-      const signature=JSON.stringify(people.map(p=>[p.studentId,kind==='coloring'?p.colors:kind==='quiz'?[p.answered,p.correct,p.finished,p.answers]:p.total]));
+      const signature=JSON.stringify(people.map(p=>[p.studentId,kind==='coloring'?p.colors:kind==='quiz'?[p.answered,p.correct,p.finished,p.answers]:[p.total,p.collectedCards]]));
       if(signature!==peopleSignature||Date.now()-lastTeacherRender>=30000){
         if(kind==='coloring')renderColorTeacher();else if(kind==='quiz')renderQuizTeacher();else renderTypingTeacher();
         peopleSignature=signature;lastTeacherRender=Date.now();
