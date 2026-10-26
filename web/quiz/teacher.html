@@ -89,6 +89,8 @@ body{overflow-anchor:none}
 .quiz-wrong-row p{font-size:13px;margin:0 0 8px}
 .home-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
 @media(max-width:900px){.quiz-match,.home-grid{grid-template-columns:1fr}.kb-sil{max-width:100%}}
+
+@media(min-width:901px){.coloring-metrics{grid-template-columns:repeat(5,minmax(0,1fr))}}
 </style></head><body><script>window.APP_CONFIG={"taskId":"6486qb6tyb86","title":"认识键盘-知识点练习","kind":"quiz","role":"teacher"};</script><script>(function (root) {
   'use strict';
   const regions = [
@@ -719,7 +721,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     finally{creatingRoom=false;button.disabled=false;$('#room').disabled=false;button.textContent='新建课堂';}
   }
   function teacherColor(){
-    teacherShell();$('#teacher-content').innerHTML=`<div class="metrics"><div class="metric"><span class="label">参与学生</span><strong id="m-count">0<small>人</small></strong></div><div class="metric"><span class="label">最近在线</span><strong id="m-online">0<small>人</small></strong></div><div class="metric"><span class="label">平均填色进度</span><strong id="m-progress">0<small>%</small></strong></div><div class="metric"><span class="label">已填完</span><strong id="m-complete">0<small>人</small></strong></div></div>
+    teacherShell();$('#teacher-content').innerHTML=`<div class="metrics coloring-metrics"><div class="metric"><span class="label">参与学生</span><strong id="m-count">0<small>人</small></strong></div><div class="metric"><span class="label">最近在线</span><strong id="m-online">0<small>人</small></strong></div><div class="metric"><span class="label">平均填色进度</span><strong id="m-progress">0<small>%</small></strong></div><div class="metric"><span class="label">平均正确率</span><strong id="m-accuracy">0<small>%</small></strong></div><div class="metric"><span class="label">已填完</span><strong id="m-complete">0<small>人</small></strong></div></div>
       <section class="panel"><div class="section-head"><h2 id="board-title">全班混色键盘</h2><button id="answer-toggle">查看标准分区</button></div><div class="legend">${legend()}</div><div id="empty-hint" class="notice">等待学生进入。同一课堂中的学生填色后，这里会自动更新。</div><div class="keyboard-scroll"><div id="keyboard"></div></div></section>
       <div class="below"><section class="panel"><h2>保存快照</h2><div class="toolbar"><button id="save-before">保存讲解前</button><button id="save-after">保存修正后</button></div><p class="tips" id="snapshot-message"></p></section>
       <section class="panel"><div class="section-head"><h2>讲解前后对比</h2><button id="live-view">回到实时</button></div><div id="snapshots"><p class="tips">还没有保存快照。</p></div></section></div><div id="tooltip" role="tooltip" class="tooltip hidden"></div>`;
@@ -738,6 +740,8 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     $('#m-count').innerHTML=n+'<small>人</small>';$('#m-online').innerHTML=people.filter(p=>Date.now()-p.updatedAt<90000).length+'<small>人</small>';
     const painted=progress.reduce((sum,p)=>sum+p.filled,0);
     $('#m-progress').innerHTML=(n?Math.round(painted/(n*keys.length)*100):0)+'<small>%</small>';
+    const averageAccuracy=n?Math.floor(progress.reduce((sum,p)=>sum+(p.filled?p.correct/p.filled:0),0)/n*1000)/10:0;
+    $('#m-accuracy').innerHTML=averageAccuracy+'<small>%</small>';
     $('#m-complete').innerHTML=data.filter((p,i)=>p.hasFilledAll||p.completed||progress[i].filled===keys.length).length+'<small>人</small>';
     $('#empty-hint').classList.toggle('hidden',n>0);
     $('#board-title').textContent=showAnswer?'标准分区 · 用于讲解':viewSnapshot?`${viewSnapshot.label} · ${n} 人快照`:'全班混色键盘';

@@ -88,3 +88,5 @@ body{overflow-anchor:none}
 .quiz-wrong-row p{font-size:13px;margin:0 0 8px}
 .home-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
 @media(max-width:900px){.quiz-match,.home-grid{grid-template-columns:1fr}.kb-sil{max-width:100%}}
+
+@media(min-width:901px){.coloring-metrics{grid-template-columns:repeat(5,minmax(0,1fr))}}
