@@ -109,10 +109,10 @@
     $('#shade-guide')?.remove();$('#shade-play')?.classList.remove('guide-active');
   }
   function showShadeGuide(){
-    if(!state.completed||!Lesson.coloringProgress(state.colors,keys).perfect||load(localKey+':shade-guide-seen',false))return;
+    if(!state.completed||load(localKey+':shade-guide-seen',false))return;
     const target=$('#shade-play');if(!target||target.classList.contains('hidden'))return;
     save(localKey+':shade-guide-seen',true);target.classList.add('guide-active');
-    target.insertAdjacentHTML('beforeend','<div id="shade-guide" class="shade-guide" role="dialog" aria-label="试试调色"><strong>全部正确，试试调色！</strong><p>先选左侧区域，再点这里的色块，换个色调。</p><button id="shade-guide-close" class="primary">试试看</button></div>');
+    target.insertAdjacentHTML('beforeend','<div id="shade-guide" class="shade-guide" role="dialog" aria-label="试试调色"><strong>已完成，试试调色！</strong><p>先选左侧区域，再点这里的色块，换个色调。</p><button id="shade-guide-close" class="primary">试试看</button></div>');
     $('#shade-guide-close').onclick=dismissShadeGuide;
     $('#shade-guide').addEventListener('keydown',event=>{if(event.key==='Escape')dismissShadeGuide();});
     const rect=target.getBoundingClientRect();
@@ -124,7 +124,7 @@
   function renderShades(){
     const id=regions.some(r=>r.id===selected)?selected:regions[0].id;
     $('#shade-options').innerHTML=shadeOptions(id).map((color,i)=>`<button class="shade-option" style="--shade:${color}" data-shade="${i}" aria-label="${regions.find(r=>r.id===id).name}色号 ${i+1}" aria-pressed="${(localShades[id]||0)===i}"></button>`).join('');
-    $$('[data-shade]').forEach(b=>b.onclick=()=>{if(!state.completed||!Lesson.coloringProgress(state.colors,keys).perfect)return;dismissShadeGuide();localShades[id]=Number(b.dataset.shade);save(shadeStorageKey,localShades);renderShades();updateColor();});
+    $$('[data-shade]').forEach(b=>b.onclick=()=>{if(!state.completed)return;dismissShadeGuide();localShades[id]=Number(b.dataset.shade);save(shadeStorageKey,localShades);renderShades();updateColor();});
   }
   function studentColor(){
     main.innerHTML=`<div class="intro coloring-intro"><h1>给键盘涂色</h1><div id="shade-play" class="shade-play hidden"><div id="shade-options" class="shade-options"></div></div></div>`+
@@ -148,9 +148,9 @@
     const progress=Lesson.coloringProgress(state.colors,keys),filled=progress.filled,allFilled=filled===keys.length;
     if(!state.hasFilledAll&&(allFilled||state.completed)){state.hasFilledAll=true;persist();}
     if(state.completed&&!allFilled){state.completed=false;persist();}
-    if(!state.completed||!progress.perfect||selected==='blank')dismissShadeGuide();
+    if(!state.completed||selected==='blank')dismissShadeGuide();
     $('#complete').disabled=!allFilled;
-    $('#shade-play').classList.toggle('hidden',!state.completed||!progress.perfect||selected==='blank');
+    $('#shade-play').classList.toggle('hidden',!state.completed||selected==='blank');
     $$('[data-color] .dot').forEach(dot=>{dot.style.background=displayColor(dot.parentElement.dataset.color);});
     $$('.key').forEach(b=>{const id=state.colors[b.dataset.key],r=regions.find(x=>x.id===id);b.style.background=displayColor(id);b.setAttribute('aria-label',`${keys.find(k=>k.id===b.dataset.key)?.label||'空格键'}，${r?.name||'未填色'}`);});
     $('#paint-count').textContent=`已填 ${filled} / ${keys.length} 格`;
