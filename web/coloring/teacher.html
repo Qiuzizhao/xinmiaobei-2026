@@ -171,6 +171,14 @@ body{overflow-anchor:none}
 .quiz-feedback strong{font-size:16px;line-height:1.6;min-height:1.6em}
 .quiz-feedback .quiz-explanation{margin:0;font-size:14px;line-height:1.8;font-weight:400}
 @media(max-width:760px){.quiz-feedback strong{min-height:3.2em}}
+
+.quiz-review{gap:18px}.quiz-review-row{padding:22px;min-width:0}.quiz-review-row span{float:none;font-size:inherit;color:inherit}
+.review-heading{display:flex;justify-content:space-between;align-items:center;gap:12px}.review-status{font-size:13px!important;font-weight:700;color:#26744f!important}.bad .review-status{color:#a14b30!important}
+.review-prompt{font-size:18px;line-height:1.6;margin:14px 0}.review-options{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.review-option{display:flex;align-items:center;flex-wrap:wrap;gap:8px;padding:10px 12px;border:1px solid var(--line);border-radius:9px;line-height:1.6;font-size:14px;min-width:0}.review-option small{font-size:12px;color:var(--muted)}.review-option.is-selected{border-color:#a5b8ab}.bad .review-option.is-selected:not(.is-answer){background:#fbebe7;border-color:#d49487}.review-option.is-answer{background:#edf7ef;border-color:#9acbb0}
+.review-answer{margin:14px 0}.quiz-review-row .review-answer p{font-size:14px;line-height:1.8}.review-explanation{background:#f3f7f0;border-radius:10px;padding:12px 14px;margin-top:16px}.review-explanation>b{font-size:14px;color:var(--green)}.quiz-review-row .review-explanation p{font-size:14px;line-height:1.85;margin:5px 0 0}
+.review-pairs{border-collapse:collapse;table-layout:fixed;width:100%;font-size:14px;line-height:1.7}.review-pairs th,.review-pairs td{border:1px solid var(--line);padding:10px;text-align:left;vertical-align:middle;overflow-wrap:anywhere}.review-pairs thead{background:#f1f5ef}.review-pairs th:first-child{width:22%}.review-pairs td{position:relative}.review-pairs em{display:block;text-align:right;font-style:normal;color:#26744f}.review-pairs .pair-wrong td:nth-child(2){background:#fff4ee}.review-pairs .pair-wrong em{color:#a14b30}.review-pairs .key-fragment{height:94px}
+@media(max-width:640px){.quiz-review-row{padding:16px}.review-options{grid-template-columns:1fr}.review-pairs,.review-pairs tbody{display:block}.review-pairs thead{display:none}.review-pairs tr{display:block;border:1px solid var(--line);border-radius:10px;margin-top:10px;overflow:hidden}.review-pairs th,.review-pairs td{display:block;border:0;width:100%!important}.review-pairs th{background:#f1f5ef}.review-pairs td:before{content:attr(data-label);display:block;color:var(--muted);font-size:12px;margin-bottom:5px}.review-pairs td+td{border-top:1px solid var(--line)}}
 </style></head><body><script>window.APP_CONFIG={"taskId":"urw467xtz4n7","title":"填色盘","kind":"coloring","role":"teacher"};</script><script>(function (root) {
   'use strict';
   const regions = [
@@ -629,18 +637,31 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     }
     state.index--;quizPickLeft=null;quizDraft={};persist();renderQuizStudent();
   }
+  function reviewQuestionHTML(q,index,answer){
+    const ok=!!answer?.checked&&!!answer.correct,status=!answer?.checked?'未作答':ok?'正确':'再看看';
+    let detail='';
+    if(q.type==='mcq'){
+      const answerText=id=>{const i=q.choices.findIndex(c=>c.id===id);return i<0?'未作答':String.fromCharCode(65+i)+'. '+q.choices[i].text;};
+      detail=`<ul class="review-options">${q.choices.map((choice,i)=>`<li class="review-option${choice.id===answer?.value?' is-selected':''}${choice.id===q.answer?' is-answer':''}"><b>${String.fromCharCode(65+i)}</b><span>${esc(choice.text)}</span><small>${choice.id===answer?.value?'你的选择':''}${choice.id===q.answer?' ✓ 正确答案':''}</small></li>`).join('')}</ul><div class="review-answer"><p><b>你的答案：</b>${esc(answerText(answer?.value))}</p><p><b>正确答案：</b>${esc(answerText(q.answer))}</p></div>`;
+    }else{
+      const pairs=answer?.value&&typeof answer.value==='object'?answer.value:{};
+      const rightHTML=id=>{const item=q.right.find(r=>r.id===id);return !item?'未连接':q.type==='match-shape'?shapeHTML(item.shape):esc(item.text);};
+      detail=`<table class="review-pairs"><thead><tr><th>区域</th><th>你的连线</th><th>正确连线</th></tr></thead><tbody>${q.left.map(item=>`<tr class="${pairs[item.id]===q.answer[item.id]?'pair-correct':'pair-wrong'}"><th scope="row">${esc(item.text)}</th><td data-label="你的连线">${rightHTML(pairs[item.id])}<em>${pairs[item.id]===q.answer[item.id]?'✓':'×'}</em></td><td data-label="正确连线">${rightHTML(q.answer[item.id])}</td></tr>`).join('')}</tbody></table>`;
+    }
+    return `<article class="quiz-review-row ${ok?'ok':'bad'}"><div class="review-heading"><strong>第 ${index+1} 题 · ${q.type==='mcq'?'选择题':'连线题'}</strong><span class="review-status">${status}</span></div><h3 class="review-prompt">${esc(q.prompt)}</h3>${detail}<div class="review-explanation"><b>解析</b><p>${esc(q.explanation||'')}</p></div></article>`;
+  }
   function renderQuizStudent(){
     matchResizeObserver?.disconnect();activeMatch=null;
     const progress=quizProgress(state.answers);
     if(state.index>=quizQuestions.length){
       main.innerHTML=`<div class="intro"><div><h1>练习完成</h1><p>一共 ${progress.total} 题，答对 ${progress.correct} 题。</p></div><span class="badge">正确率 ${progress.accuracy}%</span></div>
         <section class="panel"><div class="progress-track"><span style="width:100%"></span></div><p class="notice" style="margin-top:18px">可以再看一遍错题，也可以关掉页面休息一下。</p>
-        <div class="toolbar">${quizPreviousButton()}<button id="quiz-review" class="quiet">查看作答</button><span class="spacer"></span><button id="quiz-retry" class="primary">再练一次</button></div>
+        <div class="toolbar">${quizPreviousButton()}<button id="quiz-review" class="quiet" aria-controls="quiz-review-list" aria-expanded="false">查看作答</button><span class="spacer"></span><button id="quiz-retry" class="primary">再练一次</button></div>
         <div id="quiz-review-list" class="quiz-review hidden"></div></section>`;
       $('#quiz-review').onclick=()=>{
-        const box=$('#quiz-review-list');box.classList.toggle('hidden');
-        if(box.classList.contains('hidden'))return;
-        box.innerHTML=quizQuestions.map((q,i)=>{const a=state.answers[q.id];const ok=a?.correct;return `<div class="quiz-review-row ${ok?'ok':'bad'}"><strong>第 ${i+1} 题</strong><span>${ok?'正确':'再看看'}</span><p>${esc(q.prompt)}</p></div>`;}).join('');
+        const box=$('#quiz-review-list');box.classList.toggle('hidden');const open=!box.classList.contains('hidden');
+        $('#quiz-review').textContent=open?'收起作答':'查看作答';$('#quiz-review').setAttribute('aria-expanded',String(open));
+        if(open)box.innerHTML=quizQuestions.map((q,i)=>reviewQuestionHTML(q,i,state.answers[q.id])).join('');
       };
       $('#quiz-retry').onclick=()=>{if(!confirm('清空本次作答，重新练习吗？'))return;state={quizVersion:2,answers:{},index:0};persist();quizDraft={};quizPickLeft=null;renderQuizStudent();syncStudent(true);};
       return;

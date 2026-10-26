@@ -243,18 +243,31 @@
     }
     state.index--;quizPickLeft=null;quizDraft={};persist();renderQuizStudent();
   }
+  function reviewQuestionHTML(q,index,answer){
+    const ok=!!answer?.checked&&!!answer.correct,status=!answer?.checked?'未作答':ok?'正确':'再看看';
+    let detail='';
+    if(q.type==='mcq'){
+      const answerText=id=>{const i=q.choices.findIndex(c=>c.id===id);return i<0?'未作答':String.fromCharCode(65+i)+'. '+q.choices[i].text;};
+      detail=`<ul class="review-options">${q.choices.map((choice,i)=>`<li class="review-option${choice.id===answer?.value?' is-selected':''}${choice.id===q.answer?' is-answer':''}"><b>${String.fromCharCode(65+i)}</b><span>${esc(choice.text)}</span><small>${choice.id===answer?.value?'你的选择':''}${choice.id===q.answer?' ✓ 正确答案':''}</small></li>`).join('')}</ul><div class="review-answer"><p><b>你的答案：</b>${esc(answerText(answer?.value))}</p><p><b>正确答案：</b>${esc(answerText(q.answer))}</p></div>`;
+    }else{
+      const pairs=answer?.value&&typeof answer.value==='object'?answer.value:{};
+      const rightHTML=id=>{const item=q.right.find(r=>r.id===id);return !item?'未连接':q.type==='match-shape'?shapeHTML(item.shape):esc(item.text);};
+      detail=`<table class="review-pairs"><thead><tr><th>区域</th><th>你的连线</th><th>正确连线</th></tr></thead><tbody>${q.left.map(item=>`<tr class="${pairs[item.id]===q.answer[item.id]?'pair-correct':'pair-wrong'}"><th scope="row">${esc(item.text)}</th><td data-label="你的连线">${rightHTML(pairs[item.id])}<em>${pairs[item.id]===q.answer[item.id]?'✓':'×'}</em></td><td data-label="正确连线">${rightHTML(q.answer[item.id])}</td></tr>`).join('')}</tbody></table>`;
+    }
+    return `<article class="quiz-review-row ${ok?'ok':'bad'}"><div class="review-heading"><strong>第 ${index+1} 题 · ${q.type==='mcq'?'选择题':'连线题'}</strong><span class="review-status">${status}</span></div><h3 class="review-prompt">${esc(q.prompt)}</h3>${detail}<div class="review-explanation"><b>解析</b><p>${esc(q.explanation||'')}</p></div></article>`;
+  }
   function renderQuizStudent(){
     matchResizeObserver?.disconnect();activeMatch=null;
     const progress=quizProgress(state.answers);
     if(state.index>=quizQuestions.length){
       main.innerHTML=`<div class="intro"><div><h1>练习完成</h1><p>一共 ${progress.total} 题，答对 ${progress.correct} 题。</p></div><span class="badge">正确率 ${progress.accuracy}%</span></div>
         <section class="panel"><div class="progress-track"><span style="width:100%"></span></div><p class="notice" style="margin-top:18px">可以再看一遍错题，也可以关掉页面休息一下。</p>
-        <div class="toolbar">${quizPreviousButton()}<button id="quiz-review" class="quiet">查看作答</button><span class="spacer"></span><button id="quiz-retry" class="primary">再练一次</button></div>
+        <div class="toolbar">${quizPreviousButton()}<button id="quiz-review" class="quiet" aria-controls="quiz-review-list" aria-expanded="false">查看作答</button><span class="spacer"></span><button id="quiz-retry" class="primary">再练一次</button></div>
         <div id="quiz-review-list" class="quiz-review hidden"></div></section>`;
       $('#quiz-review').onclick=()=>{
-        const box=$('#quiz-review-list');box.classList.toggle('hidden');
-        if(box.classList.contains('hidden'))return;
-        box.innerHTML=quizQuestions.map((q,i)=>{const a=state.answers[q.id];const ok=a?.correct;return `<div class="quiz-review-row ${ok?'ok':'bad'}"><strong>第 ${i+1} 题</strong><span>${ok?'正确':'再看看'}</span><p>${esc(q.prompt)}</p></div>`;}).join('');
+        const box=$('#quiz-review-list');box.classList.toggle('hidden');const open=!box.classList.contains('hidden');
+        $('#quiz-review').textContent=open?'收起作答':'查看作答';$('#quiz-review').setAttribute('aria-expanded',String(open));
+        if(open)box.innerHTML=quizQuestions.map((q,i)=>reviewQuestionHTML(q,i,state.answers[q.id])).join('');
       };
       $('#quiz-retry').onclick=()=>{if(!confirm('清空本次作答，重新练习吗？'))return;state={quizVersion:2,answers:{},index:0};persist();quizDraft={};quizPickLeft=null;renderQuizStudent();syncStudent(true);};
       return;

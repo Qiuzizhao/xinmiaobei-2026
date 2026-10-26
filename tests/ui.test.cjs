@@ -91,3 +91,15 @@ test('答对和答错均显示本题解析',()=>{
  ctx.showQuizFeedback(false,q);assert.match(feedback.innerHTML,/正确答案已标出/);assert.ok(feedback.innerHTML.includes(q.explanation));
  q.type='match';ctx.showQuizFeedback(false,q);assert.match(feedback.innerHTML,/红色虚线/);assert.ok(feedback.innerHTML.includes(q.explanation));
 });
+test('完成页展示完整题目、选项、学生答案、正确答案及解析',()=>{
+ const source=fs.readFileSync(path.join(__dirname,'../web/src/app.js'),'utf8');
+ const code=source.slice(source.indexOf('  function reviewQuestionHTML('),source.indexOf('  function renderQuizStudent('));
+ const Lesson=require('../web/src/core.js'),ctx={esc:value=>String(value),shapeHTML:id=>'<svg data-shape="'+id+'"></svg>'};vm.createContext(ctx);vm.runInContext(code,ctx);
+ const mcq=Lesson.quizQuestions[0];let html=ctx.reviewQuestionHTML(mcq,0,{checked:true,correct:false,value:'b'});
+ assert.ok(html.includes(mcq.prompt));assert.ok(html.includes('B. 功能键区'));assert.ok(html.includes('A. 主键盘区'));assert.ok(html.includes(mcq.explanation));
+ for(const choice of mcq.choices)assert.ok(html.includes(choice.text));
+ const match=Lesson.quizQuestions.find(q=>q.type==='match');html=ctx.reviewQuestionHTML(match,11,{checked:true,correct:false,value:{...match.answer,main:'d3',editing:'d1'}});
+ assert.match(html,/主键盘区<\/th><td data-label="你的连线">移动光标、翻页和编辑/);assert.ok(html.includes('正确连线'));assert.ok(html.includes(match.explanation));
+ const shapes=Lesson.quizQuestions.find(q=>q.type==='match-shape');html=ctx.reviewQuestionHTML(shapes,13,{checked:true,correct:true,value:shapes.answer});
+ assert.equal((html.match(/<svg /g)||[]).length,10);assert.ok(html.includes(shapes.explanation));
+});
